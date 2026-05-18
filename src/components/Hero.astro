@@ -1,0 +1,24 @@
+---
+import hero from '../data/hero.json';
+---
+
+<section class="hero" id="hero">
+  <div class="hero-layer layer-1" data-parallax="0.2" aria-hidden="true"></div>
+  <div class="hero-layer layer-2" data-parallax="0.5" aria-hidden="true">
+    <div class="big-yr">YR</div>
+  </div>
+  <div class="hero-layer layer-3">
+    <div class="hero-prefix">
+      <span class="line"></span>
+      <span>{hero.prefix}</span>
+      <span class="line"></span>
+    </div>
+    <h1 set:html={hero.h1} />
+    <p class="hero-sub" set:html={hero.sub} />
+    <div class="btn-row">
+      <button id="discoverBtn" class="btn" data-interactive data-magnetic>{hero.ctaPrimary}</button>
+      <a href={hero.ctaSecondaryHref} class="btn-ghost" data-interactive>{hero.ctaSecondary}</a>
+    </div>
+  </div>
+  <div class="scroll-prompt" aria-hidden="true">Desliza</div>
+</section>

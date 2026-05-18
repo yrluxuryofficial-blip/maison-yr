@@ -1,0 +1,17 @@
+---
+import nav from '../data/nav.json';
+---
+
+<div class="side-nav" id="sideNav" aria-label="Navegación lateral">
+  {
+    nav.sideNav.map((item, i) => (
+      <a
+        class={`side-dot${i === 0 ? ' active' : ''}`}
+        data-label={item.label}
+        data-target={item.target}
+        href={`#${item.target}`}
+        aria-label={`Ir a ${item.label}`}
+      />
+    ))
+  }
+</div>

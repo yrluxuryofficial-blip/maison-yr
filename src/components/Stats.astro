@@ -1,0 +1,23 @@
+---
+import stats from '../data/stats.json';
+---
+
+<section class="stats">
+  <div class="stats-grid">
+    {
+      stats.map((stat, i) => (
+        <div class={`stat reveal${i > 0 ? ` reveal-d${i}` : ''}`}>
+          <div class="num">
+            {Number.isFinite(Number(stat.value)) ? (
+              <span data-count={stat.value}>0</span>
+            ) : (
+              <span>{stat.value}</span>
+            )}
+            {stat.suffix ? <em>{stat.suffix}</em> : null}
+          </div>
+          <div class="label">{stat.label}</div>
+        </div>
+      ))
+    }
+  </div>
+</section>

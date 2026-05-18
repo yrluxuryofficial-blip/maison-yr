@@ -1,0 +1,237 @@
+---
+interface Product {
+  slug: string;
+  name: string;
+  category: string;
+  categoryLabel: string;
+  price: number;
+  currency: string;
+  image: string;
+  imagePlaceholder: string;
+  imagePosition?: string;
+  description: string;
+  tags: string[];
+}
+interface Props {
+  products: Product[];
+}
+const { products } = Astro.props;
+
+// Mapa de etiquetas → texto humano en español
+const tagLabels: Record<string, string> = {
+  bestseller: 'Más vendido',
+  nuevo: 'Nuevo',
+  signature: 'Firma',
+  'edicion-limitada': 'Edición limitada',
+  encaje: 'Encaje',
+};
+---
+
+<section class="product-grid-section">
+  <div class="product-grid">
+    {
+      products.map((product) => (
+        <article class="product-card reveal" data-product-slug={product.slug} id={product.slug}>
+          <div class="product-card-image">
+            <img
+              src={product.image}
+              data-fallback={product.imagePlaceholder}
+              onerror="if(!this.dataset.fallbackApplied){this.dataset.fallbackApplied='1';this.src=this.dataset.fallback;}"
+              alt={product.name}
+              loading="lazy"
+              style={product.imagePosition ? `object-position: ${product.imagePosition}` : undefined}
+            />
+            {product.tags.length > 0 && (
+              <span class="product-card-badge">
+                {tagLabels[product.tags[0]] ?? product.tags[0]}
+              </span>
+            )}
+          </div>
+          <div class="product-card-body">
+            <div class="product-card-category">— {product.categoryLabel}</div>
+            <h3 class="product-card-name">{product.name}</h3>
+            <p class="product-card-desc">{product.description}</p>
+            <div class="product-card-footer">
+              <span class="product-card-price">
+                ${product.price}
+                <em> {product.currency}</em>
+              </span>
+              <button
+                class="product-card-cta"
+                data-interactive
+                data-add-cart
+                data-name={product.name}
+                data-price={product.price}
+                data-image={product.imagePlaceholder}
+                type="button"
+              >
+                Añadir →
+              </button>
+            </div>
+          </div>
+        </article>
+      ))
+    }
+  </div>
+</section>
+
+<style>
+  .product-grid-section {
+    padding: 100px 56px;
+    background: var(--black);
+  }
+  .product-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 36px;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+  .product-card {
+    position: relative;
+    background: var(--black-2);
+    border: 1px solid var(--line-soft);
+    transition:
+      transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1),
+      border-color 0.3s,
+      box-shadow 0.5s;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+  .product-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--gold-soft);
+    box-shadow: 0 30px 60px -20px rgba(0, 0, 0, 0.5);
+  }
+  .product-card-image {
+    aspect-ratio: 3/4;
+    position: relative;
+    overflow: hidden;
+    background: var(--black-3);
+  }
+  .product-card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    transition: transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+  .product-card:hover .product-card-image img {
+    transform: scale(1.04);
+  }
+  .product-card-badge {
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    background: var(--gold);
+    color: var(--black);
+    font-family: 'Manrope', sans-serif;
+    font-size: 9px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    font-weight: 500;
+    padding: 6px 12px;
+    z-index: 2;
+  }
+  .product-card-body {
+    padding: 24px 22px 26px;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+  }
+  .product-card-category {
+    font-family: 'Manrope', sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 12px;
+  }
+  .product-card-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 24px;
+    font-weight: 400;
+    color: var(--ink);
+    line-height: 1.15;
+    margin-bottom: 14px;
+  }
+  .product-card-desc {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 15px;
+    color: var(--ink-soft);
+    line-height: 1.5;
+    margin-bottom: 24px;
+    flex: 1;
+  }
+  .product-card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 18px;
+    border-top: 1px solid var(--line-soft);
+    gap: 16px;
+  }
+  .product-card-price {
+    font-family: 'Forum', serif;
+    font-size: 22px;
+    color: var(--gold);
+    white-space: nowrap;
+  }
+  .product-card-price em {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 0.65em;
+    color: var(--ink-soft);
+    margin-left: 4px;
+  }
+  .product-card-cta {
+    background: transparent;
+    color: var(--gold);
+    border: 1px solid var(--gold-soft);
+    font-family: 'Manrope', sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    font-weight: 500;
+    padding: 11px 18px;
+    cursor: pointer;
+    transition:
+      background 0.3s,
+      color 0.3s,
+      border-color 0.3s;
+    white-space: nowrap;
+  }
+  .product-card-cta:hover {
+    background: var(--gold);
+    color: var(--black);
+    border-color: var(--gold);
+  }
+
+  @media (max-width: 980px) {
+    .product-grid-section {
+      padding: 70px 24px;
+    }
+    .product-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 24px;
+    }
+    .product-card-name {
+      font-size: 22px;
+    }
+  }
+  @media (max-width: 600px) {
+    .product-grid-section {
+      padding: 60px 18px;
+    }
+    .product-grid {
+      grid-template-columns: 1fr;
+      gap: 24px;
+      max-width: 420px;
+    }
+  }
+</style>
+
+<!-- El handler de [data-add-cart] vive en Cart.astro (singleton global) -->
+

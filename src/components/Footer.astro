@@ -1,0 +1,31 @@
+---
+import site from '../data/site.json';
+import footer from '../data/footer.json';
+---
+
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <div class="logo-wrap">
+        <div class="logo-emblem"><span>YR</span></div>
+        <div class="logo-text">MAISON</div>
+      </div>
+      <div class="footer-tag">{footer.tag}</div>
+    </div>
+    {
+      footer.columns.map((col) => (
+        <div class="footer-col">
+          <h4>{col.title}</h4>
+          {col.links.map((link) => (
+            <a href={link.href} data-interactive>
+              {link.label}
+            </a>
+          ))}
+        </div>
+      ))
+    }
+  </div>
+  <div class="footer-bottom">
+    <span>© {site.edition} Maison YR · Medellín</span>
+  </div>
+</footer>

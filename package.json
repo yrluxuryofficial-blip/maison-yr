@@ -1,0 +1,31 @@
+{
+  "name": "yr-maison",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro",
+    "icons": "node scripts/generate-icons.mjs",
+    "og": "node scripts/generate-og.mjs",
+    "webp": "node scripts/convert-to-webp.mjs",
+    "format": "prettier --write \"**/*.{astro,ts,tsx,js,jsx,mjs,cjs,json,md,yml,yaml}\"",
+    "format:check": "prettier --check \"**/*.{astro,ts,tsx,js,jsx,mjs,cjs,json,md,yml,yaml}\""
+  },
+  "dependencies": {
+    "astro": "^6.3.3",
+    "@astrojs/sitemap": "^3.7.2"
+  },
+  "devDependencies": {
+    "prettier": "^3.3.3",
+    "prettier-plugin-astro": "^0.14.1",
+    "sharp": "^0.34.5",
+    "to-ico": "^1.1.5",
+    "typescript": "^5.6.3"
+  }
+}

@@ -1,0 +1,39 @@
+{
+  "tag": "\"Sensualidad en su forma más elegante.\" Maison de lujo nacida en Medellín, con vocación internacional.",
+  "columns": [
+    {
+      "title": "Tienda",
+      "links": [
+        { "label": "Lencería", "href": "/lenceria" },
+        { "label": "Hombre", "href": "/hombre" },
+        { "label": "Perfume", "href": "/perfume" },
+        { "label": "Belleza", "href": "/belleza" }
+      ]
+    },
+    {
+      "title": "La Casa",
+      "links": [
+        { "label": "Historia", "href": "/historia" },
+        { "label": "La Fundadora", "href": "/historia#fundadora" },
+        { "label": "Visión 2030", "href": "/historia#vision" },
+        { "label": "Atelier", "href": "/#atelier" }
+      ]
+    },
+    {
+      "title": "Atención",
+      "links": [
+        { "label": "Contacto", "href": "/contacto" },
+        { "label": "Envíos", "href": "/envios" },
+        { "label": "Preguntas frecuentes", "href": "/preguntas-frecuentes" }
+      ]
+    }
+  ],
+  "newsletter": {
+    "h2": "Únete al <em>Cercle</em> YR.",
+    "intro": "Accede primero a colecciones cápsula, ediciones limitadas y eventos privados de la maison.",
+    "placeholder": "tu correo electrónico",
+    "submit": "Unirse →",
+    "success": "— Bienvenida al Cercle YR ✦",
+    "unconfigured": "— Configuración pendiente. Escríbenos por WhatsApp"
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "head": {
+    "prefix": "Configurador · N° I",
+    "title": "Golden <em>Kiss</em>.<br>Encuentra <em>tu tono</em>.",
+    "sub": "Selecciona un tono y míralo en tiempo real sobre los labios."
+  },
+  "intro": {
+    "roman": "— N° I / 06 TONOS",
+    "h2": "Tu <em>tono</em>,<br>tu <em>firma</em>.",
+    "description": "Cada tono Golden Kiss está formulado con ingredientes nutritivos y aceites esenciales. Brillo glossy que no se va con el agua.",
+    "previewDesc": "Brillo intenso · Hidratante · Libre de crueldad"
+  },
+  "image": "/img/yr_golden_kiss.jpg",
+  "alt": "Golden Kiss Lipgloss YR",
+  "basePrice": 32,
+  "currency": "USD",
+  "shades": [
+    {
+      "slug": "crystal",
+      "name": "Brillo Cristal",
+      "color": "#F5EEE0",
+      "colorDeep": "#C9C0A8"
+    },
+    {
+      "slug": "sugar",
+      "name": "Resplandor Dulce",
+      "color": "#F0DDC4",
+      "colorDeep": "#C9A57C"
+    },
+    {
+      "slug": "pink",
+      "name": "Beso Rosa",
+      "color": "#E8B5A8",
+      "colorDeep": "#A65D5D"
+    },
+    {
+      "slug": "golden",
+      "name": "Tono Insignia",
+      "color": "#E6C49B",
+      "colorDeep": "#A87445",
+      "active": true
+    },
+    {
+      "slug": "nude",
+      "name": "Deseo Nude",
+      "color": "#D4A582",
+      "colorDeep": "#8B5E40"
+    },
+    {
+      "slug": "rose",
+      "name": "Diamante Rosa",
+      "color": "#C58A8A",
+      "colorDeep": "#6E2D44"
+    }
+  ]
+}

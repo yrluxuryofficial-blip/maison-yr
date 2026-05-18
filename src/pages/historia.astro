@@ -1,0 +1,557 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Nav from '../components/Nav.astro';
+import MobileMenu from '../components/MobileMenu.astro';
+import Footer from '../components/Footer.astro';
+import WhatsAppFloat from '../components/WhatsAppFloat.astro';
+import site from '../data/site.json';
+
+const title = 'Historia & Concepto · Maison YR';
+const description = `La historia de ${site.name}: el concepto, la fundadora Yesenia Rodríguez, el origen colombiano y la visión 2030.`;
+
+// 6 valores que componen la esencia de la maison.
+const valores = [
+  {
+    roman: 'I',
+    title: 'Sensualidad',
+    body: 'Cada pieza es una conversación íntima entre la prenda y la piel. La sensualidad no se grita — se habita, se viste, se respira.',
+  },
+  {
+    roman: 'II',
+    title: 'Elegancia',
+    body: 'La elegancia es lo que queda cuando todo lo demás se olvida. Líneas limpias, materiales nobles, sin estridencias.',
+  },
+  {
+    roman: 'III',
+    title: 'Artesanía',
+    body: 'Encaje europeo tejido en Calais, satén de seda, herrajes dorados grabados a mano. Cada detalle es decisión, nunca azar.',
+  },
+  {
+    roman: 'IV',
+    title: 'Detalle',
+    body: 'El monograma YR en cada herraje. La caja de terciopelo verde esmeralda. El certificado numerado. Nada es accesorio.',
+  },
+  {
+    roman: 'V',
+    title: 'Origen',
+    body: 'Nacida en Medellín con vocación internacional. La esmeralda colombiana y la elegancia francesa convergen en cada pieza.',
+  },
+  {
+    roman: 'VI',
+    title: 'Firma',
+    body: 'No es una marca — es una manera de habitar el mundo. Una firma que se reconoce sin necesidad de logo visible.',
+  },
+];
+
+// 6 puntos de la visión a 2030.
+const vision = [
+  'Nuevas líneas de Eau de Parfum para hombre y ediciones limitadas estacionales.',
+  'Línea de accesorios en cuero y joyería fina con monograma YR.',
+  'Expansión de presencia a Europa — París como capital olfativa.',
+  'Apertura en Medio Oriente — Dubái como puerta al mercado de lujo regional.',
+  'Boutique física insignia en Colombia con experiencia atelier inmersiva.',
+  'Eventos privados internacionales para el Cercle YR — pre-lanzamientos exclusivos.',
+];
+---
+
+<BaseLayout title={title} description={description}>
+  <Nav />
+  <MobileMenu />
+  <main id="main">
+    <section class="institutional-hero">
+      <div class="institutional-kicker">— La Maison</div>
+      <h1 class="institutional-title">Historia <em>&amp; Concepto</em></h1>
+      <p class="institutional-lede">
+        Una maison nacida en Medellín con vocación internacional. La historia de una idea — la
+        sensualidad como firma — y de la mujer que decidió construirla.
+      </p>
+    </section>
+
+    <!-- =========================================
+         CONCEPTO + pull-quote
+         ========================================= -->
+    <section class="historia-section" id="concepto">
+      <div class="historia-inner narrow">
+        <div class="historia-eyebrow">— Concepto</div>
+        <h2 class="historia-h2">Más que lencería — <em>una firma</em>.</h2>
+        <p class="historia-paragraph">
+          Maison YR no nació para llenar un cajón. Nació para vestir un momento. Cada conjunto, cada
+          frasco, cada tono está pensado como un gesto íntimo — algo que se elige antes de salir, no
+          después de elegir todo lo demás. La maison opera en la intersección de tres mundos: la
+          lencería europea, la perfumería de Grasse y la beauty contemporánea. Tres lenguajes, una
+          sola voz.
+        </p>
+        <p class="historia-paragraph">
+          La marca no compite por volumen. Compite por permanencia — por convertirse en la firma
+          olfativa, visual y táctil de quien la elige. Edición numerada, packaging certificado,
+          atención uno a uno desde el atelier de Medellín.
+        </p>
+      </div>
+
+      <blockquote class="pullquote">
+        <p>
+          "No vendo solo lencería.<br />
+          Vendo <strong>seguridad</strong>, <strong>elegancia</strong> y una <strong>sensación</strong>."
+        </p>
+        <cite>— Yesenia Rodríguez · Fondatrice</cite>
+      </blockquote>
+    </section>
+
+    <!-- =========================================
+         FUNDADORA
+         ========================================= -->
+    <section class="historia-section alt" id="fundadora">
+      <div class="historia-grid">
+        <div class="historia-portrait">
+          <div class="portrait-frame" aria-hidden="true">
+            <div class="portrait-emblem"><span>YR</span></div>
+            <div class="portrait-placeholder-label">— Yesenia Rodríguez</div>
+          </div>
+        </div>
+        <div class="historia-grid-text">
+          <div class="historia-eyebrow">— La Fundadora</div>
+          <h2 class="historia-h2">Yesenia <em>Rodríguez</em>.</h2>
+          <p class="historia-paragraph">
+            Antioqueña, mujer de detalles. Yesenia Rodríguez no diseñó Maison YR — la construyó pieza
+            por pieza, desde la elección del primer encaje en Calais hasta el sello dorado en la caja
+            de terciopelo. La maison es su lectura del lujo: cercana, hecha a mano, sin pretensiones.
+          </p>
+          <p class="historia-paragraph">
+            "Quería una marca que mi mejor amiga pudiera usar el viernes y mi madre pudiera regalar
+            el domingo. Que no fuera ni demasiado callada ni demasiado fuerte. Que se sintiera como
+            firma, no como uniforme."
+          </p>
+          <p class="historia-paragraph">
+            Cada pieza pasa por su revisión final antes de salir del atelier. Cada caja lleva su
+            guía de uso firmada. Es la diferencia entre una marca con fundadora y una marca con un
+            equipo de marketing.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================================
+         ORIGEN
+         ========================================= -->
+    <section class="historia-section" id="origen">
+      <div class="historia-inner narrow">
+        <div class="historia-eyebrow">— Origen</div>
+        <h2 class="historia-h2">Esmeralda, <em>dorado</em>, glamour.</h2>
+        <p class="historia-paragraph">
+          La idea nació de tres símbolos que se cruzaron sin pedirlo: la <em>esmeralda colombiana</em>
+          — piedra orgullo del territorio, verde profundo como el atelier; el <em>dorado</em> — color
+          de la firma, de los herrajes, de los monogramas grabados a mano; y el <em>glamour europeo</em>
+          — la lección de las maisons históricas: que el lujo se construye con tiempo, no con prisa.
+        </p>
+        <p class="historia-paragraph">
+          Esos tres símbolos no son decoración. Son la paleta operativa de Maison YR. Verde esmeralda
+          en cada packaging. Dorado en cada herraje, en cada emblema, en cada texto que importa. Y
+          ese pulso europeo que se nota en el tejido, en las costuras invisibles, en el peso de la
+          caja al abrirla.
+        </p>
+      </div>
+    </section>
+
+    <!-- =========================================
+         ESENCIA — 6 valores
+         ========================================= -->
+    <section class="historia-section alt" id="esencia">
+      <div class="historia-inner">
+        <div class="historia-eyebrow centered">— Esencia</div>
+        <h2 class="historia-h2 centered">Seis principios. <em>Una firma</em>.</h2>
+        <p class="historia-paragraph centered narrow">
+          La esencia de la maison se sostiene en seis valores que atraviesan cada decisión —
+          desde el corte de un encaje hasta el peso del papel de la guía de uso.
+        </p>
+        <div class="valores-grid">
+          {
+            valores.map((v) => (
+              <article class="valor-card">
+                <div class="valor-roman">{v.roman}</div>
+                <h3 class="valor-title">{v.title}</h3>
+                <p class="valor-body">{v.body}</p>
+              </article>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================================
+         VISIÓN 2030
+         ========================================= -->
+    <section class="historia-section" id="vision">
+      <div class="historia-inner narrow">
+        <div class="historia-eyebrow">— Visión 2030</div>
+        <h2 class="historia-h2">Lo que <em>viene</em>.</h2>
+        <p class="historia-paragraph">
+          La maison crece sin perder su cadencia. La hoja de ruta hasta 2030 es deliberada — cada
+          paso responde a la misma pregunta: ¿esto sigue siendo una firma, o se vuelve un catálogo?
+        </p>
+        <ul class="vision-list">
+          {
+            vision.map((item) => (
+              <li class="vision-item">
+                <span class="vision-arrow" aria-hidden="true">
+                  →
+                </span>
+                <span>{item}</span>
+              </li>
+            ))
+          }
+        </ul>
+        <div class="vision-cta">
+          <a href="/lenceria" class="btn historia-btn" data-interactive data-magnetic>
+            Explorar los universos →
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+  <Footer />
+  <WhatsAppFloat />
+</BaseLayout>
+
+<style>
+  /* ============================
+     HERO institucional compartido
+     ============================ */
+  .institutional-hero {
+    padding: 160px 56px 80px;
+    text-align: center;
+    background: radial-gradient(ellipse at 50% 30%, rgba(212, 178, 102, 0.08), transparent 60%);
+  }
+  .institutional-kicker {
+    font-family: 'Manrope', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.5em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 28px;
+  }
+  .institutional-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(48px, 7vw, 92px);
+    font-weight: 300;
+    line-height: 1;
+    color: var(--ink);
+    margin-bottom: 32px;
+  }
+  .institutional-title em {
+    font-family: 'Forum', serif;
+    font-style: normal;
+    color: var(--gold);
+  }
+  .institutional-lede {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 20px;
+    line-height: 1.6;
+    color: var(--ink-soft);
+    max-width: 680px;
+    margin: 0 auto;
+  }
+
+  /* ============================
+     Secciones de historia
+     ============================ */
+  .historia-section {
+    padding: 100px 56px;
+    background: var(--black);
+    position: relative;
+    scroll-margin-top: 80px; /* offset para el nav fijo cuando se hace scroll a #id */
+  }
+  .historia-section.alt {
+    background: var(--black-2);
+    border-top: 1px solid var(--line-soft);
+    border-bottom: 1px solid var(--line-soft);
+  }
+  .historia-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  .historia-inner.narrow {
+    max-width: 780px;
+  }
+  .historia-eyebrow {
+    font-family: 'Manrope', sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.5em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 24px;
+  }
+  .historia-eyebrow.centered {
+    text-align: center;
+  }
+  .historia-h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(36px, 5vw, 64px);
+    font-weight: 300;
+    line-height: 1.05;
+    color: var(--ink);
+    margin-bottom: 40px;
+  }
+  .historia-h2 em {
+    font-family: 'Forum', serif;
+    font-style: normal;
+    color: var(--gold);
+  }
+  .historia-h2.centered {
+    text-align: center;
+  }
+  .historia-paragraph {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 19px;
+    line-height: 1.75;
+    color: var(--ink-soft);
+    max-width: 720px;
+  }
+  .historia-paragraph + .historia-paragraph {
+    margin-top: 22px;
+  }
+  .historia-paragraph em {
+    color: var(--gold);
+    font-style: italic;
+  }
+  .historia-paragraph.centered {
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .historia-paragraph.narrow {
+    max-width: 600px;
+  }
+
+  /* ============================
+     Pull-quote (concepto)
+     ============================ */
+  .pullquote {
+    max-width: 880px;
+    margin: 80px auto 0;
+    padding: 56px 24px 0;
+    border-top: 1px solid var(--line-soft);
+    text-align: center;
+  }
+  .pullquote p {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: clamp(28px, 4vw, 48px);
+    line-height: 1.25;
+    color: var(--ink);
+    margin-bottom: 36px;
+  }
+  .pullquote p strong {
+    font-family: 'Forum', serif;
+    font-style: normal;
+    font-weight: 400;
+    color: var(--gold);
+  }
+  .pullquote cite {
+    font-family: 'Forum', serif;
+    font-style: normal;
+    font-size: 13px;
+    letter-spacing: 0.5em;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+
+  /* ============================
+     Fundadora — retrato + texto
+     ============================ */
+  .historia-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.3fr;
+    gap: 80px;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .historia-grid-text {
+    min-width: 0;
+  }
+  .historia-portrait {
+    min-width: 0;
+  }
+  .portrait-frame {
+    aspect-ratio: 4/5;
+    background:
+      radial-gradient(ellipse at 50% 30%, rgba(14, 68, 52, 0.45) 0%, transparent 65%),
+      linear-gradient(160deg, var(--black-3) 0%, var(--black) 100%);
+    border: 1px solid var(--line-soft);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 28px;
+    position: relative;
+    overflow: hidden;
+  }
+  .portrait-frame::before {
+    content: '';
+    position: absolute;
+    inset: 16px;
+    border: 1px solid var(--line-soft);
+    pointer-events: none;
+  }
+  .portrait-emblem {
+    width: 92px;
+    height: 92px;
+    border-radius: 50%;
+    border: 1.5px solid var(--gold);
+    background: radial-gradient(circle at 30% 30%, var(--emerald) 0%, var(--emerald-deep) 70%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 24px rgba(212, 178, 102, 0.3);
+  }
+  .portrait-emblem span {
+    font-family: 'Forum', serif;
+    font-size: 32px;
+    color: var(--gold);
+    letter-spacing: 0.08em;
+  }
+  .portrait-placeholder-label {
+    font-family: 'Manrope', sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.5em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+  }
+
+  /* ============================
+     Esencia — 6 valores grid
+     ============================ */
+  .valores-grid {
+    margin-top: 56px;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 36px;
+  }
+  .valor-card {
+    padding: 32px 24px;
+    background: var(--black);
+    border: 1px solid var(--line-soft);
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    transition:
+      transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1),
+      border-color 0.3s;
+  }
+  .valor-card:hover {
+    transform: translateY(-3px);
+    border-color: var(--gold-soft);
+  }
+  .valor-roman {
+    font-family: 'Forum', serif;
+    font-size: 32px;
+    color: var(--gold);
+    letter-spacing: 0.05em;
+    margin-bottom: 4px;
+  }
+  .valor-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 26px;
+    font-weight: 300;
+    color: var(--ink);
+    margin: 0;
+  }
+  .valor-body {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 16px;
+    line-height: 1.6;
+    color: var(--ink-soft);
+    margin: 0;
+  }
+
+  /* ============================
+     Visión 2030 — lista con flechas
+     ============================ */
+  .vision-list {
+    list-style: none;
+    margin: 32px 0 48px;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+  }
+  .vision-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    padding: 20px 0;
+    border-bottom: 1px solid var(--line-soft);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px;
+    line-height: 1.55;
+    color: var(--ink);
+  }
+  .vision-item:last-child {
+    border-bottom: 1px solid var(--line-soft);
+  }
+  .vision-arrow {
+    color: var(--gold);
+    font-family: 'Forum', serif;
+    font-size: 22px;
+    line-height: 1;
+    margin-top: 2px;
+    flex-shrink: 0;
+  }
+  .vision-cta {
+    text-align: center;
+    margin-top: 24px;
+  }
+  .historia-btn {
+    display: inline-flex;
+  }
+
+  /* ============================
+     Responsive
+     ============================ */
+  @media (max-width: 980px) {
+    .institutional-hero {
+      padding: 130px 24px 60px;
+    }
+    .historia-section {
+      padding: 70px 24px;
+    }
+    .historia-grid {
+      grid-template-columns: 1fr;
+      gap: 40px;
+    }
+    .portrait-frame {
+      aspect-ratio: 1;
+      max-width: 360px;
+      margin: 0 auto;
+    }
+    .valores-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 20px;
+    }
+    .pullquote {
+      margin-top: 60px;
+      padding: 40px 16px 0;
+    }
+  }
+  @media (max-width: 600px) {
+    .institutional-hero {
+      padding: 110px 18px 50px;
+    }
+    .institutional-lede {
+      font-size: 17px;
+    }
+    .historia-section {
+      padding: 60px 18px;
+    }
+    .historia-paragraph {
+      font-size: 17px;
+    }
+    .valores-grid {
+      grid-template-columns: 1fr;
+    }
+    .vision-item {
+      font-size: 16px;
+    }
+  }
+</style>

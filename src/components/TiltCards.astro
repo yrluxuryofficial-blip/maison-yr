@@ -1,0 +1,57 @@
+---
+import data from '../data/tilt-cards.json';
+---
+
+<section>
+  <div class="section-head reveal">
+    <div class="section-prefix">
+      <span class="dash"></span><span>{data.head.prefix}</span><span class="dash"></span>
+    </div>
+    <h2 class="section-title" set:html={data.head.title} />
+    <p class="section-sub">{data.head.sub}</p>
+  </div>
+  <div class="universes-tilt">
+    {
+      data.cards.map((card, i) => (
+        <div
+          class={`tilt-card ${card.cssClass} reveal${i > 0 ? ` reveal-d${i}` : ''}`}
+          data-tilt
+          data-interactive
+        >
+          <div class="bg" />
+          <div class="shine" />
+          <div class="top-row">
+            <span class="roman">{card.roman}</span>
+            <span class="badge">{card.badge}</span>
+          </div>
+          <div class="label">
+            <div class="small">{card.category}</div>
+            <div class="name" set:html={card.name} />
+            <div class="desc">{card.description}</div>
+          </div>
+        </div>
+      ))
+    }
+  </div>
+</section>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-tilt]').forEach((card) => {
+    card.addEventListener('mousemove', (e) => {
+      const evt = e as MouseEvent;
+      const rect = card.getBoundingClientRect();
+      const x = evt.clientX - rect.left;
+      const y = evt.clientY - rect.top;
+      const cx = rect.width / 2;
+      const cy = rect.height / 2;
+      const rx = ((y - cy) / cy) * -8;
+      const ry = ((x - cx) / cx) * 8;
+      card.style.transform = `perspective(1500px) rotateX(${rx}deg) rotateY(${ry}deg) translateZ(0)`;
+      card.style.setProperty('--mx', `${(x / rect.width) * 100}%`);
+      card.style.setProperty('--my', `${(y / rect.height) * 100}%`);
+    });
+    card.addEventListener('mouseleave', () => {
+      card.style.transform = 'perspective(1500px) rotateX(0) rotateY(0)';
+    });
+  });
+</script>

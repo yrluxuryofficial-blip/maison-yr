@@ -1,0 +1,33 @@
+{
+  "image": "/img/yr_parfum_green.jpg",
+  "alt": "YR Eau de Parfum",
+  "frames": [
+    {
+      "prefix": "Parfum N° I · Capítulo I",
+      "h2": "El comienzo<br>de una <em>firma</em>.",
+      "body": "Una fragancia creada en Grasse, capital mundial del perfume. Cada gota es un equilibrio entre tradición francesa y energía latina.",
+      "meta": [
+        { "value": "100", "label": "ml · 3.4 fl oz" },
+        { "value": "Grasse", "label": "Origen del aceite" }
+      ]
+    },
+    {
+      "prefix": "Parfum N° I · Capítulo II",
+      "h2": "Una <em>pirámide</em><br>olfativa.",
+      "body": "\"Tu esencia. Tu poder. Tu momento.\" Tres capas que se revelan en el tiempo — la primera impresión, el corazón, y la huella que dejas al irte.",
+      "meta": [
+        { "value": "3", "label": "Capas de notas" },
+        { "value": "12h+", "label": "Persistencia" }
+      ]
+    },
+    {
+      "prefix": "Parfum N° I · Capítulo III",
+      "h2": "Una manera<br>de <em>habitar</em>.",
+      "body": "El frasco viene en una caja de terciopelo verde esmeralda, con certificado de autenticidad y una guía de uso firmada por la fondatrice.",
+      "meta": [
+        { "value": "$129", "label": "USD" },
+        { "value": "Edición", "label": "Numerada" }
+      ]
+    }
+  ]
+}

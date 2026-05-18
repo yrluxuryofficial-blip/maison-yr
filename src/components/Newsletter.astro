@@ -1,0 +1,71 @@
+---
+import footer from '../data/footer.json';
+
+const endpoint = import.meta.env.PUBLIC_FORM_ENDPOINT ?? '';
+const ns = footer.newsletter;
+---
+
+<section class="newsletter" id="newsletter">
+  <h2 class="reveal" set:html={ns.h2} />
+  <p class="reveal reveal-d1">{ns.intro}</p>
+  <form class="reveal reveal-d2" id="newsletterForm" data-endpoint={endpoint}>
+    <label class="hp-field" aria-hidden="true">
+      Si sos humano, no llenes este campo:
+      <input type="text" name="website" tabindex="-1" autocomplete="off" />
+    </label>
+    <input
+      type="email"
+      name="email"
+      placeholder={ns.placeholder}
+      required
+      aria-label="Correo electrónico"
+    />
+    <button type="submit" data-interactive>{ns.submit}</button>
+  </form>
+  <p class="newsletter-success reveal" id="newsletterSuccess">{ns.success}</p>
+  <p class="newsletter-error reveal" id="newsletterError">{ns.unconfigured}</p>
+</section>
+
+<script>
+  const form = document.getElementById('newsletterForm') as HTMLFormElement | null;
+  const successMsg = document.getElementById('newsletterSuccess');
+  const errorMsg = document.getElementById('newsletterError');
+
+  if (form && successMsg && errorMsg) {
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const endpoint = form.dataset.endpoint ?? '';
+      const formData = new FormData(form);
+
+      // Honeypot: si el campo "website" está lleno, descartamos en cliente (y Apps Script también).
+      if ((formData.get('website') as string)?.trim()) {
+        form.reset();
+        return;
+      }
+
+      // Si no hay endpoint configurado: mensaje de fallback.
+      if (!endpoint) {
+        errorMsg.classList.add('visible');
+        setTimeout(() => errorMsg.classList.remove('visible'), 5000);
+        return;
+      }
+
+      try {
+        const body = new URLSearchParams();
+        formData.forEach((value, key) => body.append(key, String(value)));
+
+        await fetch(endpoint, {
+          method: 'POST',
+          body,
+        });
+
+        form.reset();
+        successMsg.classList.add('visible');
+        setTimeout(() => successMsg.classList.remove('visible'), 4000);
+      } catch {
+        errorMsg.classList.add('visible');
+        setTimeout(() => errorMsg.classList.remove('visible'), 5000);
+      }
+    });
+  }
+</script>

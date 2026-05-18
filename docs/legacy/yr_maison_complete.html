@@ -1,0 +1,2703 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>YR — Maison</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Forum&family=Tenor+Sans&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400;1,500&family=Manrope:wght@200;300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --black: #050302;
+    --black-2: #0A0807;
+    --black-3: #0F0B08;
+    --emerald-deep: #06241C;
+    --emerald: #0E4434;
+    --emerald-mid: #14563F;
+    --emerald-glow: #1F7456;
+    --gold: #D4B266;
+    --gold-bright: #E8C988;
+    --gold-soft: #A88B4E;
+    --ink: #F4EAD4;
+    --ink-soft: #C8BC9F;
+    --ink-mute: #8A7E66;
+    --line: rgba(212,178,102,0.18);
+    --line-soft: rgba(212,178,102,0.08);
+    --gloss: #E6C49B;
+    --gloss-deep: #A87445;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior:smooth; }
+  body {
+    background: var(--black);
+    color: var(--ink);
+    font-family: 'Manrope', sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+  /* Custom cursor activates only after click */
+  body.atelier-mode { cursor: none; }
+  body.atelier-mode a, body.atelier-mode button { cursor: none; }
+
+  body::before {
+    content:'';
+    position:fixed; inset:0;
+    pointer-events:none;
+    z-index: 1000;
+    opacity: 0.045;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  /* CUSTOM CURSOR (hidden until atelier mode) */
+  .cursor-dot, .cursor-ring {
+    position: fixed; top: 0; left: 0;
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    transition: opacity .5s, width .3s, height .3s;
+    will-change: transform;
+    mix-blend-mode: difference;
+  }
+  body.atelier-mode .cursor-dot,
+  body.atelier-mode .cursor-ring { opacity: 1; }
+  .cursor-dot {
+    width: 6px; height: 6px;
+    background: var(--gold);
+    border-radius: 50%;
+    box-shadow: 0 0 12px var(--gold-bright);
+  }
+  .cursor-ring {
+    width: 40px; height: 40px;
+    border: 1px solid var(--gold);
+    border-radius: 50%;
+    transition: width .3s, height .3s, opacity .5s;
+  }
+  .cursor-ring.expand { width: 80px; height: 80px; border-color: var(--gold-bright); }
+
+  /* Scroll progress bar */
+  .scroll-progress {
+    position:fixed; top:0; left:0; right:0;
+    height: 2px; background: rgba(212,178,102,0.1);
+    z-index: 200;
+  }
+  .scroll-progress-bar {
+    height: 100%; width: 0%;
+    background: linear-gradient(90deg, var(--gold), var(--gold-bright));
+    transition: width .1s linear;
+    box-shadow: 0 0 10px var(--gold);
+  }
+
+  /* Side navigation indicator */
+  .side-nav {
+    position: fixed;
+    right: 32px; top: 50%;
+    transform: translateY(-50%);
+    z-index: 90;
+    display:flex; flex-direction:column; gap: 18px;
+    opacity: 0;
+    transition: opacity .6s;
+  }
+  .side-nav.visible { opacity: 1; }
+  .side-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    border: 1px solid var(--gold-soft);
+    background: transparent;
+    cursor: pointer;
+    transition: all .3s;
+    position:relative;
+    display: block;
+  }
+  .side-dot.active { background: var(--gold); border-color: var(--gold); box-shadow: 0 0 12px var(--gold); }
+  .side-dot::before {
+    content: attr(data-label);
+    position:absolute; right: 18px; top: 50%; transform: translateY(-50%);
+    color: var(--gold); font-family: 'Manrope', sans-serif;
+    font-size: 9px; letter-spacing: 0.3em; text-transform: uppercase;
+    white-space: nowrap;
+    opacity: 0; transition: opacity .3s;
+    pointer-events: none;
+  }
+  .side-dot:hover::before, .side-dot.active::before { opacity: 1; }
+
+  .forum { font-family:'Forum', serif; letter-spacing: 0.06em; }
+  .tenor { font-family:'Tenor Sans', serif; }
+  .mono { font-family:'Manrope',sans-serif; font-weight: 400; letter-spacing: 0.32em; text-transform: uppercase; font-size: 10px; }
+
+  /* NAV */
+  nav {
+    position:fixed; top:0; left:0; right:0; z-index:100;
+    padding: 22px 56px;
+    background: rgba(5,3,2,0.7);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--line-soft);
+    display:flex; align-items:center; justify-content:space-between;
+  }
+  .logo-wrap { display:flex; align-items:center; gap: 14px; }
+  .logo-emblem {
+    width: 42px; height: 42px; border-radius: 50%;
+    background: radial-gradient(circle at 30% 30%, var(--emerald) 0%, var(--emerald-deep) 70%);
+    border: 1.5px solid var(--gold);
+    display:flex; align-items:center; justify-content:center;
+    position:relative;
+    box-shadow: 0 0 14px rgba(212,178,102,0.3);
+    transition: transform .6s cubic-bezier(.2,.8,.2,1);
+  }
+  .logo-wrap:hover .logo-emblem { transform: rotate(360deg); }
+  .logo-emblem::before {
+    content:''; position:absolute; top: 2px; left:50%; transform:translateX(-50%);
+    width: 3px; height: 3px; border-radius: 50%; background: var(--gold);
+  }
+  .logo-emblem span { font-family:'Forum', serif; font-size: 18px; color: var(--gold); }
+  .logo-text { font-family:'Forum', serif; font-size: 22px; letter-spacing: 0.24em; color: var(--ink); }
+  .nav-center { display:flex; gap: 36px; }
+  .nav-center a {
+    color: var(--ink-soft); text-decoration:none;
+    font-family:'Manrope',sans-serif; font-size: 11px;
+    letter-spacing: 0.28em; text-transform: uppercase; font-weight: 400;
+    transition: color .3s;
+  }
+  .nav-center a:hover { color: var(--gold); }
+  .nav-right { display:flex; gap: 22px; align-items:center; }
+  .nav-right a {
+    color: var(--ink-soft); text-decoration:none;
+    font-family:'Manrope',sans-serif; font-size: 10px;
+    letter-spacing: 0.3em; text-transform: uppercase; font-weight: 400;
+  }
+  .cart-icon { position:relative; display:flex; align-items:center; gap: 8px; }
+  .cart-badge {
+    background: var(--gold); color: var(--black);
+    font-family:'Manrope',sans-serif; font-size: 9px; font-weight: 600;
+    min-width: 18px; height: 18px; padding: 0 5px;
+    border-radius: 100px;
+    display:flex; align-items:center; justify-content:center;
+    transition: transform .3s cubic-bezier(.5,2,.5,1);
+    letter-spacing: 0;
+  }
+  .cart-badge.bump { transform: scale(1.5); }
+
+  /* =========================================
+     HERO — INMERSIVA STYLE (parallax layers)
+     ========================================= */
+  .hero {
+    height: 100vh;
+    position:relative;
+    overflow:hidden;
+    background: var(--black);
+  }
+  .hero-layer {
+    position:absolute; inset:0;
+    will-change: transform;
+  }
+  .layer-1 {
+    background:
+      radial-gradient(ellipse at 30% 30%, rgba(14,68,52,0.4) 0%, transparent 50%),
+      radial-gradient(ellipse at 70% 70%, rgba(212,178,102,0.15) 0%, transparent 50%),
+      linear-gradient(180deg, var(--black) 0%, var(--emerald-deep) 100%);
+  }
+  .layer-2 {
+    display:flex; align-items:center; justify-content:center;
+  }
+  .layer-2 .big-yr {
+    font-family:'Forum', serif;
+    font-size: clamp(280px, 50vw, 720px);
+    color: rgba(212,178,102,0.06);
+    line-height: 0.9;
+    letter-spacing: 0.04em;
+    user-select: none;
+  }
+  .layer-3 {
+    display:flex; flex-direction: column; align-items:center; justify-content:center;
+    padding: 0 56px;
+    text-align:center;
+  }
+  .hero-prefix {
+    margin-bottom: 48px;
+    display:inline-flex; align-items:center; gap: 20px;
+    color: var(--gold);
+    font-family:'Manrope',sans-serif; font-size: 10px;
+    letter-spacing: 0.5em; text-transform: uppercase;
+  }
+  .hero-prefix .line { width: 50px; height: 1px; background: var(--gold); }
+
+  .hero h1 {
+    font-family:'Cormorant Garamond', serif;
+    font-size: clamp(64px, 9vw, 152px);
+    line-height: 0.95; font-weight: 300;
+    letter-spacing: -0.015em;
+    margin-bottom: 40px;
+    color: var(--ink);
+    max-width: 1200px;
+  }
+  .hero h1 em {
+    font-family:'Forum', serif; font-style: normal;
+    color: var(--gold);
+    text-shadow: 0 0 30px rgba(212,178,102,0.4);
+  }
+  .hero-sub {
+    font-family:'Cormorant Garamond', serif;
+    font-style: italic; font-size: 22px;
+    line-height: 1.7; color: var(--ink-soft);
+    max-width: 600px; margin: 0 auto 56px;
+  }
+  .hero-sub em { color: var(--gold); }
+
+  .btn-row { display:flex; gap: 24px; justify-content:center; align-items:center; flex-wrap:wrap; }
+  .btn {
+    display:inline-flex; align-items:center; gap: 14px;
+    padding: 20px 40px;
+    background: var(--gold);
+    color: var(--black);
+    text-decoration:none; border:none;
+    font-family:'Manrope',sans-serif;
+    font-size: 11px; letter-spacing: 0.32em;
+    text-transform: uppercase; font-weight: 500;
+    border: 1px solid var(--gold);
+    transition: background .4s, color .4s, transform .3s ease;
+    will-change: transform;
+    position:relative;
+  }
+  .btn:hover { background: transparent; color: var(--gold); }
+  .btn-ghost {
+    color: var(--ink); text-decoration:none;
+    font-family:'Manrope',sans-serif;
+    font-size: 11px; letter-spacing: 0.32em;
+    text-transform: uppercase; font-weight: 400;
+    padding: 20px 0;
+    border-bottom: 1px solid var(--gold-soft);
+    transition: color .3s, border-color .3s;
+  }
+  .btn-ghost:hover { color: var(--gold); border-color: var(--gold); }
+
+  .scroll-prompt {
+    position:absolute; bottom: 40px; left:50%;
+    transform: translateX(-50%);
+    display:flex; flex-direction: column; align-items:center; gap: 14px;
+    color: var(--gold-soft);
+    font-family:'Manrope',sans-serif;
+    font-size: 9px; letter-spacing: 0.5em;
+    text-transform: uppercase;
+    z-index: 5;
+  }
+  .scroll-prompt::after {
+    content:''; width: 1px; height: 50px;
+    background: linear-gradient(180deg, var(--gold), transparent);
+    animation: drop 2.5s ease-in-out infinite;
+  }
+  @keyframes drop {
+    0% { transform: scaleY(0); transform-origin: top; opacity: 0; }
+    50% { transform: scaleY(1); transform-origin: top; opacity: 1; }
+    100% { transform: scaleY(1); transform-origin: bottom; opacity: 0; }
+  }
+
+  /* =========================================
+     PINNED PERFUME (Inmersiva) — bottle rotates with scroll
+     ========================================= */
+  .pinned-section {
+    position:relative;
+    height: 300vh;
+  }
+  .pinned-inner {
+    position: sticky; top: 0;
+    height: 100vh;
+    overflow: hidden;
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    background: radial-gradient(ellipse at 50% 50%, var(--emerald-deep) 0%, var(--black) 80%);
+  }
+  .pin-bottle-stage {
+    position:relative;
+    display:flex; align-items:center; justify-content:center;
+    perspective: 1500px;
+  }
+  .pin-bottle-stage::before {
+    content:'';
+    position:absolute;
+    width: 90%; height: 90%;
+    left: 5%; top: 5%;
+    background: radial-gradient(ellipse at 50% 30%, rgba(212,178,102,0.18), transparent 60%);
+  }
+  .pin-bottle {
+    width: 55%; aspect-ratio: 3/4;
+    position: relative;
+    transform-style: preserve-3d;
+    will-change: transform;
+    transition: transform .15s linear;
+    filter: drop-shadow(0 60px 80px rgba(0,0,0,0.7)) drop-shadow(0 0 80px rgba(31,116,86,0.25));
+  }
+  .pin-bottle-img {
+    width: 100%; height: 100%;
+    object-fit: contain;
+    display: block;
+  }
+  .bottle-face {
+    width: 100%; height: 100%;
+    background:
+      linear-gradient(90deg, rgba(0,0,0,0.5), transparent 30%, transparent 70%, rgba(0,0,0,0.5)),
+      linear-gradient(180deg, var(--emerald) 0%, var(--emerald-deep) 100%);
+    border-radius: 6px 6px 16px 16px;
+    box-shadow:
+      0 80px 120px rgba(0,0,0,0.7),
+      inset 2px 0 5px rgba(212,178,102,0.15),
+      inset -2px 0 5px rgba(0,0,0,0.5);
+    position:relative;
+  }
+  .bottle-cap {
+    position:absolute;
+    top: -16%; left: 26%; right: 26%; height: 18%;
+    background: linear-gradient(180deg, var(--black) 0%, var(--black-3) 100%);
+    border-radius: 3px;
+  }
+  .bottle-cap::after {
+    content:''; position:absolute; bottom: -3px; left:0; right:0;
+    height: 2px; background: var(--gold); box-shadow: 0 0 10px var(--gold-bright);
+  }
+  .bottle-emblem {
+    position:absolute;
+    top: 38%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 62%; aspect-ratio: 1;
+    border-radius: 50%;
+    background: radial-gradient(circle at 30% 30%, var(--emerald) 0%, var(--emerald-deep) 70%);
+    border: 2px solid var(--gold);
+    display:flex; align-items:center; justify-content:center;
+    box-shadow:
+      0 0 24px rgba(212,178,102,0.4),
+      inset 0 0 16px rgba(212,178,102,0.15);
+  }
+  .bottle-emblem::before {
+    content:''; position:absolute; top: 3px; left:50%; transform:translateX(-50%);
+    width: 5px; height: 5px; background: var(--gold);
+    border-radius: 50%; box-shadow: 0 0 6px var(--gold-bright);
+  }
+  .bottle-emblem span {
+    font-family:'Forum', serif; font-size: clamp(20px, 2.5vw, 36px);
+    color: var(--gold); letter-spacing: 0.06em;
+    text-shadow: 0 0 8px rgba(212,178,102,0.5);
+  }
+  .bottle-shine {
+    position:absolute;
+    left: 12%; top: 5%; bottom: 30%; width: 7%;
+    background: linear-gradient(180deg, rgba(255,255,255,0.18), transparent);
+    border-radius: 4px;
+  }
+
+  .pin-text-stage {
+    display:flex; align-items:center;
+    padding: 0 80px;
+    position:relative;
+  }
+  .pin-frame {
+    position:absolute;
+    top: 50%; left: 80px; right: 80px;
+    transform: translateY(-50%);
+    opacity: 0;
+    transition: opacity .5s ease;
+  }
+  .pin-frame.visible { opacity: 1; }
+  .pin-frame .section-prefix {
+    display:inline-flex; align-items:center; gap: 14px;
+    color: var(--gold); margin-bottom: 28px;
+    font-family:'Manrope',sans-serif; font-size: 10px;
+    letter-spacing: 0.5em; text-transform: uppercase;
+  }
+  .pin-frame .section-prefix .dash { width: 30px; height: 1px; background: var(--gold); }
+  .pin-frame h2 {
+    font-family:'Cormorant Garamond', serif;
+    font-size: clamp(44px, 5vw, 80px);
+    line-height: 0.98; font-weight: 300;
+    margin-bottom: 32px;
+  }
+  .pin-frame h2 em { font-family:'Forum', serif; font-style: normal; color: var(--gold); }
+  .pin-frame p {
+    font-family:'Cormorant Garamond', serif;
+    font-style: italic; font-size: 19px;
+    line-height: 1.7; color: var(--ink-soft);
+    max-width: 480px; margin-bottom: 40px;
+  }
+  .pin-frame .meta {
+    display:flex; gap: 36px; padding-top: 24px;
+    border-top: 1px solid var(--line-soft);
+    max-width: 480px;
+  }
+  .pin-frame .meta div {
+    font-family:'Manrope',sans-serif; font-size: 10px;
+    letter-spacing: 0.3em; text-transform: uppercase; color: var(--ink-soft);
+  }
+  .pin-frame .meta div strong {
+    display:block; font-family:'Forum', serif;
+    font-weight: 400; color: var(--gold);
+    font-size: 22px; letter-spacing: 0.04em;
+    margin-bottom: 6px; text-transform: none;
+  }
+  .frame-indicator {
+    position:absolute; top: 40px; right: 80px;
+    display:flex; gap: 6px;
+    z-index: 3;
+  }
+  .frame-dot {
+    width: 24px; height: 2px;
+    background: rgba(212,178,102,0.2);
+    transition: background .3s;
+  }
+  .frame-dot.active { background: var(--gold); }
+
+  /* =========================================
+     HORIZONTAL SCROLL UNIVERSES (Inmersiva)
+     ========================================= */
+  .horizontal-section {
+    position:relative;
+    height: 400vh;
+  }
+  .horizontal-pin {
+    position:sticky; top:0;
+    height: 100vh;
+    overflow:hidden;
+    background: var(--black-2);
+  }
+  .horizontal-track {
+    display:flex;
+    height: 100%;
+    will-change: transform;
+  }
+  .h-slide {
+    flex: 0 0 100vw;
+    height: 100%;
+    padding: 0 56px;
+    display:flex;
+    align-items: center;
+    position:relative;
+  }
+  .h-slide-inner {
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+    max-width: 1500px;
+    margin: 0 auto;
+    width: 100%;
+  }
+  .h-visual {
+    aspect-ratio: 3/4;
+    position:relative;
+    overflow:hidden;
+    border: 1px solid var(--line-soft);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+  .h-visual::after {
+    content:'';
+    position:absolute; inset:0;
+    background: linear-gradient(180deg, rgba(5,3,2,0) 40%, rgba(5,3,2,0.85) 100%);
+  }
+  .hs-1 .h-visual {
+    background-image: url('images/yr_lingerie_colors.jpg');
+    background-position: left center;
+  }
+  .hs-2 .h-visual {
+    background-image: url('images/yr_men_logo.jpg');
+    background-position: center;
+  }
+  .hs-3 .h-visual {
+    background-image: url('images/yr_parfum_green.jpg');
+    background-position: center;
+    background-color: var(--black);
+    background-size: contain;
+  }
+  .hs-4 .h-visual {
+    background-image: url('images/yr_golden_kiss.jpg');
+    background-position: center;
+    background-size: contain;
+    background-color: #2A1C0E;
+  }
+  .h-visual .frame-top {
+    position:absolute; top: 32px; left: 32px;
+    color: var(--gold);
+    font-family:'Forum',serif; font-size: 13px;
+    letter-spacing: 0.4em; text-transform: uppercase;
+    z-index: 2;
+  }
+  .h-visual .frame-roman {
+    position:absolute; top: 32px; right: 32px;
+    font-family:'Forum',serif; font-size: 20px;
+    color: var(--gold); z-index: 2;
+  }
+  .h-visual .frame-bottom {
+    position:absolute; bottom: 36px; left: 36px; right: 36px; z-index: 2;
+  }
+  .h-visual .frame-bottom .name {
+    font-family:'Cormorant Garamond', serif;
+    font-size: 36px; color: var(--ink);
+    font-weight: 300; line-height: 1; margin-bottom: 10px;
+  }
+  .h-visual .frame-bottom .name em { font-family:'Forum', serif; font-style: normal; color: var(--gold); }
+
+  .h-text { padding: 0 24px; }
+  .h-text .roman {
+    font-family:'Forum',serif; font-size: 16px;
+    color: var(--gold); letter-spacing: 0.2em;
+    margin-bottom: 20px;
+  }
+  .h-text h3 {
+    font-family:'Cormorant Garamond', serif;
+    font-size: clamp(48px, 5vw, 80px); font-weight: 300;
+    line-height: 0.96; margin-bottom: 28px;
+  }
+  .h-text h3 em { font-family:'Forum', serif; font-style: normal; color: var(--gold); }
+  .h-text p {
+    font-family:'Cormorant Garamond', serif;
+    font-style: italic; font-size: 19px;
+    line-height: 1.7; color: var(--ink-soft);
+    margin-bottom: 40px; max-width: 440px;
+  }
+  .h-text .feature-list { display:flex; flex-direction:column; gap: 16px; margin-bottom: 40px; max-width: 440px; }
+  .h-text .feature-list li {
+    list-style: none;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--line-soft);
+    display:flex; justify-content:space-between;
+    font-family:'Manrope', sans-serif; font-size: 12px;
+    letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+  .h-text .feature-list li strong {
+    color: var(--gold); font-weight: 400;
+    font-family:'Cormorant Garamond', serif;
+    font-style: italic; font-size: 16px; letter-spacing: 0;
+    text-transform: none;
+  }
+  .h-progress {
+    position:absolute; bottom: 32px; left:50%;
+    transform: translateX(-50%);
+    display:flex; align-items:center; gap: 12px;
+    z-index: 5;
+    background: rgba(5,3,2,0.7);
+    padding: 12px 24px;
+    border-radius: 100px;
+    border: 1px solid var(--line-soft);
+  }
+  .h-progress .label {
+    font-family:'Manrope', sans-serif; font-size: 10px;
+    letter-spacing: 0.3em; text-transform: uppercase; color: var(--ink-soft);
+  }
+  .h-progress .track {
+    width: 120px; height: 1px;
+    background: rgba(212,178,102,0.2);
+    position:relative;
+  }
+  .h-progress .fill {
+    position:absolute; top:0; left:0; height: 100%;
+    background: var(--gold);
+    width: 0%;
+    transition: width .15s linear;
+    box-shadow: 0 0 6px var(--gold);
+  }
+  .h-progress .count {
+    font-family:'Forum', serif; font-size: 14px;
+    color: var(--gold);
+  }
+
+  /* =========================================
+     ATELIER REVEAL — activates on interactive mode
+     ========================================= */
+  .atelier-intro {
+    padding: 200px 56px;
+    background: var(--black);
+    position:relative;
+    overflow:hidden;
+    text-align:center;
+  }
+  .atelier-spotlight {
+    position:absolute;
+    width: 700px; height: 700px;
+    background: radial-gradient(circle, rgba(212,178,102,0.15) 0%, rgba(31,116,86,0.06) 35%, transparent 65%);
+    border-radius: 50%;
+    pointer-events:none;
+    left: 50%; top: 50%;
+    transform: translate(-50%, -50%);
+    transition: transform .3s ease-out;
+    will-change: transform;
+    filter: blur(10px);
+    opacity: 0;
+  }
+  body.atelier-mode .atelier-spotlight { opacity: 1; }
+  .atelier-intro > .inner { position:relative; z-index: 2; max-width: 1100px; margin: 0 auto; }
+  .atelier-intro .section-prefix {
+    display:inline-flex; align-items:center; gap: 14px;
+    color: var(--gold); margin-bottom: 32px;
+    font-family:'Manrope',sans-serif; font-size: 10px;
+    letter-spacing: 0.5em; text-transform: uppercase;
+  }
+  .atelier-intro .section-prefix .dash { width: 30px; height: 1px; background: var(--gold); }
+  .atelier-intro h2 {
+    font-family:'Cormorant Garamond', serif;
+    font-size: clamp(48px, 7vw, 104px);
+    line-height: 0.98; font-weight: 300;
+    color: var(--ink); margin-bottom: 32px;
+  }
+  .atelier-intro h2 em { font-family:'Forum', serif; font-style: normal; color: var(--gold); }
+  .atelier-intro p {
+    font-family:'Cormorant Garamond', serif;
+    font-style: italic; font-size: 21px;
+    color: var(--ink-soft); max-width: 640px;
+    margin: 0 auto; line-height: 1.7;
+  }
+
+  /* STATS COUNTERS */
+  .stats {
+    padding: 80px 56px;
+    border-top: 1px solid var(--line-soft);
+    border-bottom: 1px solid var(--line-soft);
+    background: var(--black-2);
+  }
+  .stats-grid {
+    display:grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 60px;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+  .stat { text-align:center; }
+  .stat .num {
+    font-family:'Cormorant Garamond', serif;
+    font-size: clamp(48px, 5vw, 80px);
+    font-weight: 300;
+    color: var(--gold);
+    line-height: 1; margin-bottom: 16px;
+  }
+  .stat .num em { font-family:'Forum', serif; font-style: normal; }
+  .stat .label {
+    font-family:'Manrope', sans-serif;
+    font-size: 11px; letter-spacing: 0.3em;
+    text-transform: uppercase; color: var(--ink-soft);
+    font-weight: 300;
+  }
+  .reveal { opacity: 0; transform: translateY(30px); transition: opacity 1s, transform 1s; }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+  .reveal-d1 { transition-delay: .15s; }
+  .reveal-d2 { transition-delay: .3s; }
+  .reveal-d3 { transition-delay: .45s; }
+
+  /* TILT CARDS (Atelier) */
+  section { padding: 140px 56px; position:relative; }
+  .section-head { text-align:center; margin-bottom: 80px; max-width: 1200px; margin-left:auto; margin-right:auto; }
+  .section-prefix {
+    display:inline-flex; align-items:center; gap: 14px;
+    color: var(--gold); margin-bottom: 28px;
+    font-family:'Manrope',sans-serif; font-size: 10px;
+    letter-spacing: 0.5em; text-transform: uppercase;
+  }
+  .section-prefix .dash { width: 30px; height: 1px; background: var(--gold); }
+  .section-title {
+    font-family:'Cormorant Garamond', serif;
+    font-size: clamp(48px, 7vw, 104px);
+    line-height: 0.98;
+    font-weight: 300;
+    color: var(--ink);
+  }
+  .section-title em {
+    font-family:'Forum', serif; font-style: normal;
+    color: var(--gold);
+  }
+  .section-sub {
+    font-family:'Cormorant Garamond', serif;
+    font-style: italic; font-size: 19px;
+    color: var(--ink-soft); max-width: 600px;
+    margin: 24px auto 0; line-height: 1.6;
+  }
+
+  .universes-tilt {
+    display:grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 28px;
+    max-width: 1500px;
+    margin: 0 auto;
+    perspective: 1500px;
+  }
+  .tilt-card {
+    position:relative;
+    aspect-ratio: 3/4.2;
+    overflow:hidden;
+    border-radius: 4px;
+    border: 1px solid var(--line-soft);
+    transform-style: preserve-3d;
+    transition: transform .15s ease-out, box-shadow .4s;
+    will-change: transform;
+  }
+  .tilt-card:hover { box-shadow: 0 60px 100px -30px rgba(212,178,102,0.15); }
+  .tilt-card .bg { position:absolute; inset:0; transform: translateZ(0); }
+  .tilt-card::after {
+    content:'';
+    position:absolute; inset:0;
+    background: linear-gradient(180deg, transparent 40%, rgba(5,3,2,0.92) 100%);
+    z-index: 1;
+  }
+  .tilt-card .shine {
+    position:absolute; inset:0;
+    background: radial-gradient(circle at var(--mx, 50%) var(--my, 50%), rgba(212,178,102,0.15), transparent 40%);
+    opacity: 0;
+    transition: opacity .3s;
+    z-index: 2;
+    pointer-events: none;
+  }
+  .tilt-card:hover .shine { opacity: 1; }
+  .tc-1 .bg {
+    background-image: url('images/yr_lingerie_colors.jpg');
+    background-size: cover;
+    background-position: 18% center;
+  }
+  .tc-2 .bg {
+    background-image: url('images/yr_men_collection.jpg');
+    background-size: cover;
+    background-position: center 20%;
+  }
+  .tc-3 .bg {
+    background-image: url('images/yr_golden_kiss.jpg');
+    background-size: cover;
+    background-position: center;
+    background-color: #2A1C0E;
+  }
+  .tilt-card .top-row {
+    position:absolute; top: 28px; left: 32px; right: 32px;
+    display:flex; justify-content:space-between; align-items:center;
+    z-index: 3; transform: translateZ(40px);
+  }
+  .tilt-card .roman { font-family:'Forum',serif; font-size: 14px; color: var(--gold); letter-spacing: 0.1em; }
+  .tilt-card .badge {
+    font-family:'Manrope',sans-serif; font-size: 9px;
+    letter-spacing: 0.3em; text-transform: uppercase;
+    color: var(--ink-soft);
+    padding: 6px 12px;
+    border: 1px solid var(--line); border-radius: 100px;
+  }
+  .tilt-card .label {
+    position:absolute; bottom: 32px; left: 32px; right: 32px;
+    z-index: 3; transform: translateZ(50px);
+  }
+  .tilt-card .small {
+    font-family:'Forum', serif;
+    font-size: 12px; letter-spacing: 0.4em;
+    color: var(--gold); text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+  .tilt-card .name {
+    font-family:'Cormorant Garamond', serif;
+    font-size: 36px; color: var(--ink); font-weight: 300;
+    line-height: 1; margin-bottom: 12px;
+  }
+  .tilt-card .name em { font-family:'Forum', serif; font-style: normal; color: var(--gold); }
+  .tilt-card .desc {
+    font-family:'Cormorant Garamond', serif;
+    font-style: italic; font-size: 15px;
+    color: var(--ink-soft); line-height: 1.5; max-width: 90%;
+  }
+
+  /* =========================================
+     CONFIGURATOR sections
+     ========================================= */
+  /* LIPGLOSS */
+  .lipgloss-section {
+    background: var(--black-2);
+    position:relative; overflow:hidden;
+  }
+  .lipgloss-section::before {
+    content:''; position:absolute;
+    width: 700px; height: 700px;
+    right: -200px; top: 20%;
+    background: radial-gradient(circle, rgba(212,178,102,0.1), transparent 60%);
+  }
+  .lipgloss-inner {
+    max-width: 1400px; margin: 0 auto;
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+    position:relative; z-index: 2;
+  }
+  .lipgloss-preview {
+    aspect-ratio: 1;
+    background:
+      radial-gradient(ellipse at 50% 40%, rgba(212,178,102,0.12), transparent 60%),
+      linear-gradient(160deg, var(--black-3) 0%, var(--black) 100%);
+    border: 1px solid var(--line-soft);
+    position:relative; overflow:hidden;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .lip-shape {
+    width: 95%; height: 90%;
+    position:relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    filter: drop-shadow(0 30px 60px rgba(0,0,0,0.6));
+  }
+  .lipgloss-product-img {
+    width: 100%; height: 100%;
+    object-fit: contain;
+    display: block;
+  }
+  .shade-overlay {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 50% 50%, var(--gloss) 0%, transparent 35%);
+    mix-blend-mode: overlay;
+    opacity: 0;
+    transition: opacity .6s, background .6s;
+    pointer-events: none;
+  }
+  .shade-overlay.active { opacity: 0.35; }
+  .lip-shape svg { width: 100%; height: 100%; overflow: visible; }
+  .lip-shape .lip-fill { fill: var(--gloss); transition: fill .6s cubic-bezier(.2,.8,.2,1); }
+  .lip-shape .lip-shine { fill: rgba(255,255,255,0.55); }
+  .lip-shape .lip-deep { fill: var(--gloss); opacity: 0.5; transition: fill .6s; filter: brightness(0.55); }
+  .lip-shape .lip-highlight-strong { fill: rgba(255,255,255,0.85); }
+  .lipgloss-preview .preview-label {
+    position:absolute; bottom: 32px; left: 32px; right: 32px;
+    text-align:center;
+  }
+  .lipgloss-preview .preview-label .name {
+    font-family:'Cormorant Garamond', serif;
+    font-style: italic; font-size: 28px;
+    color: var(--gold); margin-bottom: 8px;
+  }
+  .lipgloss-preview .preview-label .desc {
+    font-family:'Manrope', sans-serif;
+    font-size: 10px; letter-spacing: 0.4em;
+    text-transform: uppercase; color: var(--ink-soft);
+  }
+  .lipgloss-preview .tube {
+    position:absolute; top: 32px; left: 32px;
+    width: 36px; height: 80px;
+    background: linear-gradient(180deg, rgba(212,178,102,0.4), rgba(212,178,102,0.1));
+    border-radius: 4px;
+    border: 1px solid var(--gold);
+    overflow: hidden;
+  }
+  .lipgloss-preview .tube::before {
+    content:'';
+    position:absolute; bottom: 0; left: 0; right: 0;
+    height: 70%;
+    background: var(--gloss);
+    transition: background .6s;
+  }
+
+  .config-text .roman {
+    font-family:'Forum', serif; font-size: 14px;
+    color: var(--gold); letter-spacing: 0.3em; margin-bottom: 20px;
+  }
+  .config-text h2 {
+    font-family:'Cormorant Garamond', serif;
+    font-size: clamp(44px, 4.5vw, 72px);
+    line-height: 1; font-weight: 300; margin-bottom: 28px;
+  }
+  .config-text h2 em {
+    font-family:'Forum', serif; font-style: normal;
+    color: var(--gold);
+  }
+  .config-text .description {
+    font-family:'Cormorant Garamond', serif;
+    font-style: italic; font-size: 18px;
+    line-height: 1.7; color: var(--ink-soft);
+    margin-bottom: 40px; max-width: 480px;
+  }
+  .shade-section-label {
+    font-family:'Manrope', sans-serif; font-size: 10px;
+    letter-spacing: 0.4em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 20px;
+    display:flex; justify-content:space-between; align-items: center;
+  }
+  .shade-current {
+    font-family:'Cormorant Garamond', serif;
+    font-style: italic; color: var(--ink);
+    font-size: 16px; letter-spacing: 0; text-transform: none;
+  }
+  .shades-row {
+    display:grid; grid-template-columns: repeat(6, 1fr);
+    gap: 12px; margin-bottom: 40px;
+  }
+  .shade {
+    aspect-ratio: 1;
+    border-radius: 50%;
+    cursor:pointer; position:relative;
+    border: 2px solid transparent;
+    transition: border-color .3s, transform .3s;
+    box-shadow:
+      inset 0 -8px 12px rgba(0,0,0,0.3),
+      0 4px 12px rgba(0,0,0,0.4);
+  }
+  .shade::before {
+    content:'';
+    position:absolute; top: 15%; left: 25%;
+    width: 30%; height: 25%;
+    background: rgba(255,255,255,0.3);
+    border-radius: 50%; filter: blur(3px);
+  }
+  .shade:hover { transform: scale(1.1); }
+  .shade.active { border-color: var(--gold); transform: scale(1.1); box-shadow: 0 0 16px var(--gold), inset 0 -8px 12px rgba(0,0,0,0.3); }
+
+  .quantity-row {
+    display:flex; justify-content:space-between; align-items: center;
+    padding: 20px 0;
+    border-top: 1px solid var(--line-soft);
+    border-bottom: 1px solid var(--line-soft);
+    margin-bottom: 32px;
+  }
+  .quantity-label {
+    font-family:'Manrope', sans-serif; font-size: 10px;
+    letter-spacing: 0.4em; text-transform: uppercase; color: var(--gold);
+  }
+  .quantity-controls { display:flex; align-items:center; gap: 16px; }
+  .qty-btn {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    background: transparent;
+    border: 1px solid var(--gold-soft);
+    color: var(--gold);
+    font-family:'Forum', serif; font-size: 18px;
+    transition: all .3s;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .qty-btn:hover { background: var(--gold); color: var(--black); }
+  .qty-display {
+    font-family:'Forum', serif; font-size: 22px;
+    color: var(--ink); min-width: 30px; text-align:center;
+  }
+  .price-action {
+    display:flex; justify-content:space-between; align-items:center; gap: 24px;
+  }
+  .price-total {
+    font-family:'Forum', serif; font-size: 36px;
+    color: var(--gold);
+  }
+  .price-total em { font-family:'Cormorant Garamond', serif; font-style: italic; font-size: 0.6em; margin-left: 8px; }
+
+  /* LINGERIE CONFIG */
+  .lingerie-section {
+    background: var(--black);
+    position:relative; overflow:hidden;
+  }
+  .lingerie-section::before {
+    content:''; position:absolute;
+    width: 800px; height: 800px;
+    left: -250px; bottom: -200px;
+    background: radial-gradient(circle, rgba(14,68,52,0.25), transparent 60%);
+  }
+  .lingerie-inner {
+    max-width: 1400px; margin: 0 auto;
+    display:grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 100px;
+    align-items: center;
+    position:relative; z-index: 2;
+  }
+  .lingerie-preview {
+    aspect-ratio: 4/5;
+    position:relative; overflow:hidden;
+    border: 1px solid var(--line-soft);
+    transition: background-position .8s cubic-bezier(.2,.8,.2,1), background-color .8s;
+  }
+  .lingerie-preview[data-color="noir"] {
+    background-image: url('images/yr_lingerie_colors.jpg');
+    background-size: 300% 70%;
+    background-position: 0% top;
+    background-repeat: no-repeat;
+    background-color: #050302;
+  }
+  .lingerie-preview[data-color="chocolat"] {
+    background-image: url('images/yr_lingerie_colors.jpg');
+    background-size: 300% 70%;
+    background-position: 50% top;
+    background-repeat: no-repeat;
+    background-color: #1F140A;
+  }
+  .lingerie-preview[data-color="blanc"] {
+    background-image: url('images/yr_lingerie_colors.jpg');
+    background-size: 300% 70%;
+    background-position: 100% top;
+    background-repeat: no-repeat;
+    background-color: #C8BC9F;
+  }
+  .lingerie-preview .silhouette {
+    position:absolute;
+    left:50%; bottom: 0;
+    transform: translateX(-50%);
+    width: 75%; height: 95%;
+    background:
+      radial-gradient(ellipse at 50% 20%, rgba(212,178,102,0.18) 0%, transparent 40%),
+      radial-gradient(ellipse at 50% 60%, rgba(0,0,0,0.3) 0%, transparent 50%);
+    filter: blur(50px);
+  }
+  .lingerie-preview .lace {
+    position:absolute; inset:0;
+    background-image:
+      radial-gradient(circle at 25% 30%, rgba(212,178,102,0.06) 1px, transparent 2px),
+      radial-gradient(circle at 75% 50%, rgba(212,178,102,0.06) 1px, transparent 2px),
+      radial-gradient(circle at 50% 80%, rgba(212,178,102,0.06) 1px, transparent 2px);
+    background-size: 50px 50px;
+    opacity: 0.7;
+  }
+  .lingerie-preview::after {
+    content:'';
+    position:absolute; inset:0;
+    background: linear-gradient(180deg, transparent 60%, rgba(5,3,2,0.7) 100%);
+  }
+  .lingerie-preview .frame-top {
+    position:absolute; top: 32px; left: 32px;
+    color: var(--gold);
+    font-family:'Forum', serif; font-size: 12px;
+    letter-spacing: 0.4em; text-transform: uppercase;
+    z-index: 2;
+  }
+  .lingerie-preview .frame-roman {
+    position:absolute; top: 32px; right: 32px;
+    font-family:'Forum', serif; font-size: 18px;
+    color: var(--gold); z-index: 2;
+  }
+  .lingerie-preview .frame-bottom {
+    position:absolute; bottom: 36px; left: 36px; right: 36px;
+    z-index: 2;
+  }
+  .lingerie-preview .frame-bottom .name {
+    font-family:'Cormorant Garamond', serif; font-size: 38px;
+    color: var(--ink); font-weight: 300;
+    line-height: 1; margin-bottom: 10px;
+  }
+  .lingerie-preview .frame-bottom .name em {
+    font-family:'Forum', serif; font-style: normal; color: var(--gold);
+  }
+  .lingerie-preview .frame-bottom .quote {
+    font-family:'Cormorant Garamond', serif;
+    font-style: italic; font-size: 16px;
+    color: var(--ink-soft);
+  }
+  .config-block { margin-bottom: 32px; }
+  .config-label {
+    display:flex; justify-content: space-between; align-items: center;
+    margin-bottom: 18px;
+  }
+  .config-label .label-text {
+    font-family:'Manrope', sans-serif; font-size: 10px;
+    letter-spacing: 0.4em; text-transform: uppercase; color: var(--gold);
+  }
+  .config-label .label-value {
+    font-family:'Cormorant Garamond', serif; font-style: italic;
+    font-size: 16px; color: var(--ink);
+  }
+  .colorway-options {
+    display:grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px;
+  }
+  .colorway-opt {
+    padding: 14px 12px;
+    background: transparent;
+    border: 1px solid var(--line-soft);
+    transition: all .3s;
+    display:flex; flex-direction: column; align-items:center; gap: 12px;
+    font-family:'Manrope', sans-serif;
+  }
+  .colorway-opt:hover { border-color: var(--gold-soft); }
+  .colorway-opt.active { border-color: var(--gold); background: rgba(212,178,102,0.06); }
+  .colorway-opt .swatch {
+    width: 36px; height: 36px; border-radius: 50%;
+    border: 1px solid var(--line);
+  }
+  .colorway-opt[data-color="noir"] .swatch { background: linear-gradient(135deg, #1A1108, #050302); }
+  .colorway-opt[data-color="chocolat"] .swatch { background: linear-gradient(135deg, #6B4A35, #2A1A0F); }
+  .colorway-opt[data-color="blanc"] .swatch { background: linear-gradient(135deg, #F4EAD4, #C8BC9F); }
+  .colorway-opt .opt-name {
+    font-family:'Cormorant Garamond', serif; font-style: italic;
+    font-size: 15px; color: var(--ink);
+  }
+  .size-options {
+    display:grid; grid-template-columns: repeat(5, 1fr); gap: 10px;
+  }
+  .size-opt {
+    padding: 12px;
+    background: transparent;
+    border: 1px solid var(--line-soft);
+    color: var(--ink-soft);
+    transition: all .3s;
+    font-family:'Forum', serif;
+    font-size: 13px; letter-spacing: 0.2em;
+    text-align:center;
+  }
+  .size-opt:hover { border-color: var(--gold-soft); color: var(--ink); }
+  .size-opt.active { border-color: var(--gold); background: var(--gold); color: var(--black); }
+
+  /* PERFUME with rotating bottle + notes accordion */
+  .parfum-section {
+    padding: 160px 56px;
+    background: radial-gradient(ellipse at 50% 50%, var(--emerald-deep) 0%, var(--black) 80%);
+    position:relative; overflow:hidden;
+  }
+  .parfum-section::before {
+    content:''; position:absolute;
+    width: 1400px; height: 800px;
+    left:50%; top: 0; transform: translateX(-50%);
+    background: radial-gradient(ellipse at 50% 0%, rgba(212,178,102,0.15), transparent 60%);
+    pointer-events:none;
+  }
+  .parfum-inner {
+    max-width: 1400px; margin: 0 auto;
+    display:grid;
+    grid-template-columns: 1fr 1.1fr;
+    gap: 100px; align-items: center;
+    position:relative; z-index: 2;
+  }
+  .parfum-visual {
+    aspect-ratio: 4/5;
+    position:relative;
+    overflow: hidden;
+    background:
+      radial-gradient(ellipse at 50% 30%, rgba(212,178,102,0.15), transparent 60%),
+      radial-gradient(ellipse at 50% 70%, rgba(31,116,86,0.15), transparent 60%);
+    border: 1px solid var(--line-soft);
+    perspective: 1500px;
+  }
+  .parfum-bottle {
+    position:absolute;
+    left:50%; top:50%;
+    transform:translate(-50%,-50%);
+    width: 80%; aspect-ratio: 4/5;
+    transform-style: preserve-3d;
+    will-change: transform;
+    transition: transform .15s linear;
+    filter: drop-shadow(0 40px 60px rgba(0,0,0,0.55));
+  }
+  .parfum-bottle-img {
+    width: 100%; height: 100%;
+    object-fit: contain;
+    display: block;
+  }
+  .parfum-text .roman {
+    font-family:'Forum', serif; font-size: 14px;
+    color: var(--gold); letter-spacing: 0.3em; margin-bottom: 20px;
+  }
+  .parfum-text h2 {
+    font-family:'Cormorant Garamond', serif;
+    font-size: clamp(48px, 5vw, 84px);
+    line-height: 0.98; font-weight: 300; margin-bottom: 32px;
+  }
+  .parfum-text h2 em { font-family:'Forum', serif; font-style: normal; color: var(--gold); }
+  .parfum-text .intro {
+    font-family:'Cormorant Garamond', serif;
+    font-style: italic; font-size: 19px;
+    line-height: 1.7; color: var(--ink-soft);
+    margin-bottom: 48px; max-width: 520px;
+  }
+  .parfum-text .intro em { color: var(--gold); }
+  .pyramid { margin-bottom: 48px; max-width: 540px; }
+  .note-accordion {
+    border-bottom: 1px solid var(--line-soft);
+  }
+  .note-accordion:first-child { border-top: 1px solid var(--line-soft); }
+  .note-head {
+    padding: 24px 0;
+    display:flex; justify-content:space-between; align-items: center;
+    transition: all .3s;
+  }
+  .note-accordion:hover .note-head { padding-left: 8px; }
+  .note-accordion .note-label {
+    font-family:'Manrope', sans-serif; font-size: 10px;
+    letter-spacing: 0.4em; text-transform: uppercase; color: var(--gold);
+  }
+  .note-accordion .note-summary {
+    font-family:'Cormorant Garamond', serif;
+    font-style: italic; font-size: 19px; color: var(--ink);
+  }
+  .note-accordion .note-icon {
+    width: 28px; height: 28px;
+    border: 1px solid var(--gold-soft);
+    border-radius: 50%;
+    display:flex; align-items:center; justify-content:center;
+    color: var(--gold);
+    transition: transform .4s, background .3s, color .3s;
+    font-family:'Forum', serif; font-size: 16px;
+  }
+  .note-accordion.open .note-icon { transform: rotate(45deg); background: var(--gold); color: var(--black); }
+  .note-body {
+    max-height: 0; overflow: hidden;
+    transition: max-height .5s ease, padding .3s;
+  }
+  .note-accordion.open .note-body { max-height: 200px; padding-bottom: 24px; }
+  .note-detail {
+    font-family:'Cormorant Garamond', serif;
+    font-style: italic; font-size: 16px;
+    line-height: 1.7; color: var(--ink-soft);
+    max-width: 480px; padding-left: 8px;
+    border-left: 1px solid var(--gold-soft);
+    margin-left: 8px;
+  }
+
+  /* PHILOSOPHY */
+  .philosophy {
+    padding: 200px 56px;
+    text-align: center;
+    background: var(--black-2);
+    border-top: 1px solid var(--line-soft);
+    border-bottom: 1px solid var(--line-soft);
+    position:relative; overflow:hidden;
+  }
+  .philosophy::before {
+    content:''; position:absolute;
+    width: 1200px; height: 600px;
+    left:50%; top:50%; transform:translate(-50%,-50%);
+    background: radial-gradient(ellipse, rgba(14,68,52,0.2), transparent 60%);
+  }
+  .philosophy > * { position:relative; z-index: 2; }
+  .philosophy .mono { color: var(--gold); margin-bottom: 48px; }
+  .philosophy h2 {
+    font-family:'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: clamp(40px, 5.5vw, 76px);
+    line-height: 1.15; font-weight: 300; max-width: 1100px;
+    margin: 0 auto; color: var(--ink);
+  }
+  .philosophy h2 strong {
+    font-family:'Forum', serif; font-style: normal;
+    color: var(--gold); font-weight: 400;
+  }
+  .philosophy .signature {
+    margin-top: 64px;
+    font-family:'Forum', serif; font-size: 13px;
+    letter-spacing: 0.5em; text-transform: uppercase; color: var(--gold);
+  }
+
+  /* NEWSLETTER */
+  .newsletter { padding: 140px 56px; text-align:center; background: var(--black); }
+  .newsletter h2 {
+    font-family:'Cormorant Garamond', serif;
+    font-size: clamp(44px, 5vw, 72px); margin-bottom: 24px;
+    font-weight: 300;
+  }
+  .newsletter h2 em { font-family:'Forum', serif; font-style: normal; color: var(--gold); }
+  .newsletter p {
+    font-family:'Cormorant Garamond', serif; font-style: italic;
+    color: var(--ink-soft); margin-bottom: 56px;
+    font-size: 18px; max-width: 560px;
+    margin-left:auto; margin-right:auto; line-height: 1.7;
+  }
+  .newsletter form {
+    display:flex; max-width: 560px; margin: 0 auto;
+    border-bottom: 1px solid var(--gold); padding-bottom: 8px;
+  }
+  .newsletter input {
+    flex:1; background:transparent; border:none; outline:none;
+    padding: 16px 0;
+    font-family:'Cormorant Garamond', serif; font-style: italic;
+    font-size: 18px; color: var(--ink);
+  }
+  .newsletter input::placeholder { color: var(--ink-mute); }
+  .newsletter button {
+    background:transparent; border:none;
+    font-family:'Forum',serif; font-size: 12px;
+    letter-spacing: 0.4em; text-transform:uppercase;
+    color: var(--gold); padding: 16px 0;
+  }
+  .newsletter-success {
+    margin-top: 28px;
+    font-family:'Forum', serif;
+    font-size: 13px; letter-spacing: 0.5em;
+    text-transform: uppercase; color: var(--gold);
+    opacity: 0; max-height: 0;
+    transition: opacity .6s, max-height .6s;
+    overflow: hidden;
+  }
+  .newsletter-success.visible {
+    opacity: 1; max-height: 60px;
+  }
+
+  /* FOOTER */
+  footer { padding: 100px 56px 36px; background: var(--black-2); border-top: 1px solid var(--line-soft); }
+  .footer-grid {
+    display:grid; grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 80px; margin-bottom: 80px;
+    max-width: 1500px; margin-left:auto; margin-right:auto;
+  }
+  .footer-brand { display:flex; flex-direction: column; gap: 24px; }
+  .footer-tag {
+    font-family:'Cormorant Garamond', serif; font-style:italic;
+    font-size: 17px; color: var(--ink-soft);
+    max-width: 320px; line-height: 1.6;
+  }
+  .footer-col h4 {
+    font-family:'Forum',serif; font-size: 13px;
+    letter-spacing: 0.4em; text-transform: uppercase;
+    margin-bottom: 28px; color: var(--gold);
+  }
+  .footer-col a {
+    display:block; color: var(--ink-soft); text-decoration:none;
+    font-family:'Cormorant Garamond', serif; font-size: 16px;
+    margin-bottom: 12px; transition: color .3s;
+  }
+  .footer-col a:hover { color: var(--gold); }
+  .footer-bottom {
+    border-top: 1px solid var(--line-soft); padding-top: 32px;
+    display:flex; justify-content:space-between; align-items:center;
+    font-family:'Manrope',sans-serif; font-size: 11px;
+    letter-spacing: 0.3em; color: var(--ink-mute);
+    text-transform: uppercase;
+    max-width: 1500px; margin: 0 auto;
+  }
+
+  /* WHATSAPP FLOATING BUTTON */
+  .whatsapp-float {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 62px;
+    height: 62px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 150;
+    text-decoration: none;
+    box-shadow:
+      0 12px 28px rgba(37, 211, 102, 0.45),
+      0 4px 8px rgba(0,0,0,0.2);
+    transition: transform .4s cubic-bezier(.2,.8,.2,1);
+    animation: wa-pulse 2.5s ease-out infinite;
+  }
+  .whatsapp-float:hover {
+    transform: scale(1.1) rotate(-6deg);
+    animation-play-state: paused;
+  }
+  .whatsapp-float svg {
+    width: 32px;
+    height: 32px;
+    fill: white;
+    filter: drop-shadow(0 1px 2px rgba(0,0,0,0.2));
+  }
+  .whatsapp-float .wa-tooltip {
+    position: absolute;
+    right: 75px;
+    top: 50%;
+    transform: translateY(-50%) translateX(20px);
+    background: rgba(5,3,2,0.95);
+    color: var(--ink);
+    padding: 10px 18px;
+    border-radius: 100px;
+    font-family: 'Manrope', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    opacity: 0;
+    transition: all .35s cubic-bezier(.2,.8,.2,1);
+    border: 1px solid var(--gold-soft);
+    pointer-events: none;
+  }
+  .whatsapp-float:hover .wa-tooltip {
+    opacity: 1;
+    transform: translateY(-50%) translateX(0);
+  }
+  @keyframes wa-pulse {
+    0%, 100% {
+      box-shadow:
+        0 12px 28px rgba(37,211,102,0.45),
+        0 0 0 0 rgba(37,211,102,0.6),
+        0 4px 8px rgba(0,0,0,0.2);
+    }
+    70% {
+      box-shadow:
+        0 12px 28px rgba(37,211,102,0.45),
+        0 0 0 22px rgba(37,211,102,0),
+        0 4px 8px rgba(0,0,0,0.2);
+    }
+  }
+
+  /* SOCIAL ICONS in footer */
+  .social-icons {
+    display: flex;
+    gap: 14px;
+    align-items: center;
+  }
+  .social-icons a {
+    width: 38px;
+    height: 38px;
+    border: 1px solid var(--gold-soft);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--gold-soft);
+    text-decoration: none;
+    transition: all .35s cubic-bezier(.2,.8,.2,1);
+  }
+  .social-icons a:hover {
+    color: var(--black);
+    background: var(--gold);
+    border-color: var(--gold);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(212,178,102,0.3);
+  }
+  .social-icons svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  /* MODE-CHANGE INDICATOR (small flash when atelier mode activates) */
+  .mode-flash {
+    position:fixed; inset:0;
+    background: radial-gradient(circle, rgba(212,178,102,0.3) 0%, transparent 60%);
+    z-index: 9998; pointer-events:none;
+    opacity: 0;
+  }
+  .mode-flash.flash {
+    animation: flashFade 1.2s ease-out;
+  }
+  @keyframes flashFade {
+    0% { opacity: 0; }
+    30% { opacity: 1; }
+    100% { opacity: 0; }
+  }
+
+  /* MOBILE MENU TOGGLE (hamburger) */
+  .menu-toggle {
+    display: none;
+    background: transparent;
+    border: none;
+    width: 36px;
+    height: 36px;
+    cursor: pointer;
+    position: relative;
+    z-index: 110;
+    padding: 0;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+  }
+  .menu-toggle span {
+    display: block;
+    width: 22px;
+    height: 1.5px;
+    background: var(--gold);
+    transition: transform .35s cubic-bezier(.2,.8,.2,1), opacity .25s;
+    transform-origin: center;
+  }
+  .menu-toggle.open span:nth-child(1) {
+    transform: translateY(7.5px) rotate(45deg);
+  }
+  .menu-toggle.open span:nth-child(2) {
+    opacity: 0;
+  }
+  .menu-toggle.open span:nth-child(3) {
+    transform: translateY(-7.5px) rotate(-45deg);
+  }
+
+  /* MOBILE MENU PANEL */
+  .mobile-menu {
+    position: fixed;
+    top: 0; right: 0;
+    width: 100%; max-width: 360px;
+    height: 100vh;
+    background: rgba(5,3,2,0.97);
+    backdrop-filter: blur(24px);
+    border-left: 1px solid var(--line-soft);
+    padding: 100px 36px 40px;
+    z-index: 99;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    transform: translateX(100%);
+    transition: transform .45s cubic-bezier(.2,.8,.2,1);
+    overflow-y: auto;
+  }
+  .mobile-menu.open { transform: translateX(0); }
+  .mobile-menu a {
+    display: block;
+    padding: 16px 0;
+    color: var(--ink);
+    text-decoration: none;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-style: italic;
+    letter-spacing: 0.04em;
+    border-bottom: 1px solid var(--line-soft);
+    transition: color .3s, padding-left .3s;
+  }
+  .mobile-menu a:hover, .mobile-menu a:active {
+    color: var(--gold);
+    padding-left: 8px;
+  }
+  .mobile-menu-divider {
+    height: 1px;
+    background: var(--line-soft);
+    margin: 20px 0 8px;
+  }
+  body.menu-open { overflow: hidden; }
+
+  /* =========================================
+     RESPONSIVE — TABLET (max-width: 980px)
+     ========================================= */
+  @media (max-width: 980px) {
+    body.atelier-mode { cursor: auto; }
+    body.atelier-mode a, body.atelier-mode button { cursor: auto; }
+    .cursor-dot, .cursor-ring { display: none; }
+    .side-nav { display: none; }
+
+    nav { padding: 14px 24px; }
+    .nav-center, .nav-right { display: none; }
+    .menu-toggle { display: flex; }
+    .logo-text { font-size: 18px; }
+    .logo-emblem { width: 36px; height: 36px; }
+
+    .hero { height: 100svh; min-height: 580px; }
+    .layer-3 { padding: 0 24px; }
+    .hero-prefix { font-size: 8px; gap: 12px; margin-bottom: 32px; }
+    .hero-prefix .line { width: 28px; }
+    .hero h1 { margin-bottom: 28px; }
+    .hero-sub { font-size: 18px; margin-bottom: 40px; padding: 0 8px; }
+    .btn-row { gap: 16px; }
+    .btn { padding: 16px 28px; font-size: 10px; letter-spacing: 0.28em; }
+    .btn-ghost { padding: 14px 0; font-size: 10px; }
+    .scroll-prompt { bottom: 24px; font-size: 8px; }
+    .scroll-prompt::after { height: 36px; }
+    .layer-2 .big-yr { font-size: clamp(220px, 60vw, 480px); }
+
+    .pinned-section { height: auto; }
+    .pinned-inner { position: static; height: auto; grid-template-columns: 1fr; padding: 60px 24px; }
+    .pin-bottle-stage { aspect-ratio: 3/4; height: auto; padding: 40px 0; }
+    .pin-bottle { width: 70%; }
+    .pin-text-stage { padding: 40px 0 20px; min-height: auto; }
+    .pin-frame { position: relative; top: auto; left: auto; right: auto; transform: none; opacity: 1; margin-bottom: 40px; }
+    .pin-frame:not(:first-child) { display: none; }
+    .frame-indicator { display: none; }
+    .pin-frame p { font-size: 17px; }
+    .pin-frame .meta { gap: 24px; flex-wrap: wrap; }
+
+    .horizontal-section { height: auto; }
+    .horizontal-pin { position: static; height: auto; }
+    .horizontal-track { flex-direction: column; transform: none !important; }
+    .h-slide { flex: none; width: 100%; padding: 60px 24px; height: auto; }
+    .h-slide-inner { grid-template-columns: 1fr; gap: 40px; }
+    .h-text { padding: 0; }
+    .h-text p { font-size: 17px; }
+    .h-progress { display: none; }
+
+    section, .parfum-section, .newsletter, .philosophy, .atelier-intro, .lipgloss-section, .lingerie-section { padding: 80px 24px; }
+    .atelier-intro { padding: 100px 24px; }
+    .philosophy { padding: 120px 24px; }
+    .section-head { margin-bottom: 50px; }
+    .section-sub, .atelier-intro p { font-size: 17px; }
+
+    .stats { padding: 60px 24px; }
+    .stats-grid { grid-template-columns: 1fr 1fr; gap: 40px; }
+
+    .universes-tilt { grid-template-columns: 1fr; max-width: 480px; }
+    .tilt-card { aspect-ratio: 4/4.5; }
+    .tilt-card .name { font-size: 32px; }
+
+    .lipgloss-inner, .lingerie-inner, .parfum-inner { grid-template-columns: 1fr; gap: 50px; }
+    .shades-row { grid-template-columns: repeat(3, 1fr); gap: 14px; }
+    .shade { max-width: 70px; margin: 0 auto; width: 100%; }
+    .lipgloss-preview .tube { display: none; }
+    .config-text h2, .parfum-text h2 { font-size: clamp(38px, 8vw, 56px); }
+    .config-text .description, .parfum-text .intro { font-size: 17px; }
+    .price-action { flex-direction: column; align-items: flex-start; gap: 20px; }
+    .price-action .btn { width: 100%; justify-content: center; }
+    .price-total { font-size: 32px; }
+
+    .colorway-opt { padding: 10px 6px; gap: 8px; }
+    .colorway-opt .swatch { width: 30px; height: 30px; }
+    .colorway-opt .opt-name { font-size: 13px; }
+
+    .parfum-section { padding: 100px 24px; }
+    .parfum-bottle { width: 70%; }
+    .note-head { padding: 18px 0; flex-wrap: wrap; gap: 8px; }
+    .note-accordion .note-summary { font-size: 17px; flex: 1; }
+
+    .newsletter form { flex-direction: column; gap: 8px; border-bottom: none; }
+    .newsletter input { text-align: center; border-bottom: 1px solid var(--gold); padding: 14px 0; }
+    .newsletter button { padding: 14px 0; border: 1px solid var(--gold); margin-top: 12px; }
+    .newsletter button:hover { background: var(--gold); color: var(--black); }
+
+    .footer-grid { grid-template-columns: 1fr 1fr; gap: 40px 32px; margin-bottom: 50px; }
+    .footer-brand { grid-column: 1 / -1; }
+    footer { padding: 60px 24px 36px; }
+    .footer-bottom { flex-direction: column; gap: 18px; text-align: center; font-size: 10px; }
+
+    .whatsapp-float { bottom: 20px; right: 20px; width: 54px; height: 54px; }
+    .whatsapp-float svg { width: 26px; height: 26px; }
+    .whatsapp-float .wa-tooltip { display: none; }
+    .social-icons { justify-content: center; }
+  }
+
+  /* =========================================
+     RESPONSIVE — MOBILE (max-width: 600px)
+     ========================================= */
+  @media (max-width: 600px) {
+    nav { padding: 12px 18px; }
+    .logo-text { font-size: 16px; letter-spacing: 0.2em; }
+    .logo-emblem { width: 32px; height: 32px; }
+    .logo-emblem span { font-size: 14px; }
+
+    .hero h1 { font-size: clamp(48px, 13vw, 80px); margin-bottom: 24px; }
+    .hero-sub { font-size: 16px; line-height: 1.6; margin-bottom: 36px; }
+    .btn-row { flex-direction: column; width: 100%; gap: 16px; }
+    .btn, .btn-ghost { width: 100%; max-width: 320px; justify-content: center; text-align: center; }
+
+    section, .parfum-section, .newsletter, .philosophy, .lipgloss-section, .lingerie-section {
+      padding: 70px 18px;
+    }
+    .atelier-intro { padding: 80px 18px; }
+    .pinned-inner { padding: 50px 18px; }
+    .h-slide { padding: 50px 18px; }
+    .stats { padding: 50px 18px; }
+    .stats-grid { gap: 32px 20px; }
+    .stat .num { font-size: clamp(42px, 11vw, 64px); }
+    .stat .label { font-size: 10px; letter-spacing: 0.24em; }
+
+    .section-title, .atelier-intro h2 { font-size: clamp(40px, 11vw, 64px); }
+    .section-prefix { font-size: 9px; letter-spacing: 0.4em; gap: 10px; margin-bottom: 22px; }
+    .section-prefix .dash { width: 20px; }
+    .section-sub { font-size: 16px; }
+
+    .pin-frame h2, .h-text h3, .config-text h2, .parfum-text h2 {
+      font-size: clamp(36px, 9.5vw, 52px);
+    }
+    .pin-frame p, .h-text p, .config-text .description, .parfum-text .intro {
+      font-size: 16px; line-height: 1.65;
+    }
+
+    .pin-frame .meta div, .h-text .feature-list li {
+      font-size: 9px; letter-spacing: 0.2em;
+    }
+    .pin-frame .meta div strong { font-size: 18px; }
+    .h-text .feature-list li strong { font-size: 14px; }
+    .h-text .feature-list { gap: 8px; }
+    .h-text .feature-list li { padding: 10px 0; flex-wrap: wrap; gap: 6px; }
+
+    .tilt-card .name { font-size: 28px; }
+    .tilt-card .desc { font-size: 14px; }
+    .tilt-card .top-row { top: 22px; left: 22px; right: 22px; }
+    .tilt-card .label { bottom: 24px; left: 22px; right: 22px; }
+    .tilt-card .small { font-size: 10px; letter-spacing: 0.3em; margin-bottom: 10px; }
+
+    .lipgloss-preview, .lingerie-preview, .parfum-visual { aspect-ratio: 1/1; }
+    .parfum-bottle { width: 80%; }
+    .lipgloss-preview .preview-label .name { font-size: 22px; }
+    .lipgloss-preview .preview-label .desc { font-size: 9px; letter-spacing: 0.3em; }
+
+    .lingerie-preview .frame-bottom .name { font-size: 28px; }
+    .lingerie-preview .frame-bottom .quote { font-size: 14px; }
+    .lingerie-preview .frame-top, .h-visual .frame-top { font-size: 10px; letter-spacing: 0.3em; top: 20px; left: 20px; }
+    .lingerie-preview .frame-roman, .h-visual .frame-roman { font-size: 16px; top: 20px; right: 20px; }
+    .lingerie-preview .frame-bottom, .h-visual .frame-bottom { bottom: 22px; left: 22px; right: 22px; }
+    .h-visual .frame-bottom .name { font-size: 28px; }
+
+    .shades-row { grid-template-columns: repeat(3, 1fr); gap: 12px; }
+    .size-options { grid-template-columns: repeat(5, 1fr); gap: 6px; }
+    .size-opt { padding: 10px 4px; font-size: 11px; }
+    .colorway-options { gap: 8px; }
+    .colorway-opt { padding: 10px 4px; }
+    .colorway-opt .opt-name { font-size: 12px; }
+
+    .quantity-row { padding: 16px 0; }
+    .quantity-label, .label-text { font-size: 9px; letter-spacing: 0.3em; }
+    .config-label .label-value { font-size: 14px; }
+    .price-total { font-size: 28px; }
+
+    .philosophy h2 { font-size: clamp(28px, 8vw, 44px); line-height: 1.25; }
+    .philosophy .signature { font-size: 11px; letter-spacing: 0.4em; margin-top: 40px; }
+
+    .newsletter h2 { font-size: clamp(36px, 9vw, 52px); }
+    .newsletter p { font-size: 16px; margin-bottom: 40px; }
+    .newsletter input { font-size: 16px; }
+
+    .footer-grid { grid-template-columns: 1fr; gap: 36px; text-align: center; }
+    .footer-brand { align-items: center; }
+    .footer-tag { text-align: center; }
+    .social-icons { justify-content: center; }
+    footer { padding: 50px 18px 28px; }
+
+    .mobile-menu { padding: 90px 28px 36px; }
+    .mobile-menu a { font-size: 20px; padding: 14px 0; }
+  }
+
+  /* =========================================
+     RESPONSIVE — SMALL MOBILE (max-width: 380px)
+     ========================================= */
+  @media (max-width: 380px) {
+    nav { padding: 10px 14px; }
+    section, .parfum-section, .newsletter, .philosophy, .lipgloss-section, .lingerie-section {
+      padding: 60px 14px;
+    }
+    .pinned-inner { padding: 40px 14px; }
+    .h-slide { padding: 40px 14px; }
+    .stats { padding: 40px 14px; }
+    .stats-grid { gap: 24px 16px; }
+    .footer-tag { font-size: 15px; }
+  }
+
+  /* =========================================
+     RESPONSIVE — LANDSCAPE PHONE
+     ========================================= */
+  @media (max-height: 480px) and (orientation: landscape) {
+    .hero { height: auto; min-height: 100vh; padding: 100px 0; }
+    .layer-3 { position: relative; }
+    .hero h1 { font-size: clamp(36px, 6vw, 56px); margin-bottom: 18px; }
+    .hero-sub { font-size: 14px; margin-bottom: 24px; }
+    .scroll-prompt { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="cursor-dot"></div>
+<div class="cursor-ring"></div>
+<div class="mode-flash" id="modeFlash"></div>
+<div class="scroll-progress"><div class="scroll-progress-bar" id="scrollBar"></div></div>
+
+<div class="side-nav" id="sideNav">
+  <a class="side-dot active" data-label="Inicio" data-target="hero"></a>
+  <a class="side-dot" data-label="Perfume" data-target="pinned"></a>
+  <a class="side-dot" data-label="Universos" data-target="horizontal"></a>
+  <a class="side-dot" data-label="Atelier" data-target="atelier"></a>
+  <a class="side-dot" data-label="Configurador" data-target="configurator"></a>
+  <a class="side-dot" data-label="Manifiesto" data-target="philosophy"></a>
+</div>
+
+<nav>
+  <div class="logo-wrap" data-interactive>
+    <div class="logo-emblem"><span>YR</span></div>
+    <div class="logo-text">MAISON</div>
+  </div>
+  <div class="nav-center">
+    <a href="#" data-interactive>Lencería</a>
+    <a href="#" data-interactive>Hombre</a>
+    <a href="#" data-interactive>Perfume</a>
+    <a href="#" data-interactive>Belleza</a>
+  </div>
+  <div class="nav-right">
+    <a href="#" data-interactive>Buscar</a>
+    <a href="#" data-interactive>Cuenta</a>
+  </div>
+  <button class="menu-toggle" id="menuToggle" aria-label="Menú">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+</nav>
+
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#" data-interactive>Lencería</a>
+  <a href="#" data-interactive>Hombre</a>
+  <a href="#" data-interactive>Perfume</a>
+  <a href="#" data-interactive>Belleza</a>
+  <div class="mobile-menu-divider"></div>
+  <a href="#" data-interactive>Buscar</a>
+  <a href="#" data-interactive>Cuenta</a>
+</div>
+
+<!-- =====================================
+     HERO (Inmersiva style)
+     ===================================== -->
+<section class="hero" id="hero">
+  <div class="hero-layer layer-1" data-parallax="0.2"></div>
+  <div class="hero-layer layer-2" data-parallax="0.5">
+    <div class="big-yr">YR</div>
+  </div>
+  <div class="hero-layer layer-3">
+    <div class="hero-prefix">
+      <span class="line"></span>
+      <span>Maison YR · Anno MMXXVI</span>
+      <span class="line"></span>
+    </div>
+    <h1>Sensualidad <em>en su forma</em><br>más <em>elegante</em>.</h1>
+    <p class="hero-sub">"Más que lencería — <em>una firma</em>. Más que un perfume — <em>una manera</em> de habitar el mundo."</p>
+    <div class="btn-row">
+      <button id="discoverBtn" class="btn" data-interactive data-magnetic>Descubrir la maison →</button>
+      <a href="#" class="btn-ghost" data-interactive>Nuestra historia</a>
+    </div>
+  </div>
+  <div class="scroll-prompt">Scroll</div>
+</section>
+
+<!-- =====================================
+     PINNED PERFUME (Inmersiva - bottle rotates on scroll)
+     ===================================== -->
+<section class="pinned-section" id="pinned">
+  <div class="pinned-inner">
+    <div class="frame-indicator">
+      <div class="frame-dot active" data-frame="0"></div>
+      <div class="frame-dot" data-frame="1"></div>
+      <div class="frame-dot" data-frame="2"></div>
+    </div>
+    <div class="pin-bottle-stage">
+      <div class="pin-bottle" id="pinBottle">
+        <img src="images/yr_parfum_green.jpg" alt="YR Eau de Parfum" class="pin-bottle-img" />
+      </div>
+    </div>
+    <div class="pin-text-stage">
+      <div class="pin-frame visible" data-frame="0">
+        <div class="section-prefix"><span class="dash"></span><span>Parfum N° I · Capítulo I</span></div>
+        <h2>El comienzo<br>de una <em>firma</em>.</h2>
+        <p>Una fragancia creada en Grasse, capital mundial del perfume. Cada gota es un equilibrio entre tradición francesa y energía latina.</p>
+        <div class="meta">
+          <div><strong>100</strong>ml · 3.4 fl oz</div>
+          <div><strong>Grasse</strong>Origen del aceite</div>
+        </div>
+      </div>
+      <div class="pin-frame" data-frame="1">
+        <div class="section-prefix"><span class="dash"></span><span>Parfum N° I · Capítulo II</span></div>
+        <h2>Una <em>pirámide</em><br>olfativa.</h2>
+        <p>"Tu esencia. Tu poder. Tu momento." Tres capas que se revelan en el tiempo — la primera impresión, el corazón, y la huella que dejas al irte.</p>
+        <div class="meta">
+          <div><strong>3</strong>Capas de notas</div>
+          <div><strong>12h+</strong>Persistencia</div>
+        </div>
+      </div>
+      <div class="pin-frame" data-frame="2">
+        <div class="section-prefix"><span class="dash"></span><span>Parfum N° I · Capítulo III</span></div>
+        <h2>Una manera<br>de <em>habitar</em>.</h2>
+        <p>El frasco viene en una caja de terciopelo verde esmeralda, con certificado de autenticidad y una guía de uso firmada por la fondatrice.</p>
+        <div class="meta">
+          <div><strong>$129</strong>USD</div>
+          <div><strong>Edición</strong>Numerada</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =====================================
+     HORIZONTAL UNIVERSES (Inmersiva)
+     ===================================== -->
+<section class="horizontal-section" id="horizontal">
+  <div class="horizontal-pin">
+    <div class="horizontal-track" id="hTrack">
+      <div class="h-slide hs-1">
+        <div class="h-slide-inner">
+          <div class="h-visual">
+            <div class="frame-top">— Universo I</div>
+            <div class="frame-roman">N°I</div>
+            <div class="frame-bottom"><div class="name">Pour <em>Elle</em></div></div>
+          </div>
+          <div class="h-text">
+            <div class="roman">— N° I</div>
+            <h3>Lingerie<br><em>Pour Elle</em>.</h3>
+            <p>Encaje europeo tejido en Calais. Satén de seda. Herrajes dorados con monograma YR grabado a mano.</p>
+            <ul class="feature-list">
+              <li><span>Material</span><strong>Encaje · Satén</strong></li>
+              <li><span>Origen</span><strong>Calais, FR</strong></li>
+              <li><span>Tonos</span><strong>Noir · Marrón · Blanc</strong></li>
+            </ul>
+            <a href="#" class="btn" data-interactive data-magnetic>Explorar →</a>
+          </div>
+        </div>
+      </div>
+      <div class="h-slide hs-2">
+        <div class="h-slide-inner">
+          <div class="h-visual">
+            <div class="frame-top">— Universo II</div>
+            <div class="frame-roman">N°II</div>
+            <div class="frame-bottom"><div class="name">YR <em>Men</em></div></div>
+          </div>
+          <div class="h-text">
+            <div class="roman">— N° II</div>
+            <h3>YR <em>Men</em>.<br>Pour <em>Lui</em>.</h3>
+            <p>"Confidence is your best outfit." Lencería masculina pensada para el detalle — boxer, brief y homewear de lujo.</p>
+            <ul class="feature-list">
+              <li><span>Fit</span><strong>Italian Cut</strong></li>
+              <li><span>Tela</span><strong>Soft Touch Premium</strong></li>
+              <li><span>Packaging</span><strong>Black Velvet Box</strong></li>
+            </ul>
+            <a href="#" class="btn" data-interactive data-magnetic>Explorar →</a>
+          </div>
+        </div>
+      </div>
+      <div class="h-slide hs-3">
+        <div class="h-slide-inner">
+          <div class="h-visual">
+            <div class="frame-top">— Universo III</div>
+            <div class="frame-roman">N°III</div>
+            <div class="frame-bottom"><div class="name">Eau de <em>Parfum</em></div></div>
+          </div>
+          <div class="h-text">
+            <div class="roman">— N° III</div>
+            <h3>Eau de<br><em>Parfum</em>.</h3>
+            <p>Bergamota, rosa, jazmín, vainilla, ámbar, sándalo. Una composición olfativa que se queda en la piel y en la memoria.</p>
+            <ul class="feature-list">
+              <li><span>Volumen</span><strong>100ml · 3.4 fl oz</strong></li>
+              <li><span>Origen</span><strong>Grasse, FR</strong></li>
+              <li><span>Persistencia</span><strong>12 horas+</strong></li>
+            </ul>
+            <a href="#" class="btn" data-interactive data-magnetic>Descubrir →</a>
+          </div>
+        </div>
+      </div>
+      <div class="h-slide hs-4">
+        <div class="h-slide-inner">
+          <div class="h-visual">
+            <div class="frame-top">— Universo IV</div>
+            <div class="frame-roman">N°IV</div>
+            <div class="frame-bottom"><div class="name">Golden <em>Kiss</em></div></div>
+          </div>
+          <div class="h-text">
+            <div class="roman">— N° IV</div>
+            <h3>Golden<br><em>Kiss</em>.</h3>
+            <p>Lipgloss con brillo intenso, fórmula hidratante y aroma irresistible. Seis tonos creados para combinarse contigo.</p>
+            <ul class="feature-list">
+              <li><span>Volumen</span><strong>15ml · 0.44 fl oz</strong></li>
+              <li><span>Tonos</span><strong>6 disponibles</strong></li>
+              <li><span>Garantía</span><strong>Cruelty Free</strong></li>
+            </ul>
+            <a href="#configurator" class="btn" data-interactive data-magnetic>Ver tonos →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="h-progress">
+      <span class="label">Universo</span>
+      <span class="count" id="hCount">N°I</span>
+      <div class="track"><div class="fill" id="hFill"></div></div>
+      <span class="label">de IV</span>
+    </div>
+  </div>
+</section>
+
+<!-- =====================================
+     ATELIER REVEAL (Activates Interactive Mode)
+     ===================================== -->
+<section class="atelier-intro" id="atelier">
+  <div class="atelier-spotlight" id="atelierSpotlight"></div>
+  <div class="inner">
+    <div class="section-prefix"><span class="dash"></span><span>Atelier · Maison YR</span></div>
+    <h2 class="reveal">Bienvenida<br>al <em>atelier</em>.</h2>
+    <p class="reveal reveal-d1">Aquí cada gesto cuenta. <em style="color:var(--gold)">Mueve el cursor</em>, descubre las piezas en 3D, configura tu firma. Una experiencia diseñada para tus sentidos.</p>
+  </div>
+</section>
+
+<section class="stats">
+  <div class="stats-grid">
+    <div class="stat reveal">
+      <div class="num"><span data-count="4">0</span></div>
+      <div class="label">Universos</div>
+    </div>
+    <div class="stat reveal reveal-d1">
+      <div class="num"><span data-count="100">0</span><em>%</em></div>
+      <div class="label">Diseño propio</div>
+    </div>
+    <div class="stat reveal reveal-d2">
+      <div class="num"><span data-count="6">0</span></div>
+      <div class="label">Tonos beauty</div>
+    </div>
+    <div class="stat reveal reveal-d3">
+      <div class="num">∞</div>
+      <div class="label">Posibilidades</div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="section-head reveal">
+    <div class="section-prefix"><span class="dash"></span><span>Las piezas · 3D Interactive</span><span class="dash"></span></div>
+    <h2 class="section-title">Toca, <em>inclina</em>,<br><em>descubre</em>.</h2>
+    <p class="section-sub">Cada tarjeta responde a tu cursor. Pasa el mouse sobre las piezas para ver el detalle desde cada ángulo.</p>
+  </div>
+  <div class="universes-tilt">
+    <div class="tilt-card tc-1 reveal" data-tilt data-interactive>
+      <div class="bg"></div>
+      <div class="shine"></div>
+      <div class="top-row">
+        <span class="roman">— N° I</span>
+        <span class="badge">Bestseller</span>
+      </div>
+      <div class="label">
+        <div class="small">— Lingerie</div>
+        <div class="name">Pour <em>Elle</em></div>
+        <div class="desc">Encaje europeo, satén, herrajes dorados con monograma YR.</div>
+      </div>
+    </div>
+    <div class="tilt-card tc-2 reveal reveal-d1" data-tilt data-interactive>
+      <div class="bg"></div>
+      <div class="shine"></div>
+      <div class="top-row">
+        <span class="roman">— N° II</span>
+        <span class="badge">New</span>
+      </div>
+      <div class="label">
+        <div class="small">— Hombre</div>
+        <div class="name">YR <em>Men</em></div>
+        <div class="desc">Confidence is your best outfit.</div>
+      </div>
+    </div>
+    <div class="tilt-card tc-3 reveal reveal-d2" data-tilt data-interactive>
+      <div class="bg"></div>
+      <div class="shine"></div>
+      <div class="top-row">
+        <span class="roman">— N° III</span>
+        <span class="badge">Signature</span>
+      </div>
+      <div class="label">
+        <div class="small">— Beauty</div>
+        <div class="name">Golden <em>Kiss</em></div>
+        <div class="desc">Lipgloss con brillo intenso. Seis tonos.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =====================================
+     CONFIGURATOR — LIPGLOSS
+     ===================================== -->
+<section class="lipgloss-section" id="configurator">
+  <div class="section-head">
+    <div class="section-prefix"><span class="dash"></span><span>Configurator · N° I</span><span class="dash"></span></div>
+    <h2 class="section-title">Golden <em>Kiss</em>.<br>Encuentra <em>tu tono</em>.</h2>
+    <p class="section-sub">Selecciona un tono y míralo en tiempo real sobre los labios.</p>
+  </div>
+  <div class="lipgloss-inner">
+    <div class="lipgloss-preview">
+      <div class="lip-shape">
+        <img src="images/yr_golden_kiss.jpg" alt="Golden Kiss Lipgloss YR" class="lipgloss-product-img" />
+        <div class="shade-overlay" id="shadeOverlay"></div>
+      </div>
+      <div class="preview-label">
+        <div class="name" id="shadeName">— Golden Kiss</div>
+        <div class="desc">Brillo intenso · Hidratante · Cruelty Free</div>
+      </div>
+    </div>
+    <div class="config-text">
+      <div class="roman">— N° I / 06 TONOS</div>
+      <h2>Tu <em>tono</em>,<br>tu <em>firma</em>.</h2>
+      <p class="description">Cada tono Golden Kiss está formulado con ingredientes nutritivos y aceites esenciales. Brillo glossy que no se va con el agua.</p>
+      <div class="shade-section-label">
+        <span>— Selecciona tu tono</span>
+        <span class="shade-current" id="shadeCurrent">Golden Kiss</span>
+      </div>
+      <div class="shades-row" id="shadesRow">
+        <div class="shade" data-interactive data-shade="crystal" data-name="Crystal Shine" data-color="#F5EEE0" data-color-deep="#C9C0A8" style="background: linear-gradient(135deg, #F5EEE0, #C9C0A8);"></div>
+        <div class="shade" data-interactive data-shade="sugar" data-name="Sugar Glow" data-color="#F0DDC4" data-color-deep="#C9A57C" style="background: linear-gradient(135deg, #F0DDC4, #C9A57C);"></div>
+        <div class="shade" data-interactive data-shade="pink" data-name="Pink Kiss" data-color="#E8B5A8" data-color-deep="#A65D5D" style="background: linear-gradient(135deg, #E8B5A8, #A65D5D);"></div>
+        <div class="shade active" data-interactive data-shade="golden" data-name="Golden Kiss" data-color="#E6C49B" data-color-deep="#A87445" style="background: linear-gradient(135deg, #E6C49B, #A87445);"></div>
+        <div class="shade" data-interactive data-shade="nude" data-name="Nude Desire" data-color="#D4A582" data-color-deep="#8B5E40" style="background: linear-gradient(135deg, #D4A582, #8B5E40);"></div>
+        <div class="shade" data-interactive data-shade="rose" data-name="Rose Diamond" data-color="#C58A8A" data-color-deep="#6E2D44" style="background: linear-gradient(135deg, #C58A8A, #6E2D44);"></div>
+      </div>
+      <div class="quantity-row">
+        <span class="quantity-label">— Cantidad</span>
+        <div class="quantity-controls">
+          <button class="qty-btn" data-interactive data-qty-action="dec">−</button>
+          <span class="qty-display" id="qtyDisplay">1</span>
+          <button class="qty-btn" data-interactive data-qty-action="inc">+</button>
+        </div>
+      </div>
+      <div class="price-action">
+        <div class="price-total">$<span id="lipPrice">32</span><em>USD</em></div>
+        <button class="btn" data-interactive data-magnetic data-add-cart data-name="Golden Kiss · Golden" data-base-price="32" data-qty-source="qtyDisplay">Añadir →</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =====================================
+     CONFIGURATOR — LINGERIE
+     ===================================== -->
+<section class="lingerie-section">
+  <div class="section-head">
+    <div class="section-prefix"><span class="dash"></span><span>Configurator · N° II</span><span class="dash"></span></div>
+    <h2 class="section-title">Lingerie<br><em>Pour Elle</em>.</h2>
+    <p class="section-sub">Configura tu pieza. Cambia el color y míralo en tiempo real.</p>
+  </div>
+  <div class="lingerie-inner">
+    <div class="lingerie-preview" id="lingeriePreview" data-color="noir">
+      <div class="silhouette"></div>
+      <div class="lace"></div>
+      <div class="frame-top">— Pour Elle</div>
+      <div class="frame-roman">N°II</div>
+      <div class="frame-bottom">
+        <div class="name" id="colorName"><em>Noir</em> Profond</div>
+        <div class="quote" id="colorDesc">Encaje negro · Herrajes dorados</div>
+      </div>
+    </div>
+    <div class="config-text">
+      <div class="roman">— N° II / 03 EDITIONS</div>
+      <h2>Tres <em>tonos</em>.<br>Una <em>promesa</em>.</h2>
+      <p class="description">Cada conjunto YR es una conversación íntima entre la prenda y la piel. Diseñado para sentirse antes que para verse.</p>
+      <div class="config-block">
+        <div class="config-label">
+          <span class="label-text">— Color</span>
+          <span class="label-value" id="colorLabel">Noir Profond</span>
+        </div>
+        <div class="colorway-options" id="colorwayOptions">
+          <button class="colorway-opt active" data-interactive data-color="noir" data-name="Noir Profond" data-desc="Encaje negro · Herrajes dorados">
+            <span class="swatch"></span><span class="opt-name">Noir</span>
+          </button>
+          <button class="colorway-opt" data-interactive data-color="chocolat" data-name="Chocolat Doré" data-desc="Cacao cálido · Detalles oro">
+            <span class="swatch"></span><span class="opt-name">Chocolat</span>
+          </button>
+          <button class="colorway-opt" data-interactive data-color="blanc" data-name="Blanc Lumière" data-desc="Marfil suave · Oro mate">
+            <span class="swatch"></span><span class="opt-name">Blanc</span>
+          </button>
+        </div>
+      </div>
+      <div class="config-block">
+        <div class="config-label">
+          <span class="label-text">— Talla</span>
+          <span class="label-value" id="sizeLabel">M</span>
+        </div>
+        <div class="size-options" id="sizeOptions">
+          <button class="size-opt" data-interactive data-size="XS">XS</button>
+          <button class="size-opt" data-interactive data-size="S">S</button>
+          <button class="size-opt active" data-interactive data-size="M">M</button>
+          <button class="size-opt" data-interactive data-size="L">L</button>
+          <button class="size-opt" data-interactive data-size="XL">XL</button>
+        </div>
+      </div>
+      <div class="price-action">
+        <div class="price-total">$<span>189</span><em>USD</em></div>
+        <button class="btn" data-interactive data-magnetic data-add-cart data-name="Pour Elle">Añadir →</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =====================================
+     CONFIGURATOR — PARFUM (3D bottle + notes accordion)
+     ===================================== -->
+<section class="parfum-section">
+  <div class="section-head">
+    <div class="section-prefix"><span class="dash"></span><span>Configurator · N° III</span><span class="dash"></span></div>
+    <h2 class="section-title">Eau de <em>Parfum</em>.<br>Tu <em>firma</em> olfativa.</h2>
+    <p class="section-sub">Mueve el cursor sobre el frasco para verlo en 3D. Haz click en cada nota para explorar.</p>
+  </div>
+  <div class="parfum-inner">
+    <div class="parfum-visual" id="parfumStage">
+      <div class="parfum-bottle" id="parfumBottle">
+        <img src="images/yr_parfum_pink.jpg" alt="YR Eau de Parfum Pour Elle" class="parfum-bottle-img" />
+      </div>
+    </div>
+    <div class="parfum-text">
+      <div class="roman">— N° III / Pour Elle</div>
+      <h2>Una <em>pirámide</em><br>olfativa.</h2>
+      <p class="intro">Tres capas que se revelan en el tiempo — la primera impresión, el corazón, y la huella que dejas al irte. <em>Haz click en cada nota para explorar</em>.</p>
+      <div class="pyramid">
+        <div class="note-accordion" data-interactive>
+          <div class="note-head">
+            <span class="note-label">— Notas de salida</span>
+            <span class="note-summary">Bergamota · Pera</span>
+            <span class="note-icon">+</span>
+          </div>
+          <div class="note-body">
+            <p class="note-detail">La primera impresión — fresca y cítrica. Bergamota italiana y pera nashi crean una apertura luminosa que dura los primeros 30 minutos sobre la piel.</p>
+          </div>
+        </div>
+        <div class="note-accordion" data-interactive>
+          <div class="note-head">
+            <span class="note-label">— Notas de corazón</span>
+            <span class="note-summary">Rosa · Jazmín · Peonía</span>
+            <span class="note-icon">+</span>
+          </div>
+          <div class="note-body">
+            <p class="note-detail">El alma de la fragancia. Rosa de Damasco, jazmín de Grasse y peonía blanca componen un bouquet floral profundo, sensual y persistente.</p>
+          </div>
+        </div>
+        <div class="note-accordion" data-interactive>
+          <div class="note-head">
+            <span class="note-label">— Notas de fondo</span>
+            <span class="note-summary">Vainilla · Ámbar · Sándalo</span>
+            <span class="note-icon">+</span>
+          </div>
+          <div class="note-body">
+            <p class="note-detail">La huella. Vainilla bourbon, ámbar resinoso y madera de sándalo — la base cálida y envolvente que permanece en la piel durante más de 12 horas.</p>
+          </div>
+        </div>
+      </div>
+      <div class="price-action">
+        <div class="price-total">$<span>129</span><em>USD</em></div>
+        <button class="btn" data-interactive data-magnetic data-add-cart data-name="Eau de Parfum">Añadir →</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="philosophy" id="philosophy">
+  <div class="mono">— Manifeste · Maison YR</div>
+  <h2 class="reveal">"La sensualidad no se grita.<br>Se <strong>habita</strong>, se viste,<br>se respira como una firma."</h2>
+  <div class="signature reveal reveal-d2">— Yesenia Rodríguez · Fondatrice</div>
+</section>
+
+<section class="newsletter">
+  <h2 class="reveal">Únete al <em>Cercle</em> YR.</h2>
+  <p class="reveal reveal-d1">Accede primero a colecciones cápsula, ediciones limitadas y eventos privados de la maison.</p>
+  <form class="reveal reveal-d2" id="newsletterForm">
+    <input type="email" placeholder="tu correo electrónico" required>
+    <button type="submit" data-interactive>Unirse →</button>
+  </form>
+  <p class="newsletter-success reveal" id="newsletterSuccess">— Bienvenida al Cercle YR ✦</p>
+</section>
+
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <div class="logo-wrap">
+        <div class="logo-emblem"><span>YR</span></div>
+        <div class="logo-text" style="font-size:30px;">MAISON</div>
+      </div>
+      <div class="footer-tag">"Sensualidad en su forma más elegante." Maison de lujo nacida en Medellín, con vocación internacional.</div>
+    </div>
+    <div class="footer-col">
+      <h4>Tienda</h4>
+      <a href="#" data-interactive>Lencería</a>
+      <a href="#" data-interactive>Hombre</a>
+      <a href="#" data-interactive>Perfume</a>
+      <a href="#" data-interactive>Belleza</a>
+    </div>
+    <div class="footer-col">
+      <h4>La Casa</h4>
+      <a href="#" data-interactive>Historia</a>
+      <a href="#" data-interactive>Atelier</a>
+      <a href="#" data-interactive>Prensa</a>
+    </div>
+    <div class="footer-col">
+      <h4>Atención</h4>
+      <a href="#" data-interactive>Contacto</a>
+      <a href="#" data-interactive>Envíos</a>
+      <a href="#" data-interactive>Preguntas frecuentes</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© MMXXVI Maison YR · Medellín</span>
+    <div class="social-icons">
+      <a href="https://www.instagram.com/yrluxury_official?igsh=aWp0c2hzN2JpZnpy" target="_blank" rel="noopener" aria-label="Instagram" data-interactive>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="3" width="18" height="18" rx="5" ry="5"/>
+          <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+          <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
+        </svg>
+      </a>
+      <a href="https://www.tiktok.com/@yrluxury_official?_r=1&_t=ZS-96PVW02AkOw" target="_blank" rel="noopener" aria-label="TikTok" data-interactive>
+        <svg viewBox="0 0 24 24" fill="currentColor">
+          <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5.8 20.1a6.34 6.34 0 0 0 10.86-4.43V8.9a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1.84-.33z"/>
+        </svg>
+      </a>
+    </div>
+  </div>
+</footer>
+
+<!-- WHATSAPP FLOATING BUTTON -->
+<a href="https://wa.me/573000000000?text=Hola%20YR%20Maison%2C%20me%20interesa%20conocer%20más%20sobre%20sus%20productos%20%E2%9C%A8" target="_blank" rel="noopener" class="whatsapp-float" aria-label="Contáctanos por WhatsApp" data-interactive>
+  <svg viewBox="0 0 24 24">
+    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/>
+  </svg>
+  <span class="wa-tooltip">Escríbenos →</span>
+</a>
+
+<script>
+  // =========================================
+  // CUSTOM CURSOR (activates only in atelier-mode)
+  // =========================================
+  const dot = document.querySelector('.cursor-dot');
+  const ring = document.querySelector('.cursor-ring');
+  let mouseX = window.innerWidth / 2, mouseY = window.innerHeight / 2;
+  let ringX = mouseX, ringY = mouseY;
+
+  document.addEventListener('mousemove', (e) => {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+    dot.style.transform = `translate(${mouseX}px, ${mouseY}px) translate(-50%, -50%)`;
+  });
+
+  function animateRing() {
+    ringX += (mouseX - ringX) * 0.18;
+    ringY += (mouseY - ringY) * 0.18;
+    ring.style.transform = `translate(${ringX}px, ${ringY}px) translate(-50%, -50%)`;
+    requestAnimationFrame(animateRing);
+  }
+  animateRing();
+
+  document.querySelectorAll('[data-interactive]').forEach(el => {
+    el.addEventListener('mouseenter', () => ring.classList.add('expand'));
+    el.addEventListener('mouseleave', () => ring.classList.remove('expand'));
+  });
+
+  // =========================================
+  // MODE SWITCH — activate Atelier mode on click
+  // =========================================
+  const discoverBtn = document.getElementById('discoverBtn');
+  const modeFlash = document.getElementById('modeFlash');
+  const sideNav = document.getElementById('sideNav');
+
+  function activateAtelier() {
+    if (document.body.classList.contains('atelier-mode')) return;
+    // Flash
+    modeFlash.classList.add('flash');
+    setTimeout(() => modeFlash.classList.remove('flash'), 1200);
+    // Activate mode
+    setTimeout(() => {
+      document.body.classList.add('atelier-mode');
+      sideNav.classList.add('visible');
+    }, 200);
+    // Smooth scroll to next section (the pinned perfume)
+    setTimeout(() => {
+      document.getElementById('pinned').scrollIntoView({ behavior: 'smooth' });
+    }, 600);
+  }
+
+  discoverBtn.addEventListener('click', activateAtelier);
+
+  // Also auto-activate if user scrolls past hero (gives a graceful fallback)
+  let autoActivated = false;
+  window.addEventListener('scroll', () => {
+    if (!autoActivated && window.scrollY > window.innerHeight * 0.5) {
+      autoActivated = true;
+      if (!document.body.classList.contains('atelier-mode')) {
+        document.body.classList.add('atelier-mode');
+        sideNav.classList.add('visible');
+      }
+    }
+  });
+
+  // =========================================
+  // PARALLAX hero layers
+  // =========================================
+  const parallaxLayers = document.querySelectorAll('[data-parallax]');
+  window.addEventListener('scroll', () => {
+    const scrollY = window.scrollY;
+    parallaxLayers.forEach(layer => {
+      const speed = parseFloat(layer.dataset.parallax);
+      layer.style.transform = `translateY(${scrollY * speed}px)`;
+    });
+  });
+
+  // =========================================
+  // SCROLL PROGRESS BAR
+  // =========================================
+  const scrollBar = document.getElementById('scrollBar');
+  window.addEventListener('scroll', () => {
+    const h = document.documentElement;
+    const progress = (h.scrollTop / (h.scrollHeight - h.clientHeight)) * 100;
+    scrollBar.style.width = progress + '%';
+  });
+
+  // =========================================
+  // PINNED PERFUME (bottle rotates + frames swap)
+  // =========================================
+  const pinnedSection = document.getElementById('pinned');
+  const pinBottle = document.getElementById('pinBottle');
+  const pinFrames = document.querySelectorAll('.pin-frame');
+  const frameDots = document.querySelectorAll('.frame-dot');
+
+  window.addEventListener('scroll', () => {
+    const rect = pinnedSection.getBoundingClientRect();
+    const sectionHeight = pinnedSection.offsetHeight;
+    const windowH = window.innerHeight;
+    const scrolled = -rect.top;
+    const totalScroll = sectionHeight - windowH;
+    const progress = Math.max(0, Math.min(1, scrolled / totalScroll));
+
+    const rotation = progress * 720;
+    pinBottle.style.transform = `rotateY(${rotation}deg)`;
+
+    let activeFrame = 0;
+    if (progress > 0.66) activeFrame = 2;
+    else if (progress > 0.33) activeFrame = 1;
+
+    pinFrames.forEach((f, i) => f.classList.toggle('visible', i === activeFrame));
+    frameDots.forEach((d, i) => d.classList.toggle('active', i === activeFrame));
+  });
+
+  // =========================================
+  // HORIZONTAL SCROLL UNIVERSES
+  // =========================================
+  const hSection = document.getElementById('horizontal');
+  const hTrack = document.getElementById('hTrack');
+  const hFill = document.getElementById('hFill');
+  const hCount = document.getElementById('hCount');
+  const romans = ['N°I', 'N°II', 'N°III', 'N°IV'];
+
+  window.addEventListener('scroll', () => {
+    const rect = hSection.getBoundingClientRect();
+    const sectionH = hSection.offsetHeight;
+    const windowH = window.innerHeight;
+    const scrolled = -rect.top;
+    const totalScroll = sectionH - windowH;
+    const progress = Math.max(0, Math.min(1, scrolled / totalScroll));
+
+    if (window.innerWidth > 980) {
+      const translateX = progress * 75;
+      hTrack.style.transform = `translateX(-${translateX}%)`;
+    }
+
+    hFill.style.width = (progress * 100) + '%';
+    const idx = Math.min(3, Math.floor(progress * 4));
+    hCount.textContent = romans[idx];
+  });
+
+  // =========================================
+  // ATELIER SPOTLIGHT follows cursor
+  // =========================================
+  const atelierSection = document.getElementById('atelier');
+  const atelierSpotlight = document.getElementById('atelierSpotlight');
+  atelierSection.addEventListener('mousemove', (e) => {
+    const rect = atelierSection.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    atelierSpotlight.style.transform = `translate(${x}px, ${y}px) translate(-50%, -50%)`;
+  });
+
+  // =========================================
+  // 3D TILT CARDS
+  // =========================================
+  document.querySelectorAll('[data-tilt]').forEach(card => {
+    card.addEventListener('mousemove', (e) => {
+      const rect = card.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      const cx = rect.width / 2, cy = rect.height / 2;
+      const rx = ((y - cy) / cy) * -8;
+      const ry = ((x - cx) / cx) * 8;
+      card.style.transform = `perspective(1500px) rotateX(${rx}deg) rotateY(${ry}deg) translateZ(0)`;
+      card.style.setProperty('--mx', `${(x/rect.width)*100}%`);
+      card.style.setProperty('--my', `${(y/rect.height)*100}%`);
+    });
+    card.addEventListener('mouseleave', () => {
+      card.style.transform = 'perspective(1500px) rotateX(0) rotateY(0)';
+    });
+  });
+
+  // =========================================
+  // MAGNETIC BUTTONS
+  // =========================================
+  document.querySelectorAll('[data-magnetic]').forEach(btn => {
+    btn.addEventListener('mousemove', (e) => {
+      const rect = btn.getBoundingClientRect();
+      const x = e.clientX - rect.left - rect.width/2;
+      const y = e.clientY - rect.top - rect.height/2;
+      btn.style.transform = `translate(${x*0.25}px, ${y*0.4}px)`;
+    });
+    btn.addEventListener('mouseleave', () => {
+      btn.style.transform = 'translate(0, 0)';
+    });
+  });
+
+  // =========================================
+  // 3D PERFUME BOTTLE (parfum-section) follows cursor
+  // =========================================
+  const parfumStage = document.getElementById('parfumStage');
+  const parfumBottle = document.getElementById('parfumBottle');
+  if (parfumStage && parfumBottle) {
+    parfumStage.addEventListener('mousemove', (e) => {
+      const rect = parfumStage.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      const cx = rect.width / 2, cy = rect.height / 2;
+      const ry = ((x - cx) / cx) * 25;
+      const rx = ((y - cy) / cy) * -10;
+      parfumBottle.style.transform = `translate(-50%, -50%) rotateY(${ry}deg) rotateX(${rx}deg)`;
+    });
+    parfumStage.addEventListener('mouseleave', () => {
+      parfumBottle.style.transform = 'translate(-50%, -50%) rotateY(0) rotateX(0)';
+    });
+  }
+
+  // =========================================
+  // REVEAL ON SCROLL
+  // =========================================
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  // =========================================
+  // ANIMATED COUNTERS
+  // =========================================
+  const counterObs = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const el = entry.target;
+        const target = parseInt(el.dataset.count, 10);
+        const duration = 1600;
+        const start = performance.now();
+        function tick(now) {
+          const p = Math.min((now - start) / duration, 1);
+          const ease = 1 - Math.pow(1 - p, 3);
+          el.textContent = Math.floor(ease * target);
+          if (p < 1) requestAnimationFrame(tick);
+          else el.textContent = target;
+        }
+        requestAnimationFrame(tick);
+        counterObs.unobserve(el);
+      }
+    });
+  }, { threshold: 0.5 });
+  document.querySelectorAll('[data-count]').forEach(el => counterObs.observe(el));
+
+  // =========================================
+  // SIDE NAV active state
+  // =========================================
+  const navSections = ['hero', 'pinned', 'horizontal', 'atelier', 'configurator', 'philosophy'];
+  const sideDots = document.querySelectorAll('.side-dot');
+  window.addEventListener('scroll', () => {
+    const scrollMid = window.scrollY + window.innerHeight / 2;
+    let active = 0;
+    navSections.forEach((id, i) => {
+      const el = document.getElementById(id);
+      if (el) {
+        const top = el.offsetTop;
+        const bottom = top + el.offsetHeight;
+        if (scrollMid >= top && scrollMid < bottom) active = i;
+      }
+    });
+    sideDots.forEach((d, i) => d.classList.toggle('active', i === active));
+  });
+  sideDots.forEach(dot => {
+    dot.addEventListener('click', () => {
+      const target = document.getElementById(dot.dataset.target);
+      if (target) target.scrollIntoView({ behavior: 'smooth' });
+    });
+  });
+
+  // =========================================
+  // LIPGLOSS SHADE PICKER
+  // =========================================
+  const shades = document.querySelectorAll('.shade');
+  const shadeName = document.getElementById('shadeName');
+  const shadeCurrent = document.getElementById('shadeCurrent');
+  const root = document.documentElement;
+  shades.forEach(shade => {
+    shade.addEventListener('click', () => {
+      shades.forEach(s => s.classList.remove('active'));
+      shade.classList.add('active');
+      const color = shade.dataset.color;
+      const colorDeep = shade.dataset.colorDeep;
+      const name = shade.dataset.name;
+      root.style.setProperty('--gloss', color);
+      root.style.setProperty('--gloss-deep', colorDeep);
+      shadeName.textContent = '— ' + name;
+      shadeCurrent.textContent = name;
+      const lipBtn = document.querySelector('[data-add-cart][data-base-price]');
+      if (lipBtn) lipBtn.dataset.name = 'Golden Kiss · ' + name;
+    });
+  });
+
+  // =========================================
+  // QUANTITY CONTROLS
+  // =========================================
+  let qty = 1;
+  const qtyDisplay = document.getElementById('qtyDisplay');
+  const lipPrice = document.getElementById('lipPrice');
+  const basePrice = 32;
+  document.querySelectorAll('[data-qty-action]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const action = btn.dataset.qtyAction;
+      if (action === 'inc' && qty < 10) qty++;
+      if (action === 'dec' && qty > 1) qty--;
+      qtyDisplay.textContent = qty;
+      lipPrice.textContent = basePrice * qty;
+    });
+  });
+
+  // =========================================
+  // LINGERIE COLORWAY PICKER
+  // =========================================
+  const colorwayOpts = document.querySelectorAll('.colorway-opt');
+  const lingeriePreview = document.getElementById('lingeriePreview');
+  const colorName = document.getElementById('colorName');
+  const colorDesc = document.getElementById('colorDesc');
+  const colorLabel = document.getElementById('colorLabel');
+  colorwayOpts.forEach(opt => {
+    opt.addEventListener('click', () => {
+      colorwayOpts.forEach(o => o.classList.remove('active'));
+      opt.classList.add('active');
+      const color = opt.dataset.color;
+      const name = opt.dataset.name;
+      const desc = opt.dataset.desc;
+      lingeriePreview.dataset.color = color;
+      const nameParts = name.split(' ');
+      colorName.innerHTML = '<em>' + nameParts[0] + '</em> ' + nameParts.slice(1).join(' ');
+      colorDesc.textContent = desc;
+      colorLabel.textContent = name;
+    });
+  });
+
+  // =========================================
+  // SIZE PICKER
+  // =========================================
+  const sizeOpts = document.querySelectorAll('.size-opt');
+  const sizeLabel = document.getElementById('sizeLabel');
+  sizeOpts.forEach(opt => {
+    opt.addEventListener('click', () => {
+      sizeOpts.forEach(o => o.classList.remove('active'));
+      opt.classList.add('active');
+      sizeLabel.textContent = opt.dataset.size;
+    });
+  });
+
+  // =========================================
+  // PERFUME NOTES ACCORDION
+  // =========================================
+  document.querySelectorAll('.note-accordion').forEach(acc => {
+    acc.addEventListener('click', () => {
+      document.querySelectorAll('.note-accordion').forEach(a => {
+        if (a !== acc) a.classList.remove('open');
+      });
+      acc.classList.toggle('open');
+    });
+  });
+
+  // =========================================
+  // ADD TO CART — feedback visual sutil en el botón
+  // =========================================
+  document.querySelectorAll('[data-add-cart]').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      const originalText = btn.textContent;
+      btn.textContent = '✓ Añadido';
+      btn.style.pointerEvents = 'none';
+      setTimeout(() => {
+        btn.textContent = originalText;
+        btn.style.pointerEvents = '';
+      }, 1800);
+    });
+  });
+
+  // =========================================
+  // NEWSLETTER — confirmación inline
+  // =========================================
+  const newsletterForm = document.getElementById('newsletterForm');
+  const newsletterSuccess = document.getElementById('newsletterSuccess');
+  if (newsletterForm) {
+    newsletterForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      newsletterForm.reset();
+      newsletterSuccess.classList.add('visible');
+      setTimeout(() => newsletterSuccess.classList.remove('visible'), 4000);
+    });
+  }
+
+  // =========================================
+  // MOBILE MENU TOGGLE
+  // =========================================
+  const menuToggle = document.getElementById('menuToggle');
+  const mobileMenu = document.getElementById('mobileMenu');
+  if (menuToggle && mobileMenu) {
+    menuToggle.addEventListener('click', () => {
+      menuToggle.classList.toggle('open');
+      mobileMenu.classList.toggle('open');
+      document.body.classList.toggle('menu-open');
+    });
+    mobileMenu.querySelectorAll('a').forEach(a => {
+      a.addEventListener('click', () => {
+        menuToggle.classList.remove('open');
+        mobileMenu.classList.remove('open');
+        document.body.classList.remove('menu-open');
+      });
+    });
+  }
+</script>
+
+</body>
+</html>

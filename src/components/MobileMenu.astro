@@ -1,0 +1,81 @@
+---
+// Panel mobile lateral. Espejo del Nav: 4 categorías + botón Buscar
+// (data-search-trigger abre el SearchOverlay montado en BaseLayout).
+---
+
+<div class="mobile-menu" id="mobileMenu" aria-label="Menú móvil">
+  <a href="/" data-interactive>Inicio</a>
+  <a href="/lenceria" data-interactive>Lencería</a>
+  <a href="/hombre" data-interactive>Hombre</a>
+  <a href="/perfume" data-interactive>Perfume</a>
+  <a href="/belleza" data-interactive>Belleza</a>
+  <div class="mobile-menu-divider"></div>
+  <button class="mobile-search" type="button" data-search-trigger data-interactive>
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="1.5"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      aria-hidden="true"
+    >
+      <circle cx="11" cy="11" r="7"></circle>
+      <line x1="16.5" y1="16.5" x2="21" y2="21"></line>
+    </svg>
+    <span>Buscar</span>
+  </button>
+  <button class="mobile-cart" type="button" data-cart-trigger data-interactive>
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="1.5"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      aria-hidden="true"
+    >
+      <path d="M6 7h12l-1 11a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2L6 7Z"></path>
+      <path d="M9 7V5a3 3 0 0 1 6 0v2"></path>
+    </svg>
+    <span>Carrito</span>
+    <span class="mobile-cart-count" data-cart-count>0</span>
+  </button>
+</div>
+
+<style>
+  /* Botón Buscar dentro del panel mobile — hereda el "look" de los <a>
+     hermanos: misma tipografía itálica Cormorant, padding, border-bottom dorado.
+     La lupa va antes del texto. */
+  .mobile-search {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    padding: 16px 0;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid var(--line-soft);
+    color: var(--ink);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-style: italic;
+    letter-spacing: 0.04em;
+    text-align: left;
+    cursor: pointer;
+    transition:
+      color 0.3s,
+      padding-left 0.3s;
+  }
+  .mobile-search:hover,
+  .mobile-search:active {
+    color: var(--gold);
+    padding-left: 8px;
+  }
+  .mobile-search svg {
+    width: 20px;
+    height: 20px;
+    color: var(--gold);
+    flex-shrink: 0;
+  }
+</style>

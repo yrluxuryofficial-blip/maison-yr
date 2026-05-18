@@ -1,0 +1,109 @@
+---
+import universes from '../data/universes.json';
+---
+
+<section class="horizontal-section" id="horizontal">
+  <div class="horizontal-pin">
+    <div class="horizontal-track" id="hTrack">
+      {
+        universes.map((u) => (
+          <div class={`h-slide ${u.slug}`}>
+            <div class="h-slide-inner">
+              <div class="h-visual">
+                <div class="frame-top">— {u.tag}</div>
+                <div class="frame-roman">{u.roman}</div>
+                <div class="frame-bottom">
+                  <div class="name" set:html={u.subtitle} />
+                </div>
+              </div>
+              <div class="h-text">
+                <div class="roman">— {u.roman}</div>
+                <h3 set:html={u.name} />
+                <p>{u.description}</p>
+                <ul class="feature-list">
+                  {u.features.map((f) => (
+                    <li>
+                      <span>{f.label}</span>
+                      <strong>{f.value}</strong>
+                    </li>
+                  ))}
+                </ul>
+                <a href={u.cta.href} class="btn" data-interactive data-magnetic>
+                  {u.cta.label}
+                </a>
+              </div>
+            </div>
+          </div>
+        ))
+      }
+    </div>
+    <div class="h-progress">
+      <span class="label">Universo</span>
+      <span class="count" id="hCount">N°I</span>
+      <div class="track"><div class="fill" id="hFill"></div></div>
+      <span class="label">de IV</span>
+    </div>
+  </div>
+</section>
+
+<script>
+  const hSection = document.getElementById('horizontal');
+  const hTrack = document.getElementById('hTrack');
+  const hFill = document.getElementById('hFill');
+  const hCount = document.getElementById('hCount');
+  const romans = ['N°I', 'N°II', 'N°III', 'N°IV'];
+
+  // 4 plateaus + 3 transiciones distribuidos uniformemente en [0, 1].
+  // Cada plateau dura 0.15 y devuelve eased ∈ {0, 1/3, 2/3, 1} — que multiplicado
+  // por 75 da translateX ∈ {0, 25, 50, 75}%, los anclajes exactos donde cada slide
+  // queda centrado (el track tiene 400vw, mover -300vw = translateX(-75%) muestra
+  // el slide 4 fully).
+  // La barra y el contador siguen usando `progress` lineal, no este eased.
+  const SLIDES = 4;
+
+  function steppedProgress(p: number): number {
+    const dwellRatio = 0.9; // 90% del scroll es dwell — plateau enorme, transiciones rápidas
+    const plateau = dwellRatio / SLIDES; // 0.225
+    const transition = (1 - dwellRatio) / (SLIDES - 1); // 0.0333
+
+    let acc = 0;
+    for (let i = 0; i < SLIDES; i++) {
+      if (p <= acc + plateau) {
+        return i / (SLIDES - 1);
+      }
+      acc += plateau;
+
+      if (i < SLIDES - 1 && p <= acc + transition) {
+        const t = (p - acc) / transition;
+        const eased = t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+        return (i + eased) / (SLIDES - 1);
+      }
+      acc += transition;
+    }
+    return 1;
+  }
+
+  if (hSection && hTrack && hFill && hCount) {
+    window.addEventListener('scroll', () => {
+      const rect = hSection.getBoundingClientRect();
+      const sectionH = hSection.offsetHeight;
+      const windowH = window.innerHeight;
+      const scrolled = -rect.top;
+      const totalScroll = sectionH - windowH;
+      const progress = Math.max(0, Math.min(1, scrolled / totalScroll));
+
+      if (window.innerWidth > 980) {
+        const eased = steppedProgress(progress);
+        // Cada slide ocupa 25% del track (CSS), y hay 3 transiciones hasta el
+        // último → translateX(-75%) muestra el slide 4 fully. Cada plateau
+        // se alinea exactamente al borde izquierdo del pin.
+        const translateX = eased * 75;
+        hTrack.style.transform = `translateX(-${translateX}%)`;
+      }
+
+      hFill.style.width = progress * 100 + '%';
+      const idx = Math.min(3, Math.floor(progress * 4));
+      hCount.textContent = romans[idx];
+    });
+  }
+</script>

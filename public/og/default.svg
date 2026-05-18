@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630">
+  <defs>
+    <radialGradient id="bg" cx="30%" cy="30%" r="90%">
+      <stop offset="0%" stop-color="#14563F" />
+      <stop offset="60%" stop-color="#06241C" />
+      <stop offset="100%" stop-color="#050302" />
+    </radialGradient>
+    <radialGradient id="emerald" cx="30%" cy="30%" r="80%">
+      <stop offset="0%" stop-color="#0E4434" />
+      <stop offset="100%" stop-color="#06241C" />
+    </radialGradient>
+    <linearGradient id="gold" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#E8C988" />
+      <stop offset="100%" stop-color="#A88B4E" />
+    </linearGradient>
+  </defs>
+
+  <rect width="1200" height="630" fill="url(#bg)" />
+
+  <!-- Decorative big YR background -->
+  <text
+    x="600"
+    y="510"
+    font-family="'Forum', 'Cormorant Garamond', serif"
+    font-size="520"
+    fill="#D4B266"
+    fill-opacity="0.06"
+    text-anchor="middle"
+    letter-spacing="14"
+  >YR</text>
+
+  <!-- Emblem -->
+  <circle cx="600" cy="200" r="78" fill="url(#emerald)" stroke="url(#gold)" stroke-width="3" />
+  <circle cx="600" cy="124" r="4" fill="#D4B266" />
+  <text
+    x="600"
+    y="218"
+    font-family="'Forum', 'Cormorant Garamond', serif"
+    font-size="62"
+    fill="url(#gold)"
+    text-anchor="middle"
+    letter-spacing="4"
+  >YR</text>
+
+  <!-- Brand line -->
+  <text
+    x="600"
+    y="345"
+    font-family="'Forum', 'Cormorant Garamond', serif"
+    font-size="52"
+    fill="#F4EAD4"
+    text-anchor="middle"
+    letter-spacing="22"
+  >MAISON</text>
+
+  <!-- Tagline -->
+  <text
+    x="600"
+    y="430"
+    font-family="'Cormorant Garamond', serif"
+    font-style="italic"
+    font-size="38"
+    fill="#C8BC9F"
+    text-anchor="middle"
+  >Sensualidad en su forma más elegante.</text>
+
+  <!-- Bottom rule -->
+  <line x1="500" y1="510" x2="700" y2="510" stroke="#D4B266" stroke-width="1" />
+  <text
+    x="600"
+    y="555"
+    font-family="'Manrope', sans-serif"
+    font-size="18"
+    fill="#D4B266"
+    text-anchor="middle"
+    letter-spacing="8"
+  >ANNO MMXXVI · MEDELLÍN</text>
+</svg>

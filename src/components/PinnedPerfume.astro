@@ -1,0 +1,77 @@
+---
+import data from '../data/perfume-pinned.json';
+---
+
+<section class="pinned-section" id="pinned">
+  <div class="pinned-inner">
+    <div class="frame-indicator" aria-hidden="true">
+      {
+        data.frames.map((_, i) => (
+          <div class={`frame-dot${i === 0 ? ' active' : ''}`} data-frame={i} />
+        ))
+      }
+    </div>
+    <div class="pin-bottle-stage">
+      <div class="pin-bottle" id="pinBottle">
+        <img
+          src={data.image}
+          alt={data.alt}
+          class="pin-bottle-img"
+          loading="eager"
+          fetchpriority="high"
+          decoding="async"
+        />
+      </div>
+    </div>
+    <div class="pin-text-stage">
+      {
+        data.frames.map((frame, i) => (
+          <div class={`pin-frame${i === 0 ? ' visible' : ''}`} data-frame={i}>
+            <div class="section-prefix">
+              <span class="dash" />
+              <span>{frame.prefix}</span>
+            </div>
+            <h2 set:html={frame.h2} />
+            <p>{frame.body}</p>
+            <div class="meta">
+              {frame.meta.map((m) => (
+                <div>
+                  <strong>{m.value}</strong>
+                  {m.label}
+                </div>
+              ))}
+            </div>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<script>
+  const pinnedSection = document.getElementById('pinned');
+  const pinBottle = document.getElementById('pinBottle');
+  const pinFrames = document.querySelectorAll<HTMLElement>('.pin-frame');
+  const frameDots = document.querySelectorAll<HTMLElement>('.frame-dot');
+
+  if (pinnedSection && pinBottle) {
+    window.addEventListener('scroll', () => {
+      const rect = pinnedSection.getBoundingClientRect();
+      const sectionHeight = pinnedSection.offsetHeight;
+      const windowH = window.innerHeight;
+      const scrolled = -rect.top;
+      const totalScroll = sectionHeight - windowH;
+      const progress = Math.max(0, Math.min(1, scrolled / totalScroll));
+
+      const rotation = progress * 720;
+      pinBottle.style.transform = `rotateY(${rotation}deg)`;
+
+      let activeFrame = 0;
+      if (progress > 0.66) activeFrame = 2;
+      else if (progress > 0.33) activeFrame = 1;
+
+      pinFrames.forEach((f, i) => f.classList.toggle('visible', i === activeFrame));
+      frameDots.forEach((d, i) => d.classList.toggle('active', i === activeFrame));
+    });
+  }
+</script>

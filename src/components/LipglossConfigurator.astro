@@ -1,0 +1,300 @@
+---
+import data from '../data/shades.json';
+const activeShade = data.shades.find((s) => s.active) ?? data.shades[0];
+---
+
+<section class="lipgloss-section" id="configurator">
+  <div class="section-head">
+    <div class="section-prefix">
+      <span class="dash"></span><span>{data.head.prefix}</span><span class="dash"></span>
+    </div>
+    <h2 class="section-title" set:html={data.head.title} />
+    <p class="section-sub">{data.head.sub}</p>
+  </div>
+  <div class="lipgloss-inner">
+    <div class="lipgloss-stage">
+      <div class="lipgloss-preview">
+        <div class="lip-shape">
+          <svg
+            class="lipgloss-svg"
+            viewBox="0 0 280 480"
+            xmlns="http://www.w3.org/2000/svg"
+            aria-label={`Frasco de lipgloss YR ${activeShade.name}`}
+            role="img"
+          >
+            <defs>
+              <linearGradient id="lgCapGrad" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stop-color="#E8C988" />
+                <stop offset="45%" stop-color="#D4B266" />
+                <stop offset="100%" stop-color="#8A6F3D" />
+              </linearGradient>
+              <linearGradient id="lgCapShine" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="rgba(255,255,255,0.55)" />
+                <stop offset="60%" stop-color="rgba(255,255,255,0)" />
+              </linearGradient>
+              <linearGradient id="lgLiquidGrad" x1="0.5" y1="0" x2="0.5" y2="1">
+                <stop offset="0%" stop-color="var(--gloss)" stop-opacity="0.78" />
+                <stop offset="55%" stop-color="var(--gloss)" />
+                <stop offset="100%" stop-color="var(--gloss-deep)" />
+              </linearGradient>
+              <linearGradient id="lgGlassEdge" x1="0" y1="0" x2="1" y2="0">
+                <stop offset="0%" stop-color="rgba(0,0,0,0.35)" />
+                <stop offset="12%" stop-color="rgba(0,0,0,0)" />
+                <stop offset="88%" stop-color="rgba(0,0,0,0)" />
+                <stop offset="100%" stop-color="rgba(0,0,0,0.45)" />
+              </linearGradient>
+              <linearGradient id="lgShine" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stop-color="rgba(255,255,255,0)" />
+                <stop offset="50%" stop-color="rgba(255,255,255,0.45)" />
+                <stop offset="100%" stop-color="rgba(255,255,255,0)" />
+              </linearGradient>
+              <radialGradient id="lgShadow" cx="0.5" cy="0.5">
+                <stop offset="0%" stop-color="rgba(0,0,0,0.55)" />
+                <stop offset="100%" stop-color="rgba(0,0,0,0)" />
+              </radialGradient>
+            </defs>
+
+            <!-- Sombra proyectada -->
+            <ellipse cx="140" cy="462" rx="92" ry="9" fill="url(#lgShadow)" />
+
+            <!-- Tapa dorada -->
+            <rect x="92" y="22" width="96" height="112" rx="8" fill="url(#lgCapGrad)" />
+            <rect x="92" y="22" width="96" height="60" rx="8" fill="url(#lgCapShine)" />
+            <rect x="92" y="106" width="96" height="3" fill="#8A6F3D" opacity="0.75" />
+            <text
+              x="140"
+              y="78"
+              font-family="'Forum', 'Cormorant Garamond', serif"
+              font-size="30"
+              fill="#050302"
+              text-anchor="middle"
+              letter-spacing="2"
+            >YR</text>
+
+            <!-- Cuello entre tapa y cuerpo -->
+            <rect x="108" y="134" width="64" height="12" fill="#B89968" />
+            <line x1="108" y1="146" x2="172" y2="146" stroke="#8A6F3D" stroke-width="1" />
+
+            <!-- Cuerpo del frasco · líquido coloreado -->
+            <rect x="76" y="148" width="128" height="288" rx="22" fill="url(#lgLiquidGrad)" />
+            <rect
+              x="76"
+              y="148"
+              width="128"
+              height="288"
+              rx="22"
+              fill="url(#lgGlassEdge)"
+              opacity="0.6"
+            />
+            <rect
+              x="76"
+              y="148"
+              width="128"
+              height="288"
+              rx="22"
+              fill="url(#lgShine)"
+              opacity="0.18"
+            />
+
+            <!-- Highlights verticales del vidrio — balanceados para no romper el centro óptico -->
+            <rect x="89" y="166" width="5" height="246" rx="2.5" fill="rgba(255,255,255,0.42)" />
+            <rect x="186" y="166" width="5" height="246" rx="2.5" fill="rgba(255,255,255,0.32)" />
+
+            <!-- Emblema YR sobre el líquido — geométricamente centrado en x=140 -->
+            <g class="bottle-emblem">
+              <circle
+                cx="140"
+                cy="296"
+                r="34"
+                fill="rgba(6,36,28,0.45)"
+                stroke="#D4B266"
+                stroke-width="1.3"
+              />
+              <text
+                x="140"
+                y="305"
+                font-family="'Forum', 'Cormorant Garamond', serif"
+                font-size="24"
+                fill="#D4B266"
+                text-anchor="middle"
+                letter-spacing="1.5"
+              >YR</text>
+            </g>
+
+            <!-- Base oscura -->
+            <rect x="74" y="430" width="132" height="9" rx="3" fill="#0A0807" />
+          </svg>
+        </div>
+      </div>
+      <div class="preview-label">
+        <div class="name" id="shadeName">— {activeShade.name}</div>
+        <div class="desc">{data.intro.previewDesc}</div>
+      </div>
+    </div>
+    <div class="config-text">
+      <div class="roman">{data.intro.roman}</div>
+      <h2 set:html={data.intro.h2} />
+      <p class="description">{data.intro.description}</p>
+      <div class="shade-section-label">
+        <span>— Selecciona tu tono</span>
+        <span class="shade-current" id="shadeCurrent">{activeShade.name}</span>
+      </div>
+      <div class="shades-row" id="shadesRow">
+        {
+          data.shades.map((s) => (
+            <button
+              type="button"
+              class={`shade${s.active ? ' active' : ''}`}
+              data-interactive
+              data-shade={s.slug}
+              data-name={s.name}
+              data-color={s.color}
+              data-color-deep={s.colorDeep}
+              aria-label={`Tono ${s.name}`}
+              style={`background: linear-gradient(135deg, ${s.color}, ${s.colorDeep});`}
+            />
+          ))
+        }
+      </div>
+      <div class="quantity-row">
+        <span class="quantity-label">— Cantidad</span>
+        <div class="quantity-controls">
+          <button
+            class="qty-btn"
+            data-interactive
+            data-qty-action="dec"
+            aria-label="Reducir cantidad">−</button
+          >
+          <span class="qty-display" id="qtyDisplay">1</span>
+          <button
+            class="qty-btn"
+            data-interactive
+            data-qty-action="inc"
+            aria-label="Aumentar cantidad">+</button
+          >
+        </div>
+      </div>
+      <div class="price-action">
+        <div class="price-total">
+          $<span id="lipPrice">{data.basePrice}</span><em>{data.currency}</em>
+        </div>
+        <button
+          class="btn"
+          data-interactive
+          data-magnetic
+          data-add-cart
+          data-name="Golden Kiss"
+          data-base-price={data.basePrice}
+          data-qty-source="qtyDisplay"
+          data-variant-sources="shadeCurrent"
+          data-image={data.image}
+        >
+          Añadir →
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  const shades = document.querySelectorAll<HTMLElement>('.shade');
+  const shadeName = document.getElementById('shadeName');
+  const shadeCurrent = document.getElementById('shadeCurrent');
+  const root = document.documentElement;
+
+  shades.forEach((shade) => {
+    shade.addEventListener('click', () => {
+      shades.forEach((s) => s.classList.remove('active'));
+      shade.classList.add('active');
+      const color = shade.dataset.color ?? '';
+      const colorDeep = shade.dataset.colorDeep ?? '';
+      const name = shade.dataset.name ?? '';
+      root.style.setProperty('--gloss', color);
+      root.style.setProperty('--gloss-deep', colorDeep);
+      if (shadeName) shadeName.textContent = '— ' + name;
+      if (shadeCurrent) shadeCurrent.textContent = name;
+      // Cart.astro lee data-variant-sources="shadeCurrent" — el name del item
+      // se compone en runtime, no hace falta actualizar data-name del botón.
+    });
+  });
+
+  let qty = 1;
+  const qtyDisplay = document.getElementById('qtyDisplay');
+  const lipPrice = document.getElementById('lipPrice');
+  const basePrice = Number(
+    document.querySelector<HTMLElement>('[data-add-cart][data-base-price]')?.dataset.basePrice ??
+      '0',
+  );
+  document.querySelectorAll<HTMLElement>('[data-qty-action]').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const action = btn.dataset.qtyAction;
+      if (action === 'inc' && qty < 10) qty++;
+      if (action === 'dec' && qty > 1) qty--;
+      if (qtyDisplay) qtyDisplay.textContent = String(qty);
+      if (lipPrice) lipPrice.textContent = String(basePrice * qty);
+    });
+  });
+</script>
+
+<style is:global>
+  /* Stage wrapper: cuadrado del frasco arriba + label de texto debajo,
+     sin overlap (la label original era position:absolute y se montaba sobre el SVG). */
+  .lipgloss-stage {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  /* El preview vuelve a ser un cuadrado limpio sin contenido absoluto encima. */
+  .lipgloss-preview {
+    aspect-ratio: 1;
+  }
+
+  /* SVG: respiración vertical + halo dorado/del tono al hacer drop-shadow. */
+  .lipgloss-preview .lip-shape {
+    width: 70%;
+    height: 92%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    filter: drop-shadow(0 40px 60px rgba(0, 0, 0, 0.6))
+      drop-shadow(0 0 40px var(--gloss));
+    transition: filter 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+  .lipgloss-svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+    overflow: visible;
+  }
+
+  /* Label override — saca la position:absolute de global.css. */
+  .lipgloss-stage > .preview-label {
+    position: static;
+    inset: auto;
+    text-align: center;
+    margin-top: 28px;
+    padding: 0 16px;
+  }
+  .lipgloss-stage > .preview-label .name {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 26px;
+    color: var(--gold);
+    margin-bottom: 10px;
+    transition: color 0.6s;
+  }
+  .lipgloss-stage > .preview-label .desc {
+    font-family: 'Manrope', sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .lipgloss-preview .lip-shape {
+      transition: none;
+    }
+  }
+</style>

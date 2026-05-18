@@ -1,0 +1,111 @@
+---
+// Nav global. Los 4 enlaces principales apuntan a las páginas de catálogo;
+// el botón "Buscar" abre el SearchOverlay (montado en BaseLayout) via
+// el atributo data-search-trigger.
+---
+
+<nav aria-label="Navegación principal">
+  <div class="logo-wrap" data-interactive>
+    <a href="/" class="logo-link" aria-label="Maison YR · Inicio">
+      <div class="logo-emblem"><span>YR</span></div>
+      <div class="logo-text">MAISON</div>
+    </a>
+  </div>
+  <div class="nav-center">
+    <a href="/" data-interactive>Inicio</a>
+    <a href="/lenceria" data-interactive>Lencería</a>
+    <a href="/hombre" data-interactive>Hombre</a>
+    <a href="/perfume" data-interactive>Perfume</a>
+    <a href="/belleza" data-interactive>Belleza</a>
+  </div>
+  <div class="nav-right">
+    <button
+      class="nav-search"
+      type="button"
+      data-search-trigger
+      data-interactive
+      aria-label="Buscar"
+    >
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.5"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        aria-hidden="true"
+      >
+        <circle cx="11" cy="11" r="7"></circle>
+        <line x1="16.5" y1="16.5" x2="21" y2="21"></line>
+      </svg>
+      <span>Buscar</span>
+    </button>
+    <button
+      class="nav-cart"
+      type="button"
+      data-cart-trigger
+      data-interactive
+      aria-label="Carrito de cotización"
+    >
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.5"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        aria-hidden="true"
+      >
+        <path d="M6 7h12l-1 11a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2L6 7Z"></path>
+        <path d="M9 7V5a3 3 0 0 1 6 0v2"></path>
+      </svg>
+      <span>Carrito</span>
+      <span class="nav-cart-badge" data-cart-count aria-hidden="true">0</span>
+    </button>
+  </div>
+  <button class="menu-toggle" id="menuToggle" aria-label="Menú" aria-expanded="false">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+</nav>
+
+<style>
+  .logo-link {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .nav-search {
+    background: transparent;
+    border: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--ink-soft);
+    font-family: 'Manrope', sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    font-weight: 400;
+    cursor: pointer;
+    padding: 6px 0;
+    transition: color 0.3s;
+  }
+  .nav-search:hover {
+    color: var(--gold);
+  }
+  .nav-search svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  @media (max-width: 980px) {
+    .nav-search {
+      display: none;
+    }
+  }
+</style>

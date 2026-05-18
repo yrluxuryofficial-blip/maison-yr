@@ -1,0 +1,44 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ScrollProgress from '../components/ScrollProgress.astro';
+import SideNav from '../components/SideNav.astro';
+import Nav from '../components/Nav.astro';
+import MobileMenu from '../components/MobileMenu.astro';
+import Hero from '../components/Hero.astro';
+import PinnedPerfume from '../components/PinnedPerfume.astro';
+import HorizontalUniverses from '../components/HorizontalUniverses.astro';
+import AtelierIntro from '../components/AtelierIntro.astro';
+import Stats from '../components/Stats.astro';
+import TiltCards from '../components/TiltCards.astro';
+import LipglossConfigurator from '../components/LipglossConfigurator.astro';
+import LingerieConfigurator from '../components/LingerieConfigurator.astro';
+import ParfumConfigurator from '../components/ParfumConfigurator.astro';
+import Philosophy from '../components/Philosophy.astro';
+import Newsletter from '../components/Newsletter.astro';
+import Footer from '../components/Footer.astro';
+import WhatsAppFloat from '../components/WhatsAppFloat.astro';
+---
+
+<BaseLayout>
+  <ScrollProgress />
+  <SideNav />
+  <Nav />
+  <MobileMenu />
+
+  <main id="main">
+    <Hero />
+    <PinnedPerfume />
+    <HorizontalUniverses />
+    <AtelierIntro />
+    <Stats />
+    <TiltCards />
+    <LipglossConfigurator />
+    <LingerieConfigurator />
+    <ParfumConfigurator />
+    <Philosophy />
+    <Newsletter />
+  </main>
+
+  <Footer />
+  <WhatsAppFloat />
+</BaseLayout>

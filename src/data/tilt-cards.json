@@ -1,0 +1,33 @@
+{
+  "head": {
+    "prefix": "Las piezas · 3D Interactivo",
+    "title": "Toca, <em>inclina</em>,<br><em>descubre</em>.",
+    "sub": "Cada tarjeta responde a tu cursor. Pasa el mouse sobre las piezas para ver el detalle desde cada ángulo."
+  },
+  "cards": [
+    {
+      "roman": "— N° I",
+      "category": "— Lencería",
+      "name": "Pour <em>Elle</em>",
+      "description": "Encaje europeo, satén, herrajes dorados con monograma YR.",
+      "badge": "Más vendido",
+      "cssClass": "tc-1"
+    },
+    {
+      "roman": "— N° II",
+      "category": "— Hombre",
+      "name": "YR <em>Hombre</em>",
+      "description": "La confianza es tu mejor atuendo.",
+      "badge": "Nuevo",
+      "cssClass": "tc-2"
+    },
+    {
+      "roman": "— N° III",
+      "category": "— Belleza",
+      "name": "Golden <em>Kiss</em>",
+      "description": "Lipgloss con brillo intenso. Seis tonos.",
+      "badge": "Insignia",
+      "cssClass": "tc-3"
+    }
+  ]
+}

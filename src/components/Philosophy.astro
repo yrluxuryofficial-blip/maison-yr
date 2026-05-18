@@ -1,0 +1,9 @@
+---
+import data from '../data/philosophy.json';
+---
+
+<section class="philosophy" id="philosophy">
+  <div class="mono">{data.eyebrow}</div>
+  <h2 class="reveal" set:html={data.quote} />
+  <div class="signature reveal reveal-d2">{data.signature}</div>
+</section>

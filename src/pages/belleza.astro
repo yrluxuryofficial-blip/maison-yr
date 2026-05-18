@@ -1,0 +1,99 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Nav from '../components/Nav.astro';
+import MobileMenu from '../components/MobileMenu.astro';
+import Footer from '../components/Footer.astro';
+import WhatsAppFloat from '../components/WhatsAppFloat.astro';
+import ProductGrid from '../components/ProductGrid.astro';
+import productsData from '../data/products.json';
+
+interface Product {
+  slug: string;
+  name: string;
+  category: string;
+  categoryLabel: string;
+  price: number;
+  currency: string;
+  image: string;
+  imagePlaceholder: string;
+  imagePosition?: string;
+  description: string;
+  tags: string[];
+}
+
+const products = productsData as Product[];
+const categoryProducts = products.filter((p) => p.category === 'belleza');
+const title = 'Belleza · Maison YR';
+const description =
+  'Golden Kiss · lipgloss con brillo intenso, fórmula hidratante y aroma irresistible. Seis tonos creados para combinarse con tu firma.';
+---
+
+<BaseLayout title={title} description={description}>
+  <Nav />
+  <MobileMenu />
+  <main id="main">
+    <section class="category-hero">
+      <div class="category-kicker">— Universo IV</div>
+      <h1 class="category-title">Golden <em>Kiss</em></h1>
+      <p class="category-lede">
+        Lipgloss con brillo intenso, fórmula hidratante y aroma irresistible. Seis tonos creados
+        para combinarse con tu firma.
+      </p>
+    </section>
+    <ProductGrid products={categoryProducts} />
+  </main>
+  <Footer />
+  <WhatsAppFloat />
+</BaseLayout>
+
+<style>
+  .category-hero {
+    padding: 160px 56px 80px;
+    text-align: center;
+    background: radial-gradient(ellipse at 50% 30%, rgba(212, 178, 102, 0.08), transparent 60%);
+  }
+  .category-kicker {
+    font-family: 'Manrope', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.5em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 28px;
+  }
+  .category-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(48px, 7vw, 92px);
+    font-weight: 300;
+    line-height: 1;
+    color: var(--ink);
+    margin-bottom: 32px;
+  }
+  .category-title em {
+    font-family: 'Forum', serif;
+    font-style: normal;
+    color: var(--gold);
+  }
+  .category-lede {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 20px;
+    line-height: 1.6;
+    color: var(--ink-soft);
+    max-width: 680px;
+    margin: 0 auto;
+  }
+
+  @media (max-width: 980px) {
+    .category-hero {
+      padding: 130px 24px 60px;
+    }
+  }
+  @media (max-width: 600px) {
+    .category-hero {
+      padding: 110px 18px 50px;
+    }
+    .category-lede {
+      font-size: 17px;
+    }
+  }
+</style>

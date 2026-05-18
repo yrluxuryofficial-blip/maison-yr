@@ -1,0 +1,220 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Nav from '../components/Nav.astro';
+import MobileMenu from '../components/MobileMenu.astro';
+import Footer from '../components/Footer.astro';
+import WhatsAppFloat from '../components/WhatsAppFloat.astro';
+
+const title = 'Envíos · Maison YR';
+const description =
+  'Tiempos, costos y políticas de envío de Maison YR. Despacho desde Medellín a Colombia e internacional.';
+---
+
+<BaseLayout title={title} description={description}>
+  <Nav />
+  <MobileMenu />
+  <main id="main">
+    <section class="institutional-hero">
+      <div class="institutional-kicker">— La Maison</div>
+      <h1 class="institutional-title">Envíos</h1>
+      <p class="institutional-lede">
+        Cada pieza viaja en su estuche original con sello de la maison. Despacho desde Medellín a
+        todo Colombia y al exterior.
+      </p>
+    </section>
+
+    <section class="info-section">
+      <div class="info-inner">
+        <article class="info-block">
+          <h2 class="info-block-title">Tiempos de entrega</h2>
+          <div class="info-rows">
+            <div class="info-row">
+              <span class="info-row-label">Medellín área metropolitana</span>
+              <span class="info-row-value">24 a 48 h hábiles</span>
+            </div>
+            <div class="info-row">
+              <span class="info-row-label">Resto de Colombia</span>
+              <span class="info-row-value">3 a 6 días hábiles</span>
+            </div>
+            <div class="info-row">
+              <span class="info-row-label">Internacional</span>
+              <span class="info-row-value">7 a 14 días hábiles [REVISAR]</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="info-block">
+          <h2 class="info-block-title">Costos</h2>
+          <div class="info-rows">
+            <div class="info-row">
+              <span class="info-row-label">Medellín</span>
+              <span class="info-row-value">$15.000 COP [COMPLETAR]</span>
+            </div>
+            <div class="info-row">
+              <span class="info-row-label">Colombia nacional</span>
+              <span class="info-row-value">$25.000 COP [COMPLETAR]</span>
+            </div>
+            <div class="info-row">
+              <span class="info-row-label">Envío gratis</span>
+              <span class="info-row-value">Pedidos sobre $300.000 COP [REVISAR]</span>
+            </div>
+            <div class="info-row">
+              <span class="info-row-label">Internacional</span>
+              <span class="info-row-value">Cotización individual</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="info-block">
+          <h2 class="info-block-title">Empaque</h2>
+          <p class="info-paragraph">
+            Cada pieza viaja en su estuche original de la maison — caja de terciopelo verde
+            esmeralda con sello dorado. Incluye guía de uso firmada por la fondatrice y certificado
+            de autenticidad numerado. El packaging exterior es discreto, sin referencias a la marca.
+          </p>
+        </article>
+
+        <article class="info-block">
+          <h2 class="info-block-title">Devoluciones</h2>
+          <p class="info-paragraph">
+            Aceptamos cambios y devoluciones dentro de los 15 días posteriores a la recepción del
+            pedido, siempre que la pieza no haya sido usada y conserve su empaque original con todos
+            los precintos de la maison intactos. Lencería y productos de belleza solo aceptan cambio
+            por talla, no devolución por motivos de higiene.
+          </p>
+          <p class="info-paragraph">
+            Para iniciar un cambio escribinos por WhatsApp y te coordinamos la logística inversa.
+          </p>
+        </article>
+      </div>
+    </section>
+  </main>
+  <Footer />
+  <WhatsAppFloat />
+</BaseLayout>
+
+<style>
+  .institutional-hero {
+    padding: 160px 56px 80px;
+    text-align: center;
+    background: radial-gradient(ellipse at 50% 30%, rgba(212, 178, 102, 0.08), transparent 60%);
+  }
+  .institutional-kicker {
+    font-family: 'Manrope', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.5em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 28px;
+  }
+  .institutional-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(48px, 7vw, 92px);
+    font-weight: 300;
+    line-height: 1;
+    color: var(--ink);
+    margin-bottom: 32px;
+  }
+  .institutional-lede {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 20px;
+    line-height: 1.6;
+    color: var(--ink-soft);
+    max-width: 680px;
+    margin: 0 auto;
+  }
+
+  .info-section {
+    padding: 60px 56px 120px;
+    background: var(--black);
+  }
+  .info-inner {
+    max-width: 880px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 64px;
+  }
+  .info-block {
+    padding-bottom: 56px;
+    border-bottom: 1px solid var(--line-soft);
+  }
+  .info-block:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+  .info-block-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(28px, 3.5vw, 40px);
+    font-weight: 300;
+    color: var(--gold);
+    margin-bottom: 28px;
+  }
+  .info-rows {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .info-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--line-soft);
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .info-row:last-child {
+    border-bottom: none;
+  }
+  .info-row-label {
+    font-family: 'Manrope', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+  .info-row-value {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 18px;
+    color: var(--ink);
+  }
+  .info-paragraph {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px;
+    line-height: 1.7;
+    color: var(--ink-soft);
+    max-width: 720px;
+  }
+  .info-paragraph + .info-paragraph {
+    margin-top: 18px;
+  }
+
+  @media (max-width: 980px) {
+    .institutional-hero {
+      padding: 130px 24px 60px;
+    }
+    .info-section {
+      padding: 40px 24px 100px;
+    }
+    .info-inner {
+      gap: 48px;
+    }
+  }
+  @media (max-width: 600px) {
+    .institutional-hero {
+      padding: 110px 18px 50px;
+    }
+    .info-section {
+      padding: 30px 18px 80px;
+    }
+    .institutional-lede {
+      font-size: 17px;
+    }
+    .info-paragraph {
+      font-size: 16px;
+    }
+  }
+</style>

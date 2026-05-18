@@ -1,0 +1,125 @@
+---
+import data from '../data/lingerie.json';
+const activeColorway = data.colorways.find((c) => c.active) ?? data.colorways[0];
+const activeNameParts = activeColorway.name.split(' ');
+const activeNameHTML = `<em>${activeNameParts[0]}</em> ${activeNameParts.slice(1).join(' ')}`;
+---
+
+<section class="lingerie-section">
+  <div class="section-head">
+    <div class="section-prefix">
+      <span class="dash"></span><span>{data.head.prefix}</span><span class="dash"></span>
+    </div>
+    <h2 class="section-title" set:html={data.head.title} />
+    <p class="section-sub">{data.head.sub}</p>
+  </div>
+  <div class="lingerie-inner">
+    <div class="lingerie-preview" id="lingeriePreview" data-color={activeColorway.slug}>
+      <div class="silhouette" aria-hidden="true"></div>
+      <div class="lace" aria-hidden="true"></div>
+      <div class="frame-top">— {data.frameTag}</div>
+      <div class="frame-roman">{data.frameRoman}</div>
+      <div class="frame-bottom">
+        <div class="name" id="colorName" set:html={activeNameHTML} />
+        <div class="quote" id="colorDesc">{activeColorway.description}</div>
+      </div>
+    </div>
+    <div class="config-text">
+      <div class="roman">{data.intro.roman}</div>
+      <h2 set:html={data.intro.h2} />
+      <p class="description">{data.intro.description}</p>
+      <div class="config-block">
+        <div class="config-label">
+          <span class="label-text">— Color</span>
+          <span class="label-value" id="colorLabel">{activeColorway.name}</span>
+        </div>
+        <div class="colorway-options" id="colorwayOptions">
+          {
+            data.colorways.map((c) => (
+              <button
+                type="button"
+                class={`colorway-opt${c.active ? ' active' : ''}`}
+                data-interactive
+                data-color={c.slug}
+                data-name={c.name}
+                data-desc={c.description}
+              >
+                <span class="swatch" />
+                <span class="opt-name">{c.name.split(' ')[0]}</span>
+              </button>
+            ))
+          }
+        </div>
+      </div>
+      <div class="config-block">
+        <div class="config-label">
+          <span class="label-text">— Talla</span>
+          <span class="label-value" id="sizeLabel">{data.defaultSize}</span>
+        </div>
+        <div class="size-options" id="sizeOptions">
+          {
+            data.sizes.map((size) => (
+              <button
+                type="button"
+                class={`size-opt${size === data.defaultSize ? ' active' : ''}`}
+                data-interactive
+                data-size={size}
+              >
+                {size}
+              </button>
+            ))
+          }
+        </div>
+      </div>
+      <div class="price-action">
+        <div class="price-total">$<span>{data.basePrice}</span><em>{data.currency}</em></div>
+        <button
+          class="btn"
+          data-interactive
+          data-magnetic
+          data-add-cart
+          data-name="Lingerie Pour Elle"
+          data-price={data.basePrice}
+          data-variant-sources="colorLabel,sizeLabel"
+          data-image="/img/yr_lingerie_noir.png"
+        >
+          Añadir →
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  const colorwayOpts = document.querySelectorAll<HTMLElement>('.colorway-opt');
+  const lingeriePreview = document.getElementById('lingeriePreview');
+  const colorName = document.getElementById('colorName');
+  const colorDesc = document.getElementById('colorDesc');
+  const colorLabel = document.getElementById('colorLabel');
+
+  colorwayOpts.forEach((opt) => {
+    opt.addEventListener('click', () => {
+      colorwayOpts.forEach((o) => o.classList.remove('active'));
+      opt.classList.add('active');
+      const color = opt.dataset.color ?? '';
+      const name = opt.dataset.name ?? '';
+      const desc = opt.dataset.desc ?? '';
+      if (lingeriePreview) lingeriePreview.dataset.color = color;
+      const nameParts = name.split(' ');
+      if (colorName)
+        colorName.innerHTML = '<em>' + nameParts[0] + '</em> ' + nameParts.slice(1).join(' ');
+      if (colorDesc) colorDesc.textContent = desc;
+      if (colorLabel) colorLabel.textContent = name;
+    });
+  });
+
+  const sizeOpts = document.querySelectorAll<HTMLElement>('.size-opt');
+  const sizeLabel = document.getElementById('sizeLabel');
+  sizeOpts.forEach((opt) => {
+    opt.addEventListener('click', () => {
+      sizeOpts.forEach((o) => o.classList.remove('active'));
+      opt.classList.add('active');
+      if (sizeLabel) sizeLabel.textContent = opt.dataset.size ?? '';
+    });
+  });
+</script>

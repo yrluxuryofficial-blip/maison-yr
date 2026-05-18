@@ -1,0 +1,93 @@
+---
+import data from '../data/parfum-notes.json';
+---
+
+<section class="parfum-section">
+  <div class="section-head">
+    <div class="section-prefix">
+      <span class="dash"></span><span>{data.head.prefix}</span><span class="dash"></span>
+    </div>
+    <h2 class="section-title" set:html={data.head.title} />
+    <p class="section-sub">{data.head.sub}</p>
+  </div>
+  <div class="parfum-inner">
+    <div class="parfum-visual" id="parfumStage">
+      <div class="parfum-bottle" id="parfumBottle">
+        <img
+          src={data.image}
+          alt={data.alt}
+          class="parfum-bottle-img"
+          loading="lazy"
+          decoding="async"
+        />
+      </div>
+    </div>
+    <div class="parfum-text">
+      <div class="roman">{data.intro.roman}</div>
+      <h2 set:html={data.intro.h2} />
+      <p class="intro" set:html={data.intro.intro} />
+      <div class="pyramid">
+        {
+          data.notes.map((note) => (
+            <div class="note-accordion" data-interactive>
+              <div class="note-head">
+                <span class="note-label">{note.label}</span>
+                <span class="note-summary">{note.summary}</span>
+                <span class="note-icon" aria-hidden="true">
+                  +
+                </span>
+              </div>
+              <div class="note-body">
+                <p class="note-detail">{note.detail}</p>
+              </div>
+            </div>
+          ))
+        }
+      </div>
+      <div class="price-action">
+        <div class="price-total">$<span>{data.basePrice}</span><em>{data.currency}</em></div>
+        <button
+          class="btn"
+          data-interactive
+          data-magnetic
+          data-add-cart
+          data-name="Eau de Parfum · Pour Elle"
+          data-price={data.basePrice}
+          data-image={data.image}
+        >
+          Añadir →
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  const parfumStage = document.getElementById('parfumStage');
+  const parfumBottle = document.getElementById('parfumBottle');
+  if (parfumStage && parfumBottle) {
+    parfumStage.addEventListener('mousemove', (e) => {
+      const evt = e as MouseEvent;
+      const rect = parfumStage.getBoundingClientRect();
+      const x = evt.clientX - rect.left;
+      const y = evt.clientY - rect.top;
+      const cx = rect.width / 2;
+      const cy = rect.height / 2;
+      const ry = ((x - cx) / cx) * 25;
+      const rx = ((y - cy) / cy) * -10;
+      parfumBottle.style.transform = `translate(-50%, -50%) rotateY(${ry}deg) rotateX(${rx}deg)`;
+    });
+    parfumStage.addEventListener('mouseleave', () => {
+      parfumBottle.style.transform = 'translate(-50%, -50%) rotateY(0) rotateX(0)';
+    });
+  }
+
+  document.querySelectorAll<HTMLElement>('.note-accordion').forEach((acc) => {
+    acc.addEventListener('click', () => {
+      document.querySelectorAll<HTMLElement>('.note-accordion').forEach((a) => {
+        if (a !== acc) a.classList.remove('open');
+      });
+      acc.classList.toggle('open');
+    });
+  });
+</script>
