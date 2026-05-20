@@ -29,7 +29,7 @@ const orgSchema = {
   '@type': 'Organization',
   name: site.name,
   url: site.url,
-  logo: new URL('/icon-512.png', site.url).toString(),
+  logo: new URL('/favicons/icon-512.png', site.url).toString(),
   description,
   email: site.contact.email,
   telephone: site.contact.phone,
@@ -57,11 +57,12 @@ const orgSchema = {
     <meta name="description" content={description} />
     <link rel="canonical" href={canonicalURL} />
 
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="alternate icon" href="/favicon.ico" />
-    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicons/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicons/favicon-16x16.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicons/apple-touch-icon.png" />
     <link rel="manifest" href="/site.webmanifest" />
-    <meta name="theme-color" content="#050302" />
+    <meta name="theme-color" content="#0E4434" />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -78,6 +79,7 @@ const orgSchema = {
     <meta property="og:image" content={ogImageURL} />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={`${site.name} — ${site.tagline}`} />
     <meta property="og:locale" content="es_ES" />
 
     <meta name="twitter:card" content="summary_large_image" />
