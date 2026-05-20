@@ -4,7 +4,9 @@ import sitemap from '@astrojs/sitemap';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://maisonyr.com',
+  // URL real del deploy en Cloudflare Pages. Cuando se conecte el dominio
+  // definitivo maisonyr.com, cambiar de vuelta a 'https://maisonyr.com'.
+  site: 'https://maison-yr.pages.dev',
   output: 'static',
   trailingSlash: 'never',
   integrations: [
