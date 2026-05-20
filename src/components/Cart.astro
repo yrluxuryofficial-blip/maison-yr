@@ -32,7 +32,9 @@ const whatsappHref = `https://wa.me/${whatsapp}?text=${encodeURIComponent('Hola,
 
     <!-- Estado vacío -->
     <div class="cart-empty" id="cartEmpty">
-      <div class="cart-empty-emblem"><span>YR</span></div>
+      <div class="cart-empty-emblem">
+        <img src="/favicons/apple-touch-icon-v2.png" alt="" loading="lazy" decoding="async" />
+      </div>
       <p class="cart-empty-title">Tu cotización está vacía.</p>
       <p class="cart-empty-sub">
         Elegí piezas y armá tu solicitud. Te contactamos para coordinar pago y envío.
@@ -332,7 +334,17 @@ const whatsappHref = `https://wa.me/${whatsapp}?text=${encodeURIComponent('Hola,
     align-items: center;
     justify-content: center;
     margin-bottom: 8px;
+    overflow: hidden;
+    position: relative;
     box-shadow: 0 0 16px rgba(212, 178, 102, 0.25);
+  }
+  .cart-empty-emblem img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
   }
   .cart-empty-emblem span {
     font-family: 'Forum', serif;

@@ -247,23 +247,22 @@ nav {
   align-items: center;
   justify-content: center;
   position: relative;
+  overflow: hidden;
   box-shadow: 0 0 14px rgba(212, 178, 102, 0.3);
   transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 .logo-wrap:hover .logo-emblem {
   transform: rotate(360deg);
 }
-.logo-emblem::before {
-  content: '';
+.logo-emblem img {
   position: absolute;
-  top: 2px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 3px;
-  height: 3px;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
   border-radius: 50%;
-  background: var(--gold);
 }
+/* Fallback: si por algo se renderizara un <span>YR</span> (caso legacy) */
 .logo-emblem span {
   font-family: 'Forum', serif;
   font-size: 18px;
