@@ -4,6 +4,9 @@
 /beauty         /belleza         301
 /lipgloss       /belleza         301
 /men            /hombre          301
+/swimwear       /trajes-de-bano  301
+/bikini         /trajes-de-bano  301
+/banadores      /trajes-de-bano  301
 
 # Atajos al manifeste y contacto (anchors de la home)
 /atelier        /#atelier        301

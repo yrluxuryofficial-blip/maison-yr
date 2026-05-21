@@ -181,5 +181,53 @@
     "imagePlaceholder": "/img/yr_golden_kiss.jpg",
     "description": "Rosa intenso con destellos. Edición limitada de la temporada.",
     "tags": ["edicion-limitada"]
+  },
+  {
+    "slug": "bikini-noir-dore",
+    "name": "Bikini Noir Doré",
+    "category": "trajes-de-bano",
+    "categoryLabel": "Trajes de Baño",
+    "price": 149,
+    "currency": "USD",
+    "image": "/img/products/trajes-bikini-noir-dore.jpg",
+    "imagePlaceholder": "/img/yr_lingerie_noir.png",
+    "description": "Bikini en lycra italiana con herrajes dorados grabados a mano. Top triangular y braga clásica.",
+    "tags": ["bestseller"]
+  },
+  {
+    "slug": "monokini-esmeralda",
+    "name": "Monokini Esmeralda",
+    "category": "trajes-de-bano",
+    "categoryLabel": "Trajes de Baño",
+    "price": 189,
+    "currency": "USD",
+    "image": "/img/products/trajes-monokini-esmeralda.jpg",
+    "imagePlaceholder": "/img/yr_lingerie_noir.png",
+    "description": "Trikini de una pieza en verde esmeralda profundo. Espalda abierta y cierre con monograma YR.",
+    "tags": ["nuevo"]
+  },
+  {
+    "slug": "tankini-blanc-lumiere",
+    "name": "Tankini Blanc Lumière",
+    "category": "trajes-de-bano",
+    "categoryLabel": "Trajes de Baño",
+    "price": 169,
+    "currency": "USD",
+    "image": "/img/products/trajes-tankini-blanc.jpg",
+    "imagePlaceholder": "/img/yr_lingerie_blanc.png",
+    "description": "Tankini marfil con detalles en oro mate. Top con copa moldeada y braga de cintura alta.",
+    "tags": []
+  },
+  {
+    "slug": "conjunto-premium-pour-elle",
+    "name": "Conjunto Premium · Pour Elle",
+    "category": "trajes-de-bano",
+    "categoryLabel": "Trajes de Baño",
+    "price": 229,
+    "currency": "USD",
+    "image": "/img/products/trajes-conjunto-premium.jpg",
+    "imagePlaceholder": "/img/yr_lingerie_chocolat.png",
+    "description": "Conjunto bikini + pareo en seda con monograma YR bordado. Edición Pour Elle de temporada.",
+    "tags": ["signature", "edicion-limitada"]
   }
 ]

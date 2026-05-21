@@ -150,8 +150,9 @@ const orgSchema = {
             if (sideNav) sideNav.classList.add('visible');
           }, 200);
           setTimeout(() => {
-            const pinned = document.getElementById('pinned');
-            if (pinned) pinned.scrollIntoView({ behavior: 'smooth' });
+            // Scroll a la primera sección después del hero (orden actual: HorizontalUniverses).
+            const target = document.getElementById('horizontal');
+            if (target) target.scrollIntoView({ behavior: 'smooth' });
           }, 600);
         }
         if (discoverBtn) discoverBtn.addEventListener('click', activateAtelier);
@@ -267,8 +268,8 @@ const orgSchema = {
         // =========================================
         const navSections = [
           'hero',
-          'pinned',
           'horizontal',
+          'pinned',
           'atelier',
           'configurator',
           'philosophy',

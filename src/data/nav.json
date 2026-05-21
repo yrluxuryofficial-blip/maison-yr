@@ -1,8 +1,8 @@
 {
   "sideNav": [
     { "label": "Inicio", "target": "hero" },
-    { "label": "Perfume", "target": "pinned" },
     { "label": "Universos", "target": "horizontal" },
+    { "label": "Perfume", "target": "pinned" },
     { "label": "Atelier", "target": "atelier" },
     { "label": "Configurador", "target": "configurator" },
     { "label": "Manifiesto", "target": "philosophy" }
