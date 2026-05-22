@@ -8,7 +8,6 @@
     "currency": "USD",
     "image": "/img/products/lenceria-noir-profond.jpg",
     "imagePlaceholder": "/img/yr_lingerie_noir.png",
-    "imagePosition": "0% center",
     "description": "Encaje europeo de Calais con herrajes dorados grabados a mano.",
     "tags": ["bestseller", "encaje"]
   },
@@ -21,7 +20,6 @@
     "currency": "USD",
     "image": "/img/products/lenceria-chocolat-dore.jpg",
     "imagePlaceholder": "/img/yr_lingerie_chocolat.png",
-    "imagePosition": "50% center",
     "description": "Tonalidad cacao con detalles en oro mate. Satén de seda y encaje delicado.",
     "tags": ["nuevo"]
   },
@@ -34,7 +32,6 @@
     "currency": "USD",
     "image": "/img/products/lenceria-blanc-lumiere.jpg",
     "imagePlaceholder": "/img/yr_lingerie_blanc.png",
-    "imagePosition": "100% center",
     "description": "Marfil suave con herrajes dorados. La pureza de la luz hecha pieza.",
     "tags": ["edicion-limitada"]
   },
@@ -49,6 +46,42 @@
     "imagePlaceholder": "/img/yr_lingerie_noir.png",
     "description": "Pieza única en encaje europeo con espalda abierta y cierre con monograma.",
     "tags": []
+  },
+  {
+    "slug": "encaje-noir-edition-atelier",
+    "name": "Conjunto Encaje Noir · Édition Atelier",
+    "category": "lenceria",
+    "categoryLabel": "Lencería",
+    "price": 219,
+    "currency": "USD",
+    "image": "/img/products/lenceria-noir-editorial.jpg",
+    "imagePlaceholder": "/img/yr_lingerie_noir.png",
+    "description": "Edición limitada del atelier. Encaje francés, herrajes oro pulido grabados, medias matching incluidas.",
+    "tags": ["signature"]
+  },
+  {
+    "slug": "encaje-chocolat-edition-atelier",
+    "name": "Conjunto Encaje Chocolat · Édition Atelier",
+    "category": "lenceria",
+    "categoryLabel": "Lencería",
+    "price": 219,
+    "currency": "USD",
+    "image": "/img/products/lenceria-chocolat-editorial.jpg",
+    "imagePlaceholder": "/img/yr_lingerie_chocolat.png",
+    "description": "Cacao profundo con bata de seda translúcida. Detalles de monograma YR en oro mate. Lookbook capsule.",
+    "tags": ["nuevo"]
+  },
+  {
+    "slug": "encaje-blanc-edition-atelier",
+    "name": "Conjunto Encaje Blanc · Édition Atelier",
+    "category": "lenceria",
+    "categoryLabel": "Lencería",
+    "price": 219,
+    "currency": "USD",
+    "image": "/img/products/lenceria-blanc-editorial.jpg",
+    "imagePlaceholder": "/img/yr_lingerie_blanc.png",
+    "description": "Marfil con bata sheer blanca y ligas matching. Pieza editorial del atelier — edición numerada.",
+    "tags": ["edicion-limitada"]
   },
   {
     "slug": "boxer-italiano",
