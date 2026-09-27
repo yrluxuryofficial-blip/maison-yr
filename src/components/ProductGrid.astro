@@ -4,6 +4,7 @@ interface Product {
   name: string;
   category: string;
   categoryLabel: string;
+  subcategory?: string;
   price: number;
   currency: string;
   image: string;
@@ -31,7 +32,12 @@ const tagLabels: Record<string, string> = {
   <div class="product-grid">
     {
       products.map((product) => (
-        <article class="product-card reveal" data-product-slug={product.slug} id={product.slug}>
+        <article
+          class="product-card reveal"
+          data-product-slug={product.slug}
+          data-subcategory={product.subcategory}
+          id={product.slug}
+        >
           <div class="product-card-image">
             <img
               src={product.image}
@@ -39,7 +45,9 @@ const tagLabels: Record<string, string> = {
               onerror="if(!this.dataset.fallbackApplied){this.dataset.fallbackApplied='1';this.src=this.dataset.fallback;}"
               alt={product.name}
               loading="lazy"
-              style={product.imagePosition ? `object-position: ${product.imagePosition}` : undefined}
+              style={
+                product.imagePosition ? `object-position: ${product.imagePosition}` : undefined
+              }
             />
             {product.tags.length > 0 && (
               <span class="product-card-badge">
@@ -48,7 +56,7 @@ const tagLabels: Record<string, string> = {
             )}
           </div>
           <div class="product-card-body">
-            <div class="product-card-category">— {product.categoryLabel}</div>
+            <div class="product-card-category">{product.categoryLabel}</div>
             <h3 class="product-card-name">{product.name}</h3>
             <p class="product-card-desc">{product.description}</p>
             <div class="product-card-footer">
@@ -234,4 +242,3 @@ const tagLabels: Record<string, string> = {
 </style>
 
 <!-- El handler de [data-add-cart] vive en Cart.astro (singleton global) -->
-

@@ -4,11 +4,12 @@
     {
       "title": "Tienda",
       "links": [
-        { "label": "Lencería", "href": "/lenceria" },
-        { "label": "Hombre", "href": "/hombre" },
-        { "label": "Trajes de Baño", "href": "/trajes-de-bano" },
-        { "label": "Perfume", "href": "/perfume" },
-        { "label": "Belleza", "href": "/belleza" }
+        { "label": "Resort", "href": "/resort" },
+        { "label": "Femme", "href": "/femme" },
+        { "label": "Homme", "href": "/homme" },
+        { "label": "Élan", "href": "/elan" },
+        { "label": "Intime", "href": "/intime" },
+        { "label": "Essence", "href": "/essence" }
       ]
     },
     {
@@ -16,7 +17,7 @@
       "links": [
         { "label": "Historia", "href": "/historia" },
         { "label": "La Fundadora", "href": "/historia#fundadora" },
-        { "label": "Visión 2030", "href": "/historia#vision" },
+        { "label": "Lo que viene", "href": "/historia#vision" },
         { "label": "Atelier", "href": "/#atelier" }
       ]
     },
@@ -30,11 +31,11 @@
     }
   ],
   "newsletter": {
-    "h2": "Únete al <em>Cercle</em> YR.",
+    "h2": "Únete al <em>Círculo</em> YR.",
     "intro": "Accede primero a colecciones cápsula, ediciones limitadas y eventos privados de la maison.",
     "placeholder": "tu correo electrónico",
     "submit": "Unirse →",
-    "success": "— Bienvenida al Cercle YR ✦",
-    "unconfigured": "— Configuración pendiente. Escríbenos por WhatsApp"
+    "success": "Bienvenida al Círculo YR ✦",
+    "unconfigured": "Configuración pendiente. Escríbenos por WhatsApp."
   }
 }

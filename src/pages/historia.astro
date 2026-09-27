@@ -7,14 +7,14 @@ import WhatsAppFloat from '../components/WhatsAppFloat.astro';
 import site from '../data/site.json';
 
 const title = 'Historia & Concepto · Maison YR';
-const description = `La historia de ${site.name}: el concepto, la fundadora Yesenia Rodríguez, el origen colombiano y la visión 2030.`;
+const description = `La historia de ${site.name}: el concepto, la fundadora Yesenia Rodríguez, el origen colombiano y lo que viene.`;
 
 // 6 valores que componen la esencia de la maison.
 const valores = [
   {
     roman: 'I',
     title: 'Sensualidad',
-    body: 'Cada pieza es una conversación íntima entre la prenda y la piel. La sensualidad no se grita — se habita, se viste, se respira.',
+    body: 'Cada pieza es una conversación íntima entre la prenda y la piel. La sensualidad no se grita. Se habita, se viste, se respira.',
   },
   {
     roman: 'II',
@@ -39,18 +39,18 @@ const valores = [
   {
     roman: 'VI',
     title: 'Firma',
-    body: 'No es una marca — es una manera de habitar el mundo. Una firma que se reconoce sin necesidad de logo visible.',
+    body: 'No es solo una marca. Es una manera de habitar el mundo. Una firma que se reconoce sin necesidad de logo visible.',
   },
 ];
 
-// 6 puntos de la visión a 2030.
+// Lo que viene: objetivos y mercados de referencia, no aperturas confirmadas.
 const vision = [
-  'Nuevas líneas de Eau de Parfum para hombre y ediciones limitadas estacionales.',
-  'Línea de accesorios en cuero y joyería fina con monograma YR.',
-  'Expansión de presencia a Europa — París como capital olfativa.',
-  'Apertura en Medio Oriente — Dubái como puerta al mercado de lujo regional.',
-  'Boutique física insignia en Colombia con experiencia atelier inmersiva.',
-  'Eventos privados internacionales para el Cercle YR — pre-lanzamientos exclusivos.',
+  'Nuevas líneas de Eau de Parfum para él y para ella, junto a ediciones limitadas y estacionales.',
+  'Expansión progresiva de Maison YR en Europa y Latinoamérica, con París entre los mercados de referencia de la marca.',
+  'Desarrollo de presencia en Oriente Medio, con Dubái como punto estratégico para el mercado del lujo.',
+  'Exploración de futuras boutiques y experiencias físicas de Maison YR en España y Colombia.',
+  'Nuevas colecciones Resort y futuras líneas Femme, Homme, Élan e Intime que amplían el universo YR.',
+  'Eventos privados internacionales para el Círculo YR y prelanzamientos exclusivos.',
 ];
 ---
 
@@ -59,11 +59,11 @@ const vision = [
   <MobileMenu />
   <main id="main">
     <section class="institutional-hero">
-      <div class="institutional-kicker">— La Maison</div>
+      <div class="institutional-kicker">La Maison</div>
       <h1 class="institutional-title">Historia <em>&amp; Concepto</em></h1>
       <p class="institutional-lede">
-        Una maison nacida en Medellín con vocación internacional. La historia de una idea — la
-        sensualidad como firma — y de la mujer que decidió construirla.
+        Una maison nacida en Medellín con vocación internacional. La historia de una idea, la
+        presencia como firma, y de la mujer que decidió construirla.
       </p>
     </section>
 
@@ -72,23 +72,22 @@ const vision = [
          ========================================= -->
     <section class="historia-section" id="concepto">
       <div class="historia-inner narrow">
-        <div class="historia-eyebrow">— Capítulo I · Manifiesto</div>
-        <h2 class="historia-h2">Más que <em>lencería</em>.<br />Una <em>firma</em>.</h2>
+        <div class="historia-eyebrow">Capítulo I · Manifiesto</div>
+        <h2 class="historia-h2">Más que <em>moda</em>.<br />Una <em>firma</em>.</h2>
 
         <p class="historia-paragraph">
           Maison YR no nació para seguir tendencias. Nació para crear <em>presencia</em>.
         </p>
 
         <p class="historia-paragraph">
-          Creemos en la lencería como una <em>extensión de la mujer que la lleva</em>:
-          segura, elegante, inolvidable. Cada pieza está diseñada para sentirse íntima y
-          poderosa al mismo tiempo — <strong>como un secreto que no necesita explicación</strong>.
+          Creemos en piezas que acompañan una forma de vivir: <em>segura, elegante, sensual e
+          inolvidable</em>. Cada creación está pensada para hacerte sentir especial, desde lo que
+          vistes hasta los pequeños detalles que forman parte de tu día.
         </p>
 
         <p class="historia-paragraph">
-          Nuestra historia une tres mundos: la <em>sensualidad de la lencería europea</em>,
-          la <em>perfumería de autor inspirada en Grasse</em> y la <em>estética contemporánea
-          del luxury beauty</em>.
+          Nuestra historia une <em>moda, beachwear, accesorios, perfumería y belleza</em> bajo una
+          misma visión: lujo contemporáneo, personalidad y atención al detalle.
         </p>
 
         <p class="historia-paragraph editorial-highlight">
@@ -97,8 +96,8 @@ const vision = [
         </p>
 
         <p class="historia-paragraph">
-          Ediciones cuidadas, detalles exclusivos y una identidad pensada para
-          <em>permanecer en la memoria</em> de quien la descubre.
+          Ediciones cuidadas, materiales seleccionados y una identidad diseñada para
+          <em>permanecer</em>.
         </p>
 
         <p class="manifesto-closing">
@@ -111,10 +110,10 @@ const vision = [
 
       <blockquote class="pullquote">
         <p>
-          "No vendo solo lencería.<br />
-          Vendo <strong>seguridad</strong>, <strong>elegancia</strong> y una <strong>sensación</strong>."
+          "No creo solo productos.<br />
+          Creo <strong>seguridad</strong>, <strong>elegancia</strong> y una <strong>sensación</strong>."
         </p>
-        <cite>— Yesenia Rodríguez · Fondatrice</cite>
+        <cite>Yesenia Rodríguez · Fundadora</cite>
       </blockquote>
     </section>
 
@@ -128,11 +127,11 @@ const vision = [
             <div class="portrait-emblem">
               <img src="/favicons/apple-touch-icon-v2.png" alt="" loading="lazy" decoding="async" />
             </div>
-            <div class="portrait-placeholder-label">— Yesenia Rodríguez</div>
+            <div class="portrait-placeholder-label">Yesenia Rodríguez</div>
           </div>
         </div>
         <div class="historia-grid-text">
-          <div class="historia-eyebrow">— Capítulo II · La Fundadora</div>
+          <div class="historia-eyebrow">Capítulo II · La Fundadora</div>
           <h2 class="historia-h2"><em>Yesenia</em><br />Rodríguez.</h2>
           <p class="founder-credentials">
             Española de raíces canarias.<br />
@@ -174,7 +173,7 @@ const vision = [
           mirara al espejo.<br />
           Algo elegante, sexy y fuerte… pero también <em>humano</em>.
         </p>
-        <div class="quote-sign">— Yesenia Rodríguez</div>
+        <div class="quote-sign">Yesenia Rodríguez</div>
       </div>
 
       <div class="founder-closing">
@@ -202,13 +201,13 @@ const vision = [
          ========================================= -->
     <section class="historia-section" id="origen">
       <div class="historia-inner narrow">
-        <div class="historia-eyebrow">— Origen</div>
+        <div class="historia-eyebrow">Origen</div>
         <h2 class="historia-h2">Esmeralda, <em>dorado</em>, glamour.</h2>
         <p class="historia-paragraph">
-          La idea nació de tres símbolos que se cruzaron sin pedirlo: la <em>esmeralda colombiana</em>
-          — piedra orgullo del territorio, verde profundo como el atelier; el <em>dorado</em> — color
-          de la firma, de los herrajes, de los monogramas grabados a mano; y el <em>glamour europeo</em>
-          — la lección de las maisons históricas: que el lujo se construye con tiempo, no con prisa.
+          La idea nació de tres símbolos que se cruzaron sin pedirlo. La <em>esmeralda colombiana</em>,
+          piedra orgullo del territorio, verde profundo como el atelier. El <em>dorado</em>, color de
+          la firma, de los herrajes, de los monogramas grabados a mano. Y el <em>glamour europeo</em>,
+          la lección de las maisons históricas: el lujo se construye con tiempo, no con prisa.
         </p>
         <p class="historia-paragraph">
           Esos tres símbolos no son decoración. Son la paleta operativa de Maison YR. Verde esmeralda
@@ -224,11 +223,11 @@ const vision = [
          ========================================= -->
     <section class="historia-section alt" id="esencia">
       <div class="historia-inner">
-        <div class="historia-eyebrow centered">— Esencia</div>
+        <div class="historia-eyebrow centered">Esencia</div>
         <h2 class="historia-h2 centered">Seis principios. <em>Una firma</em>.</h2>
         <p class="historia-paragraph centered narrow">
-          La esencia de la maison se sostiene en seis valores que atraviesan cada decisión —
-          desde el corte de un encaje hasta el peso del papel de la guía de uso.
+          La esencia de la maison se sostiene en seis valores que atraviesan cada decisión,
+          desde el corte de una pieza hasta el peso del papel de la guía de uso.
         </p>
         <div class="valores-grid">
           {
@@ -249,11 +248,15 @@ const vision = [
          ========================================= -->
     <section class="historia-section" id="vision">
       <div class="historia-inner narrow">
-        <div class="historia-eyebrow">— Visión 2030</div>
+        <div class="historia-eyebrow">Visión</div>
         <h2 class="historia-h2">Lo que <em>viene</em>.</h2>
         <p class="historia-paragraph">
-          La maison crece sin perder su cadencia. La hoja de ruta hasta 2030 es deliberada — cada
-          paso responde a la misma pregunta: ¿esto sigue siendo una firma, o se vuelve un catálogo?
+          Maison YR crece con intención. Cada nueva colección, mercado y experiencia nace para
+          ampliar un universo <em>sin perder su identidad</em>.
+        </p>
+        <p class="historia-paragraph editorial-highlight">
+          Lo que viene no es más producto.<br />
+          Es una forma <em>más grande</em> de vivir YR.
         </p>
         <ul class="vision-list">
           {
@@ -268,8 +271,8 @@ const vision = [
           }
         </ul>
         <div class="vision-cta">
-          <a href="/lenceria" class="btn historia-btn" data-interactive data-magnetic>
-            Explorar los universos →
+          <a href="/resort" class="btn historia-btn" data-interactive data-magnetic>
+            Descubrir la colección Resort →
           </a>
         </div>
       </div>

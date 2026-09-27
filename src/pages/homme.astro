@@ -1,0 +1,23 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Nav from '../components/Nav.astro';
+import MobileMenu from '../components/MobileMenu.astro';
+import Footer from '../components/Footer.astro';
+import WhatsAppFloat from '../components/WhatsAppFloat.astro';
+import ComingSoon from '../components/ComingSoon.astro';
+import categories from '../data/categories.json';
+
+const category = categories.find((c) => c.slug === 'homme')!;
+const title = `${category.label} · Maison YR`;
+const description = `${category.label} · Maison YR. Las futuras colecciones masculinas de la maison. Próximamente.`;
+---
+
+<BaseLayout title={title} description={description}>
+  <Nav />
+  <MobileMenu />
+  <main id="main">
+    <ComingSoon label={category.label} description={category.description} />
+  </main>
+  <Footer />
+  <WhatsAppFloat />
+</BaseLayout>

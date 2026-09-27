@@ -1,0 +1,52 @@
+[
+  {
+    "slug": "resort",
+    "label": "Resort",
+    "href": "/resort",
+    "active": true,
+    "description": "Bikinis, bañadores, flip flops, beach bag, beach towel, pareos y resortwear.",
+    "subcategories": [
+      { "slug": "bikinis-banadores", "label": "Bikinis y bañadores" },
+      { "slug": "flip-flops", "label": "Flip Flops" },
+      { "slug": "beach-bag", "label": "Beach Bag" },
+      { "slug": "beach-towel", "label": "Beach Towel" },
+      { "slug": "pareos-vestidos", "label": "Pareos y vestidos de playa" },
+      { "slug": "resortwear-conjuntos", "label": "Resortwear y conjuntos" }
+    ]
+  },
+  {
+    "slug": "femme",
+    "label": "Femme",
+    "href": "/femme",
+    "active": false,
+    "description": "Futuras colecciones de ropa de mujer."
+  },
+  {
+    "slug": "homme",
+    "label": "Homme",
+    "href": "/homme",
+    "active": false,
+    "description": "Futuras colecciones masculinas."
+  },
+  {
+    "slug": "elan",
+    "label": "Élan",
+    "href": "/elan",
+    "active": false,
+    "description": "Movimiento, gimnasio y athleisure."
+  },
+  {
+    "slug": "intime",
+    "label": "Intime",
+    "href": "/intime",
+    "active": false,
+    "description": "El universo de lencería de la maison."
+  },
+  {
+    "slug": "essence",
+    "label": "Essence",
+    "href": "/essence",
+    "active": false,
+    "description": "Perfume y belleza en una sola categoría."
+  }
+]

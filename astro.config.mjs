@@ -9,6 +9,15 @@ export default defineConfig({
   site: 'https://maison-yr.pages.dev',
   output: 'static',
   trailingSlash: 'never',
+  // Categorías anteriores → nuevo menú. En Cloudflare Pages manda public/_redirects
+  // (301); esto cubre `astro dev` y cualquier otro hosting estático.
+  redirects: {
+    '/trajes-de-bano': '/resort',
+    '/lenceria': '/intime',
+    '/hombre': '/homme',
+    '/perfume': '/essence',
+    '/belleza': '/essence',
+  },
   integrations: [
     sitemap({
       filter: (page) => !page.includes('/test'),

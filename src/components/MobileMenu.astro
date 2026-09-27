@@ -1,15 +1,18 @@
 ---
-// Panel mobile lateral. Espejo del Nav: 4 categorías + botón Buscar
-// (data-search-trigger abre el SearchOverlay montado en BaseLayout).
+// Panel mobile lateral. Espejo del Nav: categorías de data/categories.json +
+// botón Buscar (data-search-trigger abre el SearchOverlay montado en BaseLayout).
+import categories from '../data/categories.json';
 ---
 
 <div class="mobile-menu" id="mobileMenu" aria-label="Menú móvil">
   <a href="/" data-interactive>Inicio</a>
-  <a href="/lenceria" data-interactive>Lencería</a>
-  <a href="/hombre" data-interactive>Hombre</a>
-  <a href="/trajes-de-bano" data-interactive>Trajes de Baño</a>
-  <a href="/perfume" data-interactive>Perfume</a>
-  <a href="/belleza" data-interactive>Belleza</a>
+  {
+    categories.map((c) => (
+      <a href={c.href} data-interactive>
+        {c.label}
+      </a>
+    ))
+  }
   <div class="mobile-menu-divider"></div>
   <button class="mobile-search" type="button" data-search-trigger data-interactive>
     <svg
@@ -45,7 +48,7 @@
 </div>
 
 <style>
-  /* Botón Buscar dentro del panel mobile — hereda el "look" de los <a>
+  /* Botón Buscar dentro del panel mobile: hereda el "look" de los <a>
      hermanos: misma tipografía itálica Cormorant, padding, border-bottom dorado.
      La lupa va antes del texto. */
   .mobile-search {

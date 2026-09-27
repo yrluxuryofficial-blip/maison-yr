@@ -17,7 +17,7 @@ const whatsappHref = `https://wa.me/${phone}?text=${encodeURIComponent(site.cont
   <MobileMenu />
   <main id="main">
     <section class="institutional-hero">
-      <div class="institutional-kicker">— La Maison</div>
+      <div class="institutional-kicker">La Maison</div>
       <h1 class="institutional-title">Contacto</h1>
       <p class="institutional-lede">
         Atención personalizada, prensa, ventas privadas y consultas sobre piezas a medida.
@@ -28,7 +28,7 @@ const whatsappHref = `https://wa.me/${phone}?text=${encodeURIComponent(site.cont
     <section class="contact-grid-section">
       <div class="contact-grid">
         <article class="contact-card">
-          <div class="contact-card-label">— Correo</div>
+          <div class="contact-card-label">Correo</div>
           <a class="contact-card-value" href={`mailto:${site.contact.email}`} data-interactive>
             {site.contact.email}
           </a>
@@ -36,7 +36,7 @@ const whatsappHref = `https://wa.me/${phone}?text=${encodeURIComponent(site.cont
         </article>
 
         <article class="contact-card">
-          <div class="contact-card-label">— WhatsApp</div>
+          <div class="contact-card-label">WhatsApp</div>
           <a class="contact-card-value" href={whatsappHref} target="_blank" rel="noopener noreferrer" data-interactive>
             {site.contact.whatsappDisplay ?? site.contact.phone}
           </a>
@@ -44,7 +44,7 @@ const whatsappHref = `https://wa.me/${phone}?text=${encodeURIComponent(site.cont
         </article>
 
         <article class="contact-card">
-          <div class="contact-card-label">— Maison</div>
+          <div class="contact-card-label">Maison</div>
           <span class="contact-card-value">{site.contact.addressLine}</span>
           <p class="contact-card-note">
             Visitas con cita previa.
@@ -53,7 +53,7 @@ const whatsappHref = `https://wa.me/${phone}?text=${encodeURIComponent(site.cont
         </article>
 
         <article class="contact-card">
-          <div class="contact-card-label">— Redes</div>
+          <div class="contact-card-label">Redes</div>
           <div class="contact-card-links">
             <a href={site.social.instagram} target="_blank" rel="noopener" data-interactive>Instagram →</a>
             <a href={site.social.tiktok} target="_blank" rel="noopener" data-interactive>TikTok →</a>

@@ -139,7 +139,7 @@ Abrí http://localhost:4321, scrolleá hasta _Únete al Cercle YR_, mandá tu em
 
 - La fila aparece en la Sheet (puede tardar 1-2 segundos).
 - Recibís un email en `OWNER_EMAIL`.
-- El sitio muestra `— Bienvenida al Cercle YR ✦` debajo del formulario.
+- El sitio muestra `Bienvenida al Círculo YR ✦` debajo del formulario.
 
 Si la env var no está seteada, el form muestra `— Configuración pendiente. Escríbenos por WhatsApp` en su lugar.
 

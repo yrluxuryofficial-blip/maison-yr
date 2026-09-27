@@ -3,56 +3,104 @@
     "slug": "hs-1",
     "roman": "N°I",
     "tag": "Universo I",
-    "subtitle": "Pour <em>Elle</em>",
-    "name": "Lingerie<br><em>Pour Elle</em>.",
-    "description": "Encaje europeo tejido en Calais. Satén de seda. Herrajes dorados con monograma YR grabado a mano.",
+    "subtitle": "Colección <em>Resort</em>",
+    "name": "Colección<br><em>Resort</em>.",
+    "description": "La colección con la que abre la maison. Bikinis y bañadores, flip flops, beach bag, beach towel, pareos y resortwear para vivir el verano con la firma YR.",
     "features": [
-      { "label": "Material", "value": "Encaje · Satén" },
-      { "label": "Origen", "value": "Calais, FR" },
-      { "label": "Tonos", "value": "Noir · Marrón · Blanc" }
+      {
+        "label": "Estado",
+        "value": "Disponible"
+      },
+      {
+        "label": "Líneas",
+        "value": "Baño · Playa · Resortwear"
+      },
+      {
+        "label": "Detalle",
+        "value": "Herrajes dorados YR"
+      }
     ],
-    "cta": { "label": "Explorar →", "href": "#" }
+    "cta": {
+      "label": "Descubrir Resort →",
+      "href": "/resort"
+    }
   },
   {
     "slug": "hs-2",
     "roman": "N°II",
     "tag": "Universo II",
-    "subtitle": "YR <em>Hombre</em>",
-    "name": "YR <em>Hombre</em>.<br>Pour <em>Lui</em>.",
-    "description": "\"La confianza es tu mejor atuendo.\" Lencería masculina pensada para el detalle — boxer, brief y homewear de lujo.",
+    "subtitle": "<em>Intime</em>",
+    "name": "Intime<br><em>Pour Elle</em>.",
+    "description": "El universo de lencería de la maison. Encaje europeo, satén de seda y herrajes dorados con monograma YR grabado a mano.",
     "features": [
-      { "label": "Fit", "value": "Corte italiano" },
-      { "label": "Tela", "value": "Toque suave premium" },
-      { "label": "Estuche", "value": "Estuche de terciopelo negro" }
+      {
+        "label": "Material",
+        "value": "Encaje · Satén"
+      },
+      {
+        "label": "Origen",
+        "value": "Calais, FR"
+      },
+      {
+        "label": "Estado",
+        "value": "Próximamente"
+      }
     ],
-    "cta": { "label": "Explorar →", "href": "#" }
+    "cta": {
+      "label": "Próximamente →",
+      "href": "/intime"
+    }
   },
   {
     "slug": "hs-3",
     "roman": "N°III",
     "tag": "Universo III",
-    "subtitle": "Eau de <em>Parfum</em>",
-    "name": "Eau de<br><em>Parfum</em>.",
-    "description": "Bergamota, rosa, jazmín, vainilla, ámbar, sándalo. Una composición olfativa que se queda en la piel y en la memoria.",
+    "subtitle": "YR <em>Homme</em>",
+    "name": "YR <em>Homme</em>.<br>Pour <em>Lui</em>.",
+    "description": "\"La confianza es tu mejor atuendo.\" Las futuras colecciones masculinas de la maison, pensadas para el detalle.",
     "features": [
-      { "label": "Volumen", "value": "100ml · 3.4 fl oz" },
-      { "label": "Origen", "value": "Grasse, FR" },
-      { "label": "Persistencia", "value": "12 horas+" }
+      {
+        "label": "Fit",
+        "value": "Corte italiano"
+      },
+      {
+        "label": "Tela",
+        "value": "Toque suave premium"
+      },
+      {
+        "label": "Estado",
+        "value": "Próximamente"
+      }
     ],
-    "cta": { "label": "Descubrir →", "href": "#" }
+    "cta": {
+      "label": "Próximamente →",
+      "href": "/homme"
+    }
   },
   {
     "slug": "hs-4",
     "roman": "N°IV",
     "tag": "Universo IV",
-    "subtitle": "Golden <em>Kiss</em>",
-    "name": "Golden<br><em>Kiss</em>.",
-    "description": "Lipgloss con brillo intenso, fórmula hidratante y aroma irresistible. Seis tonos creados para combinarse contigo.",
+    "subtitle": "<em>Essence</em>",
+    "name": "Essence<br><em>Parfum</em>.",
+    "description": "Perfume y belleza en una sola categoría. Bergamota, rosa, jazmín, vainilla, ámbar y sándalo. Una composición que se queda en la piel y en la memoria.",
     "features": [
-      { "label": "Volumen", "value": "15ml · 0.44 fl oz" },
-      { "label": "Tonos", "value": "6 disponibles" },
-      { "label": "Garantía", "value": "Libre de crueldad" }
+      {
+        "label": "Volumen",
+        "value": "100ml · 3.4 fl oz"
+      },
+      {
+        "label": "Origen",
+        "value": "Grasse, FR"
+      },
+      {
+        "label": "Estado",
+        "value": "Próximamente"
+      }
     ],
-    "cta": { "label": "Ver tonos →", "href": "#configurator" }
+    "cta": {
+      "label": "Próximamente →",
+      "href": "/essence"
+    }
   }
 ]

@@ -10,14 +10,14 @@ import universes from '../data/universes.json';
           <div class={`h-slide ${u.slug}`}>
             <div class="h-slide-inner">
               <div class="h-visual">
-                <div class="frame-top">— {u.tag}</div>
+                <div class="frame-top">{u.tag}</div>
                 <div class="frame-roman">{u.roman}</div>
                 <div class="frame-bottom">
                   <div class="name" set:html={u.subtitle} />
                 </div>
               </div>
               <div class="h-text">
-                <div class="roman">— {u.roman}</div>
+                <div class="roman">{u.roman}</div>
                 <h3 set:html={u.name} />
                 <p>{u.description}</p>
                 <ul class="feature-list">

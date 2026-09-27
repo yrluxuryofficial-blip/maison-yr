@@ -1,14 +1,23 @@
-# Typos / variantes en otros idiomas → páginas reales en español
-/lingerie       /lenceria        301
-/parfum         /perfume         301
-/beauty         /belleza         301
-/lipgloss       /belleza         301
-/men            /hombre          301
-/swimwear       /trajes-de-bano  301
-/bikini         /trajes-de-bano  301
-/banadores      /trajes-de-bano  301
+# Categorías anteriores → nuevo menú (Resort activa, resto Próximamente)
+/trajes-de-bano /resort          301
+/lenceria       /intime          301
+/hombre         /homme           301
+/perfume        /essence         301
+/belleza        /essence         301
 
-# Atajos al manifeste y contacto (anchors de la home)
+# Typos / variantes en otros idiomas → páginas reales
+/lingerie       /intime          301
+/parfum         /essence         301
+/beauty         /essence         301
+/lipgloss       /essence         301
+/men            /homme           301
+/swimwear       /resort          301
+/bikini         /resort          301
+/banadores      /resort          301
+/women          /femme           301
+/mujer          /femme           301
+
+# Atajos al manifiesto y contacto (anchors de la home)
 /atelier        /#atelier        301
 /about          /#philosophy     301
 /manifesto      /#philosophy     301

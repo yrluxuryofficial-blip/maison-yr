@@ -813,27 +813,28 @@ nav {
   inset: 0;
   background: linear-gradient(180deg, rgba(5, 3, 2, 0) 40%, rgba(5, 3, 2, 0.85) 100%);
 }
+/* Resort: aún sin fotografía de campaña. Degradado esmeralda, nude y marrón. */
 .hs-1 .h-visual {
+  background-image:
+    radial-gradient(ellipse at 50% 30%, rgba(230, 196, 155, 0.24), transparent 60%),
+    linear-gradient(170deg, var(--emerald-mid) 0%, var(--emerald-deep) 55%, #2a1c0e 100%);
+  background-color: var(--emerald-deep);
+}
+.hs-2 .h-visual {
   background-image: url('/img/yr_lingerie_noir.png');
   background-size: contain;
   background-position: center;
   background-color: #050302;
 }
-.hs-2 .h-visual {
+.hs-3 .h-visual {
   background-image: url('/img/yr_men_logo.jpg');
   background-position: center;
 }
-.hs-3 .h-visual {
+.hs-4 .h-visual {
   background-image: url('/img/yr_parfum_green.jpg');
   background-position: center;
   background-color: var(--black);
   background-size: contain;
-}
-.hs-4 .h-visual {
-  background-image: url('/img/yr_golden_kiss.jpg');
-  background-position: center;
-  background-size: contain;
-  background-color: #2a1c0e;
 }
 .h-visual .frame-top {
   position: absolute;

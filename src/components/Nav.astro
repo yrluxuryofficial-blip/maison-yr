@@ -1,7 +1,8 @@
 ---
-// Nav global. Los 4 enlaces principales apuntan a las páginas de catálogo;
-// el botón "Buscar" abre el SearchOverlay (montado en BaseLayout) via
-// el atributo data-search-trigger.
+// Nav global. Las categorías salen de data/categories.json: Resort está activa
+// y el resto abre la pantalla Próximamente. El botón "Buscar" abre el
+// SearchOverlay (montado en BaseLayout) via el atributo data-search-trigger.
+import categories from '../data/categories.json';
 ---
 
 <nav aria-label="Navegación principal">
@@ -15,11 +16,13 @@
   </div>
   <div class="nav-center">
     <a href="/" data-interactive>Inicio</a>
-    <a href="/lenceria" data-interactive>Lencería</a>
-    <a href="/hombre" data-interactive>Hombre</a>
-    <a href="/trajes-de-bano" data-interactive>Trajes de Baño</a>
-    <a href="/perfume" data-interactive>Perfume</a>
-    <a href="/belleza" data-interactive>Belleza</a>
+    {
+      categories.map((c) => (
+        <a href={c.href} data-interactive>
+          {c.label}
+        </a>
+      ))
+    }
   </div>
   <div class="nav-right">
     <button

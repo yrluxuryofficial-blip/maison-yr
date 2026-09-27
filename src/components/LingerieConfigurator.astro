@@ -17,7 +17,7 @@ const activeNameHTML = `<em>${activeNameParts[0]}</em> ${activeNameParts.slice(1
     <div class="lingerie-preview" id="lingeriePreview" data-color={activeColorway.slug}>
       <div class="silhouette" aria-hidden="true"></div>
       <div class="lace" aria-hidden="true"></div>
-      <div class="frame-top">— {data.frameTag}</div>
+      <div class="frame-top">{data.frameTag}</div>
       <div class="frame-roman">{data.frameRoman}</div>
       <div class="frame-bottom">
         <div class="name" id="colorName" set:html={activeNameHTML} />
@@ -30,7 +30,7 @@ const activeNameHTML = `<em>${activeNameParts[0]}</em> ${activeNameParts.slice(1
       <p class="description">{data.intro.description}</p>
       <div class="config-block">
         <div class="config-label">
-          <span class="label-text">— Color</span>
+          <span class="label-text">Color</span>
           <span class="label-value" id="colorLabel">{activeColorway.name}</span>
         </div>
         <div class="colorway-options" id="colorwayOptions">
@@ -53,7 +53,7 @@ const activeNameHTML = `<em>${activeNameParts[0]}</em> ${activeNameParts.slice(1
       </div>
       <div class="config-block">
         <div class="config-label">
-          <span class="label-text">— Talla</span>
+          <span class="label-text">Talla</span>
           <span class="label-value" id="sizeLabel">{data.defaultSize}</span>
         </div>
         <div class="size-options" id="sizeOptions">

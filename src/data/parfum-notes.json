@@ -5,9 +5,9 @@
     "sub": "Mueve el cursor sobre el frasco para verlo en 3D. Haz click en cada nota para explorar."
   },
   "intro": {
-    "roman": "— N° III / Pour Elle",
+    "roman": "N° III / Pour Elle",
     "h2": "Una <em>pirámide</em><br>olfativa.",
-    "intro": "Tres capas que se revelan en el tiempo — la primera impresión, el corazón, y la huella que dejas al irte. <em>Haz click en cada nota para explorar</em>."
+    "intro": "Tres capas que se revelan en el tiempo: la primera impresión, el corazón y la huella que dejas al irte. <em>Haz click en cada nota para explorar</em>."
   },
   "image": "/img/yr_parfum_pink.jpg",
   "alt": "YR Eau de Parfum Pour Elle",
@@ -15,19 +15,19 @@
   "currency": "USD",
   "notes": [
     {
-      "label": "— Notas de salida",
+      "label": "Notas de salida",
       "summary": "Bergamota · Pera",
-      "detail": "La primera impresión — fresca y cítrica. Bergamota italiana y pera nashi crean una apertura luminosa que dura los primeros 30 minutos sobre la piel."
+      "detail": "La primera impresión, fresca y cítrica. Bergamota italiana y pera nashi crean una apertura luminosa que dura los primeros 30 minutos sobre la piel."
     },
     {
-      "label": "— Notas de corazón",
+      "label": "Notas de corazón",
       "summary": "Rosa · Jazmín · Peonía",
       "detail": "El alma de la fragancia. Rosa de Damasco, jazmín de Grasse y peonía blanca componen un bouquet floral profundo, sensual y persistente."
     },
     {
-      "label": "— Notas de fondo",
+      "label": "Notas de fondo",
       "summary": "Vainilla · Ámbar · Sándalo",
-      "detail": "La huella. Vainilla bourbon, ámbar resinoso y madera de sándalo — la base cálida y envolvente que permanece en la piel durante más de 12 horas."
+      "detail": "La huella. Vainilla bourbon, ámbar resinoso y madera de sándalo. La base cálida y envolvente que permanece en la piel durante más de 12 horas."
     }
   ]
 }

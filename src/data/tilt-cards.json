@@ -6,27 +6,27 @@
   },
   "cards": [
     {
-      "roman": "— N° I",
-      "category": "— Lencería",
+      "roman": "N° I",
+      "category": "Intime",
       "name": "Pour <em>Elle</em>",
       "description": "Encaje europeo, satén, herrajes dorados con monograma YR.",
-      "badge": "Más vendido",
+      "badge": "Próximamente",
       "cssClass": "tc-1"
     },
     {
-      "roman": "— N° II",
-      "category": "— Hombre",
-      "name": "YR <em>Hombre</em>",
+      "roman": "N° II",
+      "category": "Homme",
+      "name": "YR <em>Homme</em>",
       "description": "La confianza es tu mejor atuendo.",
-      "badge": "Nuevo",
+      "badge": "Próximamente",
       "cssClass": "tc-2"
     },
     {
-      "roman": "— N° III",
-      "category": "— Belleza",
+      "roman": "N° III",
+      "category": "Essence",
       "name": "Golden <em>Kiss</em>",
       "description": "Lipgloss con brillo intenso. Seis tonos.",
-      "badge": "Insignia",
+      "badge": "Próximamente",
       "cssClass": "tc-3"
     }
   ]

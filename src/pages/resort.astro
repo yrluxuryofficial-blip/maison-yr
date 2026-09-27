@@ -1,0 +1,299 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Nav from '../components/Nav.astro';
+import MobileMenu from '../components/MobileMenu.astro';
+import Footer from '../components/Footer.astro';
+import WhatsAppFloat from '../components/WhatsAppFloat.astro';
+import ProductGrid from '../components/ProductGrid.astro';
+import productsData from '../data/products.json';
+import categories from '../data/categories.json';
+
+interface Product {
+  slug: string;
+  name: string;
+  category: string;
+  categoryLabel: string;
+  subcategory?: string;
+  price: number;
+  currency: string;
+  image: string;
+  imagePlaceholder: string;
+  imagePosition?: string;
+  description: string;
+  tags: string[];
+}
+
+const products = productsData as Product[];
+const resort = categories.find((c) => c.slug === 'resort')!;
+const subcategories = resort.subcategories ?? [];
+const categoryProducts = products.filter((p) => p.category === 'resort');
+const title = 'Resort · Maison YR';
+const description =
+  'Resort · Maison YR. Bikinis y bañadores, flip flops, beach bag, beach towel, pareos, vestidos de playa y resortwear con la firma de la maison.';
+---
+
+<BaseLayout title={title} description={description}>
+  <Nav />
+  <MobileMenu />
+  <main id="main">
+    <section class="category-hero">
+      <div class="category-kicker">Colección Resort · Maison YR</div>
+      <h1 class="category-title">Colección <em>Resort</em></h1>
+      <p class="category-lede">
+        Piezas para el sol, el mar y las horas lentas. Bikinis y bañadores, flip flops, beach bag,
+        beach towel, pareos, vestidos de playa y resortwear pensados para acompañarte desde la arena
+        hasta la cena.
+      </p>
+    </section>
+
+    <div class="resort-filter" role="group" aria-label="Líneas de la colección Resort">
+      <button
+        type="button"
+        class="resort-chip active"
+        data-filter="all"
+        aria-pressed="true"
+        data-interactive
+      >
+        Todo
+      </button>
+      {
+        subcategories.map((s) => (
+          <button
+            type="button"
+            class="resort-chip"
+            data-filter={s.slug}
+            aria-pressed="false"
+            data-interactive
+          >
+            {s.label}
+          </button>
+        ))
+      }
+    </div>
+
+    <ProductGrid products={categoryProducts} />
+
+    <div class="resort-empty" id="resortEmpty" hidden>
+      <p class="resort-empty-title">Próximamente</p>
+      <div class="resort-empty-dots" aria-hidden="true">
+        <span></span><span></span><span></span>
+      </div>
+      <p class="resort-empty-sub">
+        Esta línea de la colección Resort está en preparación. Muy pronto, en la maison.
+      </p>
+    </div>
+  </main>
+  <Footer />
+  <WhatsAppFloat />
+</BaseLayout>
+
+<style>
+  .category-hero {
+    padding: 160px 56px 60px;
+    text-align: center;
+    background: radial-gradient(ellipse at 50% 30%, rgba(212, 178, 102, 0.08), transparent 60%);
+  }
+  .category-kicker {
+    font-family: 'Manrope', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.5em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 28px;
+  }
+  .category-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(48px, 7vw, 92px);
+    font-weight: 300;
+    line-height: 1;
+    color: var(--ink);
+    margin-bottom: 32px;
+  }
+  .category-title em {
+    font-family: 'Forum', serif;
+    font-style: normal;
+    color: var(--gold);
+  }
+  .category-lede {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 20px;
+    line-height: 1.6;
+    color: var(--ink-soft);
+    max-width: 680px;
+    margin: 0 auto;
+  }
+
+  .resort-filter {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px 12px;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 24px 20px;
+  }
+  .resort-chip {
+    background: transparent;
+    color: var(--ink-soft);
+    border: 1px solid var(--line);
+    font-family: 'Manrope', sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    font-weight: 400;
+    padding: 12px 18px;
+    transition:
+      color 0.3s,
+      border-color 0.3s,
+      background 0.3s;
+  }
+  .resort-chip:hover,
+  .resort-chip:focus-visible {
+    color: var(--gold);
+    border-color: var(--gold-soft);
+  }
+  .resort-chip.active {
+    color: var(--black);
+    background: var(--gold);
+    border-color: var(--gold);
+  }
+
+  .resort-empty {
+    padding: 40px 24px 140px;
+    text-align: center;
+    background: var(--black);
+  }
+  .resort-empty[hidden] {
+    display: none;
+  }
+  .resort-empty-title {
+    font-family: 'Forum', serif;
+    font-size: clamp(26px, 3.6vw, 44px);
+    letter-spacing: 0.3em;
+    margin-right: -0.3em;
+    text-transform: uppercase;
+    color: var(--ink);
+    animation: resort-fade 1.8s ease-out both;
+  }
+  .resort-empty-dots {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin: 26px 0 28px;
+  }
+  .resort-empty-dots span {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--gold);
+    opacity: 0;
+    animation: resort-dot 2.8s ease-in-out infinite;
+  }
+  .resort-empty-dots span:nth-child(2) {
+    animation-delay: 0.4s;
+  }
+  .resort-empty-dots span:nth-child(3) {
+    animation-delay: 0.8s;
+  }
+  .resort-empty-sub {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 19px;
+    line-height: 1.6;
+    color: var(--ink-soft);
+    max-width: 520px;
+    margin: 0 auto;
+  }
+  @keyframes resort-fade {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  @keyframes resort-dot {
+    0% {
+      opacity: 0;
+    }
+    25%,
+    65% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+    }
+  }
+
+  @media (max-width: 980px) {
+    .category-hero {
+      padding: 130px 24px 50px;
+    }
+  }
+  @media (max-width: 600px) {
+    .category-hero {
+      padding: 110px 18px 40px;
+    }
+    .category-lede {
+      font-size: 17px;
+    }
+    .resort-filter {
+      padding: 0 18px 10px;
+    }
+    .resort-chip {
+      padding: 10px 14px;
+      letter-spacing: 0.2em;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .resort-empty-title,
+    .resort-empty-dots span {
+      animation: none;
+      opacity: 1;
+    }
+  }
+</style>
+
+<script>
+  // Filtro por línea (subcategoría). Soporta ?linea=<slug> para enlazar
+  // directo a una línea. Si la línea no tiene piezas todavía, se muestra
+  // el estado Próximamente en lugar de una grilla vacía.
+  const chips = document.querySelectorAll<HTMLButtonElement>('.resort-chip');
+  const cards = document.querySelectorAll<HTMLElement>('.product-card[data-subcategory]');
+  const gridSection = document.querySelector<HTMLElement>('.product-grid-section');
+  const empty = document.getElementById('resortEmpty');
+
+  function applyFilter(filter: string) {
+    let visible = 0;
+    cards.forEach((card) => {
+      const show = filter === 'all' || card.dataset.subcategory === filter;
+      card.style.display = show ? '' : 'none';
+      if (show) {
+        visible++;
+        card.classList.add('visible');
+      }
+    });
+    chips.forEach((chip) => {
+      const on = chip.dataset.filter === filter;
+      chip.classList.toggle('active', on);
+      chip.setAttribute('aria-pressed', String(on));
+    });
+    if (gridSection) gridSection.style.display = visible ? '' : 'none';
+    if (empty) empty.hidden = visible > 0;
+  }
+
+  chips.forEach((chip) => {
+    chip.addEventListener('click', () => {
+      const filter = chip.dataset.filter ?? 'all';
+      applyFilter(filter);
+      const url = new URL(window.location.href);
+      if (filter === 'all') url.searchParams.delete('linea');
+      else url.searchParams.set('linea', filter);
+      history.replaceState(null, '', url);
+    });
+  });
+
+  const initial = new URLSearchParams(window.location.search).get('linea');
+  if (initial && [...chips].some((c) => c.dataset.filter === initial)) applyFilter(initial);
+</script>

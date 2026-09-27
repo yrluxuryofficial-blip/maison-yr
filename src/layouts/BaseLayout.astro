@@ -14,8 +14,8 @@ interface Props {
 }
 
 const {
-  title = `${site.name} — ${site.tagline}`,
-  description = `${site.name}. ${site.tagline}. Lencería, perfume y belleza de la maison de lujo nacida en ${site.contact.addressLine}.`,
+  title = `${site.name} · ${site.tagline}`,
+  description = `${site.name}. ${site.tagline}. Resort, moda, lencería, perfume y belleza de la maison de lujo nacida en ${site.contact.addressLine}.`,
   ogImage = '/og/default.png',
   canonical,
 } = Astro.props;
@@ -79,7 +79,7 @@ const orgSchema = {
     <meta property="og:image" content={ogImageURL} />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content={`${site.name} — ${site.tagline}`} />
+    <meta property="og:image:alt" content={`${site.name} · ${site.tagline}`} />
     <meta property="og:locale" content="es_ES" />
 
     <meta name="twitter:card" content="summary_large_image" />

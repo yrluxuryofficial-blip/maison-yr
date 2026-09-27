@@ -127,7 +127,7 @@ const activeShade = data.shades.find((s) => s.active) ?? data.shades[0];
         </div>
       </div>
       <div class="preview-label">
-        <div class="name" id="shadeName">— {activeShade.name}</div>
+        <div class="name" id="shadeName">{activeShade.name}</div>
         <div class="desc">{data.intro.previewDesc}</div>
       </div>
     </div>
@@ -136,7 +136,7 @@ const activeShade = data.shades.find((s) => s.active) ?? data.shades[0];
       <h2 set:html={data.intro.h2} />
       <p class="description">{data.intro.description}</p>
       <div class="shade-section-label">
-        <span>— Selecciona tu tono</span>
+        <span>Selecciona tu tono</span>
         <span class="shade-current" id="shadeCurrent">{activeShade.name}</span>
       </div>
       <div class="shades-row" id="shadesRow">
@@ -157,7 +157,7 @@ const activeShade = data.shades.find((s) => s.active) ?? data.shades[0];
         }
       </div>
       <div class="quantity-row">
-        <span class="quantity-label">— Cantidad</span>
+        <span class="quantity-label">Cantidad</span>
         <div class="quantity-controls">
           <button
             class="qty-btn"
@@ -211,7 +211,7 @@ const activeShade = data.shades.find((s) => s.active) ?? data.shades[0];
       const name = shade.dataset.name ?? '';
       root.style.setProperty('--gloss', color);
       root.style.setProperty('--gloss-deep', colorDeep);
-      if (shadeName) shadeName.textContent = '— ' + name;
+      if (shadeName) shadeName.textContent = name;
       if (shadeCurrent) shadeCurrent.textContent = name;
       // Cart.astro lee data-variant-sources="shadeCurrent" — el name del item
       // se compone en runtime, no hace falta actualizar data-name del botón.

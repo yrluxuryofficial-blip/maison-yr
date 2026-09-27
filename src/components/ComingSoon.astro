@@ -1,0 +1,273 @@
+---
+// Pantalla de espera para las categorías que todavía no están activas
+// (Femme, Homme, Élan, Intime, Essence). Emblema YR de fondo con baja
+// opacidad, "Próximamente" con aparición lenta y tres puntos en bucle suave.
+interface Props {
+  label: string;
+  description: string;
+}
+const { label, description } = Astro.props;
+---
+
+<section class="coming-soon" aria-labelledby="comingSoonTitle">
+  <div class="cs-glow" aria-hidden="true"></div>
+  <img
+    class="cs-emblem"
+    src="/img/yr-emblem-hero.png"
+    alt=""
+    aria-hidden="true"
+    loading="eager"
+    decoding="async"
+  />
+
+  <div class="cs-content">
+    <h1 class="cs-heading" id="comingSoonTitle">
+      <span class="cs-kicker">Maison YR · {label}</span>
+      <span class="cs-title">Próximamente</span>
+    </h1>
+    <div class="cs-dots" aria-hidden="true">
+      <span></span><span></span><span></span>
+    </div>
+    <p class="cs-note">{description}</p>
+    <a href="/resort" class="cs-link" data-interactive>Descubrir Resort →</a>
+  </div>
+</section>
+
+<style>
+  .coming-soon {
+    position: relative;
+    min-height: 100vh;
+    min-height: 100svh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 140px 24px 100px;
+    overflow: hidden;
+    background:
+      radial-gradient(ellipse at 50% 110%, rgba(168, 116, 69, 0.14), transparent 55%), var(--black);
+    text-align: center;
+  }
+
+  .cs-glow {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(
+      circle at 50% 45%,
+      rgba(14, 68, 52, 0.55),
+      rgba(6, 36, 28, 0.25) 35%,
+      transparent 70%
+    );
+    pointer-events: none;
+  }
+
+  .cs-emblem {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: min(78vmin, 720px);
+    height: auto;
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0;
+    pointer-events: none;
+    user-select: none;
+    animation:
+      cs-emblem-in 3.2s ease-out forwards,
+      cs-breathe 14s ease-in-out 3.2s infinite;
+  }
+
+  .cs-content {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 640px;
+  }
+
+  .cs-heading {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 28px;
+    font-weight: 300;
+  }
+
+  .cs-kicker {
+    font-family: 'Manrope', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.5em;
+    text-transform: uppercase;
+    color: var(--gold);
+    opacity: 0;
+    animation: cs-fade 1.6s ease-out 0.4s forwards;
+  }
+
+  .cs-title {
+    font-family: 'Forum', serif;
+    font-size: clamp(34px, 6.4vw, 84px);
+    line-height: 1;
+    letter-spacing: 0.32em;
+    /* compensa el tracking del último carácter para centrar ópticamente */
+    margin-right: -0.32em;
+    text-transform: uppercase;
+    color: var(--ink);
+    opacity: 0;
+    filter: blur(8px);
+    animation: cs-title-in 2.8s cubic-bezier(0.2, 0.7, 0.2, 1) 0.9s forwards;
+  }
+
+  .cs-dots {
+    display: flex;
+    gap: 14px;
+    margin-top: 36px;
+    height: 6px;
+  }
+  .cs-dots span {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--gold);
+    opacity: 0;
+    animation: cs-dot 2.8s ease-in-out infinite;
+  }
+  .cs-dots span:nth-child(1) {
+    animation-delay: 3.2s;
+  }
+  .cs-dots span:nth-child(2) {
+    animation-delay: 3.6s;
+  }
+  .cs-dots span:nth-child(3) {
+    animation-delay: 4s;
+  }
+
+  .cs-note {
+    margin-top: 40px;
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 20px;
+    line-height: 1.6;
+    color: var(--ink-soft);
+    opacity: 0;
+    animation: cs-fade 1.8s ease-out 3s forwards;
+  }
+
+  .cs-link {
+    margin-top: 32px;
+    font-family: 'Manrope', sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--gold);
+    text-decoration: none;
+    padding-bottom: 6px;
+    border-bottom: 1px solid var(--gold-soft);
+    opacity: 0;
+    animation: cs-fade 1.8s ease-out 3.4s forwards;
+    transition:
+      color 0.3s,
+      border-color 0.3s;
+  }
+  .cs-link:hover,
+  .cs-link:focus-visible {
+    color: var(--gold-bright);
+    border-color: var(--gold-bright);
+  }
+
+  @keyframes cs-emblem-in {
+    to {
+      opacity: 0.07;
+    }
+  }
+  @keyframes cs-breathe {
+    0%,
+    100% {
+      opacity: 0.07;
+      transform: translate(-50%, -50%) scale(1);
+    }
+    50% {
+      opacity: 0.1;
+      transform: translate(-50%, -50%) scale(1.03);
+    }
+  }
+  @keyframes cs-fade {
+    to {
+      opacity: 1;
+    }
+  }
+  @keyframes cs-title-in {
+    from {
+      opacity: 0;
+      filter: blur(8px);
+      letter-spacing: 0.48em;
+      margin-right: -0.48em;
+    }
+    to {
+      opacity: 1;
+      filter: blur(0);
+      letter-spacing: 0.32em;
+      margin-right: -0.32em;
+    }
+  }
+  @keyframes cs-dot {
+    0% {
+      opacity: 0;
+      transform: translateY(2px);
+    }
+    25%,
+    65% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    100% {
+      opacity: 0;
+      transform: translateY(0);
+    }
+  }
+
+  @media (max-width: 600px) {
+    .coming-soon {
+      padding: 120px 18px 80px;
+    }
+    .cs-kicker {
+      font-size: 10px;
+      letter-spacing: 0.4em;
+    }
+    .cs-title {
+      letter-spacing: 0.2em;
+      margin-right: -0.2em;
+    }
+    @keyframes cs-title-in {
+      from {
+        opacity: 0;
+        filter: blur(8px);
+        letter-spacing: 0.32em;
+        margin-right: -0.32em;
+      }
+      to {
+        opacity: 1;
+        filter: blur(0);
+        letter-spacing: 0.2em;
+        margin-right: -0.2em;
+      }
+    }
+    .cs-note {
+      font-size: 17px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .cs-emblem,
+    .cs-kicker,
+    .cs-title,
+    .cs-note,
+    .cs-link,
+    .cs-dots span {
+      animation: none;
+      opacity: 1;
+      filter: none;
+    }
+    .cs-emblem {
+      opacity: 0.07;
+    }
+  }
+</style>

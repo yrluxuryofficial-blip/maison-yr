@@ -1,5 +1,11 @@
 ---
-import products from '../data/products.json';
+import allProducts from '../data/products.json';
+import categories from '../data/categories.json';
+
+// Solo se buscan piezas de categorías activas (Resort al lanzamiento): el resto
+// abre la pantalla Próximamente y no tendría dónde mostrar el producto.
+const activeSlugs = new Set(categories.filter((c) => c.active).map((c) => c.slug));
+const products = allProducts.filter((p) => activeSlugs.has(p.category));
 ---
 
 <div
@@ -10,10 +16,11 @@ import products from '../data/products.json';
   aria-label="Buscar productos"
   hidden
 >
-  <button class="search-close" id="searchClose" aria-label="Cerrar búsqueda" type="button">×</button>
+  <button class="search-close" id="searchClose" aria-label="Cerrar búsqueda" type="button">×</button
+  >
 
   <div class="search-inner">
-    <label for="searchInput" class="search-label">— Buscar en la maison</label>
+    <label for="searchInput" class="search-label">Buscar en la maison</label>
     <div class="search-input-wrap">
       <svg
         class="search-icon"
@@ -32,21 +39,22 @@ import products from '../data/products.json';
         type="text"
         id="searchInput"
         class="search-input"
-        placeholder="Lencería, perfume, Golden Kiss…"
+        placeholder="Bikini, pareo, beach bag…"
         autocomplete="off"
       />
     </div>
 
     <div class="search-results" id="searchResults">
       <p class="search-hint">
-        Escribí para empezar — o explorá los <a href="/lenceria" class="search-link">universos</a>.
+        Escribí para empezar, o explorá la colección <a href="/resort" class="search-link">Resort</a
+        >.
       </p>
     </div>
   </div>
 </div>
 
 <!-- Productos serializados como JSON inline para que el script los lea sin re-fetch -->
-<script type="application/json" id="searchData" set:html={JSON.stringify(products)}></script>
+<script type="application/json" id="searchData" set:html={JSON.stringify(products)} />
 
 <style>
   .search-overlay {
@@ -338,7 +346,7 @@ import products from '../data/products.json';
       const q = normalize(query.trim());
       if (!q) {
         resultsBox.innerHTML =
-          '<p class="search-hint">Escribí para empezar — o explorá los <a href="/lenceria" class="search-link">universos</a>.</p>';
+          '<p class="search-hint">Escribí para empezar, o explorá la colección <a href="/resort" class="search-link">Resort</a>.</p>';
         return;
       }
       const matches = products.filter((p) => {
