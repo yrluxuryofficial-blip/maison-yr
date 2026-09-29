@@ -25,7 +25,7 @@
       "h2": "Una manera<br>de <em>habitar</em>.",
       "body": "El frasco viene en una caja de terciopelo verde esmeralda, con certificado de autenticidad y una guía de uso firmada por la fundadora.",
       "meta": [
-        { "value": "$129", "label": "USD" },
+        { "value": "129 €", "label": "EUR" },
         { "value": "Edición", "label": "Numerada" }
       ]
     }

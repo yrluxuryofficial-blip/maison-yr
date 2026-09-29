@@ -48,7 +48,7 @@ const whatsappHref = `https://wa.me/${whatsapp}?text=${encodeURIComponent('Hola,
       <div class="cart-subtotal">
         <span class="cart-subtotal-label">Subtotal referencial</span>
         <span class="cart-subtotal-value">
-          $<span id="cartSubtotal">0</span><em>USD</em>
+          <span id="cartSubtotal">0</span><em>€</em>
         </span>
       </div>
       <p class="cart-disclaimer">
@@ -753,7 +753,7 @@ const whatsappHref = `https://wa.me/${whatsapp}?text=${encodeURIComponent('Hola,
                 </span>
               </div>
               <div class="cart-item-side">
-                <span class="cart-item-price">$${it.price * it.qty}</span>
+                <span class="cart-item-price">${it.price * it.qty} €</span>
                 <button class="cart-item-remove" data-cart-remove>Eliminar</button>
               </div>
             </li>

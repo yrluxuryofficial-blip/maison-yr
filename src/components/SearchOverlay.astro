@@ -373,7 +373,7 @@ const products = allProducts.filter((p) => activeSlugs.has(p.category));
             <span class="search-result-cat">${escapeHtml(p.categoryLabel)}</span>
             <span class="search-result-name">${escapeHtml(p.name)}</span>
           </div>
-          <span class="search-result-price">$${p.price} ${escapeHtml(p.currency)}</span>
+          <span class="search-result-price">${p.price} €</span>
         </a>
       `,
           )

@@ -344,6 +344,6 @@ El form incluye un campo oculto `<input name="website">`. Usuarios reales nunca 
 
 ## Licencia / Crédito
 
-© MMXXVI Maison YR · Medellín. Todos los derechos reservados.
+© MMXXVI Maison YR · Tenerife. Todos los derechos reservados.
 
 Sitio diseñado y construido siguiendo la dirección creativa de Yesenia Rodríguez (Fondatrice). El HTML monolítico original se conserva como referencia histórica en `docs/legacy/`.

@@ -12,7 +12,7 @@ Este flujo es **independiente del formulario del newsletter** (que vive en otro 
 2. Renombrala a `YR Maison · Cotizaciones`.
 3. En la primera fila pegá estas columnas (la primera fila es el header):
 
-   | Fecha | Nombre | Email | Teléfono | Ciudad | Dirección | Notas | Items | Subtotal USD | Cantidad items |
+   | Fecha | Nombre | Email | Teléfono | Ciudad | Dirección | Notas | Items | Subtotal EUR | Cantidad items |
    | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 
 4. Anotá el ID del Sheet (lo necesitás más adelante). Está en la URL:
@@ -57,7 +57,7 @@ function doPost(e) {
 
     // Formatear items para celda legible
     const itemsHuman = items
-      .map(it => `${it.qty}× ${it.name} ($${it.price} c/u)`)
+      .map(it => `${it.qty}× ${it.name} (${it.price} € c/u)`)
       .join('\n');
 
     // Escribir fila en el Sheet
@@ -78,7 +78,7 @@ function doPost(e) {
 
     // Enviar email de notificación
     if (NOTIFY_EMAIL) {
-      const subject = `🎀 Nueva cotización YR · ${params.name || 'Cliente'} · $${params.subtotal || '0'} USD`;
+      const subject = `🎀 Nueva cotización YR · ${params.name || 'Cliente'} · ${params.subtotal || '0'} €`;
       const body = [
         `Nueva solicitud de cotización en Maison YR`,
         ``,
@@ -96,7 +96,7 @@ function doPost(e) {
         itemsHuman || '(sin items)',
         ``,
         `── Subtotal referencial ──`,
-        `$${params.subtotal || '0'} USD`,
+        `${params.subtotal || '0'} €`,
         ``,
         `── Acción ──`,
         `Contactá a ${params.name || 'el cliente'} por WhatsApp al ${params.phone || '—'} en menos de 24 horas hábiles.`,
